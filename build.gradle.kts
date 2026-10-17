@@ -1,5 +1,7 @@
 plugins {
     id("java")
+    application
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "it.unicam.cs.mpgc.rpg129382"
@@ -17,4 +19,14 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+javafx {
+    version = "25"
+    modules = listOf("javafx.controls", "javafx.fxml")
+}
+
+application {
+    mainClass.set("it.unicam.cs.mpgc.rpg129382.Main")
+    applicationDefaultJvmArgs = listOf("--enable-native-access=javafx.graphics")
 }
