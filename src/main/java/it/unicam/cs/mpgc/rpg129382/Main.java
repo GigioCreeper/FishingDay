@@ -10,7 +10,7 @@ public class Main extends Application {
         StageNavigator navigator = new StageNavigator(stage);
 
         navigator.register(GameScreen.MAIN_MENU,new MainMenuScreenFactory(navigator));
-        navigator.register(GameScreen.FISHING, FishingView::new);
+        navigator.register(GameScreen.FISHING, new FishingScreenFactory());
 
         stage.setTitle("Fishing Day");
         navigator.navigateTo(GameScreen.MAIN_MENU);
