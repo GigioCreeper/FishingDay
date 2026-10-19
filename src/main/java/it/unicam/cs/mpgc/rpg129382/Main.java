@@ -1,19 +1,24 @@
 package it.unicam.cs.mpgc.rpg129382;
 
+import it.unicam.cs.mpgc.rpg129382.view.*;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 public class Main extends Application {
+
     @Override
     public void start(Stage stage) {
-        Pane root = new Pane();
-        Scene scene = new Scene(root);
+        StageNavigator navigator = new StageNavigator(stage);
+
+        navigator.register(GameScreen.MAIN_MENU,new MainMenuScreenFactory(navigator));
+        navigator.register(GameScreen.FISHING, () -> new Label("Fishing Screen"));
+
         stage.setTitle("Fishing Day");
-        stage.setScene(scene);
+        navigator.navigateTo(GameScreen.MAIN_MENU);
         stage.show();
     }
+
+
     static void main(String[] args) {
         launch(args);
     }
