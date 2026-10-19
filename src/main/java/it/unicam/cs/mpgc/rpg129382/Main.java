@@ -2,7 +2,6 @@ package it.unicam.cs.mpgc.rpg129382;
 
 import it.unicam.cs.mpgc.rpg129382.view.*;
 import javafx.application.Application;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 public class Main extends Application {
 
@@ -11,7 +10,7 @@ public class Main extends Application {
         StageNavigator navigator = new StageNavigator(stage);
 
         navigator.register(GameScreen.MAIN_MENU,new MainMenuScreenFactory(navigator));
-        navigator.register(GameScreen.FISHING, () -> new Label("Fishing Screen"));
+        navigator.register(GameScreen.FISHING, new FishingScreenFactory());
 
         stage.setTitle("Fishing Day");
         navigator.navigateTo(GameScreen.MAIN_MENU);
