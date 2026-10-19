@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view;
 
+import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -42,6 +43,6 @@ public final class StageNavigator implements ScreenNavigator {
         if (factory == null) {
             throw new IllegalArgumentException("Screen not registered: " + screen);
         }
-        stage.setScene(new Scene(factory.createScreen(), 800, 600));
+        stage.setScene(new Scene(factory.createScreen(), GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT));
     }
 }
