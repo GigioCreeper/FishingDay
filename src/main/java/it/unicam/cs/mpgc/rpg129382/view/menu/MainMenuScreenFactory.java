@@ -1,5 +1,7 @@
-package it.unicam.cs.mpgc.rpg129382.view;
+package it.unicam.cs.mpgc.rpg129382.view.menu;
 
+import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
+import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 

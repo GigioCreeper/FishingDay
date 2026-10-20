@@ -18,7 +18,7 @@ public class FishingGame {
         return hook;
     }
 
-    public void SetDirection(double directionX, double directionY) {
+    public void setDirection(double directionX, double directionY) {
         this.directionX = directionX;
         this.directionY = directionY;
     }
