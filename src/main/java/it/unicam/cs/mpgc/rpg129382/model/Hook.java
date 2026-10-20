@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
-public class Hook implements Movable{
+public class Hook implements Controllable {
     private double x;
     private double y;
 
