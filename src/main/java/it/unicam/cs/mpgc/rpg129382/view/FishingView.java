@@ -2,7 +2,6 @@ package it.unicam.cs.mpgc.rpg129382.view;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
-import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,12 +16,10 @@ public class FishingView extends Pane {
     private final Canvas canvas;
     private final Image background;
     private final Image hookImage;
-    private final Hook hook;
     private final FishingGame game;
     private final AnimationTimer timer;
 
-    public FishingView(Hook hook, FishingGame game) {
-        this.hook = Objects.requireNonNull(hook);
+    public FishingView(FishingGame game) {
         this.game = Objects.requireNonNull(game);
         this.canvas = new Canvas(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
         this.background = loadImage("/images/lake.png");
@@ -66,7 +63,7 @@ public class FishingView extends Pane {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
         gc.drawImage(hookImage,
-                hook.getX() - hookImage.getWidth() / 2,
-                hook.getY() - hookImage.getHeight() / 2);
+                game.getHook().getX() - hookImage.getWidth() / 2,
+                game.getHook().getY() - hookImage.getHeight() / 2);
     }
 }

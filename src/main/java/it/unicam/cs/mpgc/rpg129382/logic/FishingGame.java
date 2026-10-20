@@ -14,6 +14,10 @@ public class FishingGame {
         this.hook = Objects.requireNonNull(hook);
     }
 
+    public Movable getHook() {
+        return hook;
+    }
+
     public void SetDirection(double directionX, double directionY) {
         this.directionX = directionX;
         this.directionY = directionY;

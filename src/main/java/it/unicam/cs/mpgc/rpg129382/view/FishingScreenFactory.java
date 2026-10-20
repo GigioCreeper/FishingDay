@@ -11,7 +11,7 @@ public final class FishingScreenFactory implements ScreenFactory {
     public Parent createScreen() {
         Hook hook = new Hook(GameConfig.WINDOW_WIDTH/2.0, GameConfig.WINDOW_HEIGHT/2.0);
         FishingGame game = new FishingGame(hook);
-        return new FishingView(hook, game);
+        return new FishingView(game);
     }
 
 }
