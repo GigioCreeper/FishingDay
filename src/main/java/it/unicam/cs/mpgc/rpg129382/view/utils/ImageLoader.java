@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.utils;
 
-import it.unicam.cs.mpgc.rpg129382.view.FishingView;
+import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingView;
 import javafx.scene.image.Image;
 
 import java.util.Objects;

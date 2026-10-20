@@ -1,6 +1,9 @@
 package it.unicam.cs.mpgc.rpg129382;
 
-import it.unicam.cs.mpgc.rpg129382.view.*;
+import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingScreenFactory;
+import it.unicam.cs.mpgc.rpg129382.view.menu.MainMenuScreenFactory;
+import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
+import it.unicam.cs.mpgc.rpg129382.view.navigation.StageNavigator;
 import javafx.application.Application;
 import javafx.stage.Stage;
 public class Main extends Application {
