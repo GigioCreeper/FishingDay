@@ -4,7 +4,8 @@ public final class GameConfig {
     public static final int WINDOW_WIDTH = 1280;
     public static final int WINDOW_HEIGHT = 720;
 
-    public static final double HOOK_SPEED = 300.0;
+    public static final double HOOK_SPEED = 180;
+    public static final double HOOKED_SPEED = 60;
 
     public static final double WATER_TOP = WINDOW_HEIGHT * 0.37;
     public static final double FISH_SPAWN_MARGIN = 100;

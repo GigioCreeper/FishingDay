@@ -64,7 +64,8 @@ public class FishingGame {
     }
 
     private void moveHook(double delta) {
-        double distance = GameConfig.HOOK_SPEED * delta;
+        double speed = hasHookedFish() ? GameConfig.HOOKED_SPEED : GameConfig.HOOK_SPEED;
+        double distance = speed * delta;
         hook.move(directionX * distance, directionY * distance);
         keepHookInWater();
     }
