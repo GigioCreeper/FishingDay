@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382;
 
+import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.menu.MainMenuScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
@@ -11,9 +12,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         StageNavigator navigator = new StageNavigator(stage);
-
+        Inventory inventory = new Inventory();
         navigator.register(GameScreen.MAIN_MENU,new MainMenuScreenFactory(navigator));
-        navigator.register(GameScreen.FISHING, new FishingScreenFactory());
+        navigator.register(GameScreen.FISHING, new FishingScreenFactory(inventory));
 
         stage.setTitle("Fishing Day");
         navigator.navigateTo(GameScreen.MAIN_MENU);

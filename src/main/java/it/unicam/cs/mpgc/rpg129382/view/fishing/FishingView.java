@@ -101,7 +101,7 @@ public class FishingView extends Pane {
     }
 
     private void drawCounter(GraphicsContext gc) {
-        String text = "Pesci pescati: " + game.getCaughtFishes().size();
+        String text = "Pesci pescati: " + game.getInventory().totalCount();
         gc.setFont(HUD_FONT);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(4);

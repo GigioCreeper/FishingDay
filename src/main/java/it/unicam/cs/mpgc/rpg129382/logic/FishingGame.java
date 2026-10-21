@@ -3,6 +3,7 @@ package it.unicam.cs.mpgc.rpg129382.logic;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.model.Controllable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
+import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,16 +14,17 @@ public class FishingGame {
     private final Controllable hook;
     private final FishSpawner spawner;
     private final CatchDetector catchDetector;
+    private final Inventory inventory;
     private final List<Fish> fishes = new ArrayList<>();
-    private final List<Fish> caughtFishes = new ArrayList<>();
     private double directionX;
     private double directionY;
     private double spawnCooldown;
 
-    public FishingGame(Controllable hook, FishSpawner spawner, CatchDetector catchDetector) {
+    public FishingGame(Controllable hook, FishSpawner spawner, CatchDetector catchDetector, Inventory inventory) {
         this.hook = Objects.requireNonNull(hook);
         this.spawner = Objects.requireNonNull(spawner);
         this.catchDetector = Objects.requireNonNull(catchDetector);
+        this.inventory = Objects.requireNonNull(inventory);
         this.spawnCooldown = spawner.nextSpawnDelay();
     }
 
@@ -34,8 +36,8 @@ public class FishingGame {
         return Collections.unmodifiableList(fishes);
     }
 
-    public List<Fish> getCaughtFishes() {
-        return Collections.unmodifiableList(caughtFishes);
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public boolean hasHookedFish() {
@@ -100,7 +102,7 @@ public class FishingGame {
                 .filter(Fish::isHooked)
                 .filter(fish -> fish.getY() <= GameConfig.CATCH_LINE)
                 .toList();
-        caughtFishes.addAll(reachedSurface);
+        reachedSurface.forEach(fish -> inventory.add(fish.getType()));
         fishes.removeAll(reachedSurface);
     }
 }
