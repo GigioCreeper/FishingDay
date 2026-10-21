@@ -12,14 +12,16 @@ import java.util.Objects;
 public class FishingGame {
     private final Controllable hook;
     private final FishSpawner spawner;
+    private final CatchDetector catchDetector;
     private final List<Fish> fishes = new ArrayList<>();
     private double directionX;
     private double directionY;
     private double spawnCooldown;
 
-    public FishingGame(Controllable hook, FishSpawner spawner) {
+    public FishingGame(Controllable hook, FishSpawner spawner, CatchDetector catchDetector) {
         this.hook = Objects.requireNonNull(hook);
         this.spawner = Objects.requireNonNull(spawner);
+        this.catchDetector = Objects.requireNonNull(catchDetector);
         this.spawnCooldown = spawner.nextSpawnDelay();
     }
 
@@ -37,10 +39,15 @@ public class FishingGame {
     }
 
     public void update(double delta) {
+        moveHook(delta);
+        updateFishes(delta);
+        updateHookedFish();
+    }
+
+    private void moveHook(double delta) {
         double distance = GameConfig.HOOK_SPEED * delta;
         hook.move(directionX * distance, directionY * distance);
         keepHookInBounds();
-        updateFishes(delta);
     }
 
     private void keepHookInBounds() {
@@ -64,5 +71,22 @@ public class FishingGame {
     private boolean hasLeftLake(Fish fish) {
         return fish.getX() < -GameConfig.FISH_SPAWN_MARGIN
                 || fish.getX() > GameConfig.WINDOW_WIDTH + GameConfig.FISH_SPAWN_MARGIN;
+    }
+
+    private void updateHookedFish() {
+        if (!hasHookedFish()) {
+            catchDetector.findCatch(hook, fishes).ifPresent(Fish::hook);
+        }
+        fishes.stream()
+                .filter(Fish::isHooked)
+                .forEach(this::attachToHook);
+    }
+
+    private boolean hasHookedFish() {
+        return fishes.stream().anyMatch(Fish::isHooked);
+    }
+
+    private void attachToHook(Fish fish) {
+        fish.move(hook.getX() - fish.getX(), hook.getY() - fish.getY());
     }
 }

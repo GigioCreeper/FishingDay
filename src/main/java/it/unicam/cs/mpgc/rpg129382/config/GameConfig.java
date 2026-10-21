@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg129382.config;
 
 public final class GameConfig {
-    public static final int WINDOW_WIDTH = 1920;
-    public static final int WINDOW_HEIGHT = 1080;
+    public static final int WINDOW_WIDTH = 1280;
+    public static final int WINDOW_HEIGHT = 720;
 
     public static final double HOOK_SPEED = 300.0;
 
@@ -11,5 +11,6 @@ public final class GameConfig {
     public static final int MAX_FISH = 6;
     public static final double SPAWN_MIN_SECONDS = 1;
     public static final double SPAWN_MAX_SECONDS = 4;
+    public static final double CATCH_RADIUS = 40;
     private GameConfig() {}
 }

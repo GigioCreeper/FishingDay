@@ -7,6 +7,7 @@ public class Fish implements Controllable {
     private final Heading heading;
     private double x;
     private double y;
+    private boolean hooked;
 
     public Fish(FishType type, Heading heading, double x, double y) {
         this.type = Objects.requireNonNull(type);
@@ -23,7 +24,18 @@ public class Fish implements Controllable {
         return heading;
     }
 
+    public boolean isHooked() {
+        return hooked;
+    }
+
+    public void hook() {
+        hooked = true;
+    }
+
     public void swim(double deltaSeconds) {
+        if (hooked) {
+            return;
+        }
         move(heading.sign() * type.speed() * deltaSeconds, 0);
     }
 

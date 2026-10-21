@@ -32,7 +32,7 @@ public class FishingView extends Pane {
         this.canvas = new Canvas(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
-        this.fishSprite = new SpriteSheet(ImageLoader.loadImage("/images/fish.png"), 2, 2);
+        this.fishSprite = new SpriteSheet(ImageLoader.loadImage("/images/trout.png"), 2, 2);
         this.timer = createTimer();
         this.getChildren().add(canvas);
         setupInput();
