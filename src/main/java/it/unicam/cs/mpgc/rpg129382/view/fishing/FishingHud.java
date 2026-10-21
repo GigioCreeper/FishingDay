@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.model.Inventory;
+import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -12,20 +12,27 @@ final class FishingHud {
     private static final Font FONT = Font.font("Arial", FontWeight.BOLD, 32);
     private static final double X = 30;
     private static final double Y = 50;
+    private static final double LINE_HEIGHT = 40;
 
-    private final Inventory inventory;
+    private final FishingGame game;
 
-    FishingHud(Inventory inventory) {
-        this.inventory = Objects.requireNonNull(inventory);
+    FishingHud(FishingGame game) {
+        this.game = Objects.requireNonNull(game);
     }
 
     void draw(GraphicsContext gc) {
-        String text = "Pesci pescati: " + inventory.totalCount();
         gc.setFont(FONT);
+        drawLine(gc, "Pesci pescati: " + game.getInventory().totalCount(), Y);
+        if (game.isFishPulling()) {
+            drawLine(gc, "Il pesce tira!", Y + LINE_HEIGHT);
+        }
+    }
+
+    private void drawLine(GraphicsContext gc, String text, double y) {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(4);
-        gc.strokeText(text, X, Y);
+        gc.strokeText(text, X, y);
         gc.setFill(Color.WHITE);
-        gc.fillText(text, X, Y);
+        gc.fillText(text, X, y);
     }
 }

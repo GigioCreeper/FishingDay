@@ -38,7 +38,7 @@ public class FishingView extends Pane {
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.fishSprite = new SpriteSheet(ImageLoader.loadImage("/images/trout.png"), 2, 2);
         this.hookedFishSprite = new SpriteSheet(ImageLoader.loadImage("/images/hookedTrout.png"), 2, 2);
-        this.hud = new FishingHud(game.getInventory());
+        this.hud = new FishingHud(game);
         this.timer = createTimer();
         this.getChildren().add(canvas);
         setupInput();

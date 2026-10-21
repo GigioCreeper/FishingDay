@@ -17,5 +17,12 @@ public final class GameConfig {
     public static final double CATCH_ZONE_LEFT = WINDOW_WIDTH / 3.0;
     public static final double CATCH_ZONE_RIGHT = WINDOW_WIDTH * 2.0 / 4.0;
     public static final double CATCH_ZONE_BOTTOM = WATER_TOP + 80;
+
+
+
+    public static final double PULL_MIN_SECONDS = 1;
+    public static final double PULL_MAX_SECONDS = 2.5;
+    public static final double CONTROL_MIN_SECONDS = 1.5;
+    public static final double CONTROL_MAX_SECONDS = 3;
     private GameConfig() {}
 }
