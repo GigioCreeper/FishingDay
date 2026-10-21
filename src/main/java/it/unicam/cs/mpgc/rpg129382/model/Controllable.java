@@ -4,7 +4,7 @@ package it.unicam.cs.mpgc.rpg129382.model;
 /**
  * Represents an object that can be moved in a 2D space.
  */
-public interface Movable {
+public interface Controllable {
     double getX();
     double getY();
 
