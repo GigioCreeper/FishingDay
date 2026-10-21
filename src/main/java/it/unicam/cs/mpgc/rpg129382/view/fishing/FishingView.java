@@ -12,23 +12,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.util.Objects;
 
 public class FishingView extends Pane {
     private static final double FISH_DRAW_WIDTH = 120;
-    private static final Font HUD_FONT = Font.font("Arial", FontWeight.BOLD, 32);
-    private static final double HUD_X = 30;
-    private static final double HUD_Y = 50;
 
     private final Canvas canvas;
     private final Image background;
     private final Image hookImage;
     private final SpriteSheet fishSprite;
     private final SpriteSheet hookedFishSprite;
+    private final FishingHud hud;
     private final FishingGame game;
     private final FishingController controller;
     private final AnimationTimer timer;
@@ -41,6 +36,7 @@ public class FishingView extends Pane {
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.fishSprite = new SpriteSheet(ImageLoader.loadImage("/images/trout.png"), 2, 2);
         this.hookedFishSprite = new SpriteSheet(ImageLoader.loadImage("/images/hookedTrout.png"), 2, 2);
+        this.hud = new FishingHud(game.getInventory());
         this.timer = createTimer();
         this.getChildren().add(canvas);
         setupInput();
@@ -80,7 +76,7 @@ public class FishingView extends Pane {
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
         drawFishes(gc);
         drawHook(gc);
-        drawCounter(gc);
+        hud.draw(gc);
     }
 
     private void drawFishes(GraphicsContext gc) {
@@ -98,15 +94,5 @@ public class FishingView extends Pane {
         gc.drawImage(hookImage,
                 game.getHook().getX() - hookImage.getWidth() / 2,
                 game.getHook().getY() - hookImage.getHeight() / 2);
-    }
-
-    private void drawCounter(GraphicsContext gc) {
-        String text = "Pesci pescati: " + game.getInventory().totalCount();
-        gc.setFont(HUD_FONT);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(4);
-        gc.strokeText(text, HUD_X, HUD_Y);
-        gc.setFill(Color.WHITE);
-        gc.fillText(text, HUD_X, HUD_Y);
     }
 }
