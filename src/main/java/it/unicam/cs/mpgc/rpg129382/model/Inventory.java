@@ -24,4 +24,8 @@ public class Inventory {
     public Map<FishType, Integer> getFishes() {
         return Collections.unmodifiableMap(fishes);
     }
+
+    public void clear() {
+        fishes.clear();
+    }
 }
