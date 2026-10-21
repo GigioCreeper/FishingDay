@@ -82,7 +82,7 @@ public class FishingGame {
                 .forEach(this::attachToHook);
     }
 
-    private boolean hasHookedFish() {
+    public boolean hasHookedFish() {
         return fishes.stream().anyMatch(Fish::isHooked);
     }
 

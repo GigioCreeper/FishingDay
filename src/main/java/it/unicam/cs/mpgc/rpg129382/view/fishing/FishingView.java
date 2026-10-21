@@ -22,6 +22,7 @@ public class FishingView extends Pane {
     private final Image background;
     private final Image hookImage;
     private final SpriteSheet fishSprite;
+    private final SpriteSheet hookedFishSprite;
     private final FishingGame game;
     private final FishingController controller;
     private final AnimationTimer timer;
@@ -33,6 +34,7 @@ public class FishingView extends Pane {
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.fishSprite = new SpriteSheet(ImageLoader.loadImage("/images/trout.png"), 2, 2);
+        this.hookedFishSprite = new SpriteSheet(ImageLoader.loadImage("/images/hookedTrout.png"), 2,2);
         this.timer = createTimer();
         this.getChildren().add(canvas);
         setupInput();
@@ -70,12 +72,22 @@ public class FishingView extends Pane {
     private void draw() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
+        drawFishes(gc);
+        drawHook(gc);
+    }
 
+    private void drawFishes(GraphicsContext gc) {
         for (Fish fish : game.getFishes()) {
-            fishSprite.drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
+            SpriteSheet sprite = fish.isHooked() ? hookedFishSprite : fishSprite;
+            sprite.drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
                     fish.getHeading() == Heading.LEFT);
         }
+    }
 
+    private void drawHook(GraphicsContext gc) {
+        if (game.hasHookedFish()) {
+            return;
+        }
         gc.drawImage(hookImage,
                 game.getHook().getX() - hookImage.getWidth() / 2,
                 game.getHook().getY() - hookImage.getHeight() / 2);
