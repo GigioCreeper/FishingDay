@@ -1,9 +1,9 @@
 package it.unicam.cs.mpgc.rpg129382.logic;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
-import it.unicam.cs.mpgc.rpg129382.model.Controllable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
+import it.unicam.cs.mpgc.rpg129382.model.Controllable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,16 +14,19 @@ public class FishingGame {
     private final Controllable hook;
     private final FishSpawner spawner;
     private final CatchDetector catchDetector;
+    private final CatchZone catchZone;
     private final Inventory inventory;
     private final List<Fish> fishes = new ArrayList<>();
     private double directionX;
     private double directionY;
     private double spawnCooldown;
 
-    public FishingGame(Controllable hook, FishSpawner spawner, CatchDetector catchDetector, Inventory inventory) {
+    public FishingGame(Controllable hook, FishSpawner spawner, CatchDetector catchDetector,
+                       CatchZone catchZone, Inventory inventory) {
         this.hook = Objects.requireNonNull(hook);
         this.spawner = Objects.requireNonNull(spawner);
         this.catchDetector = Objects.requireNonNull(catchDetector);
+        this.catchZone = Objects.requireNonNull(catchZone);
         this.inventory = Objects.requireNonNull(inventory);
         this.spawnCooldown = spawner.nextSpawnDelay();
     }
@@ -40,6 +43,10 @@ public class FishingGame {
         return inventory;
     }
 
+    public CatchZone getCatchZone() {
+        return catchZone;
+    }
+
     public boolean hasHookedFish() {
         return fishes.stream().anyMatch(Fish::isHooked);
     }
@@ -53,7 +60,7 @@ public class FishingGame {
         moveHook(delta);
         updateFishes(delta);
         updateHookedFish();
-        collectFishAtSurface();
+        collectFishInCatchZone();
     }
 
     private void moveHook(double delta) {
@@ -97,12 +104,12 @@ public class FishingGame {
         fish.move(hook.getX() - fish.getX(), hook.getY() - fish.getY());
     }
 
-    private void collectFishAtSurface() {
-        List<Fish> reachedSurface = fishes.stream()
+    private void collectFishInCatchZone() {
+        List<Fish> inZone = fishes.stream()
                 .filter(Fish::isHooked)
-                .filter(fish -> fish.getY() <= GameConfig.CATCH_LINE)
+                .filter(fish -> catchZone.contains(fish.getX(), fish.getY()))
                 .toList();
-        reachedSurface.forEach(fish -> inventory.add(fish.getType()));
-        fishes.removeAll(reachedSurface);
+        inZone.forEach(fish -> inventory.add(fish.getType()));
+        fishes.removeAll(inZone);
     }
 }

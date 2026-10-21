@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.controller.FishingController;
+import it.unicam.cs.mpgc.rpg129382.logic.CatchZone;
 import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
@@ -12,6 +13,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
@@ -74,6 +76,7 @@ public class FishingView extends Pane {
     private void draw() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
+        drawCatchZone(gc);
         drawFishes(gc);
         drawHook(gc);
         hud.draw(gc);
@@ -85,6 +88,12 @@ public class FishingView extends Pane {
             sprite.drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
                     fish.getHeading() == Heading.LEFT);
         }
+    }
+
+    private void drawCatchZone(GraphicsContext gc) {
+        CatchZone zone = game.getCatchZone();
+        gc.setFill(Color.rgb(255, 255, 255, 0.25));
+        gc.fillRect(zone.left(), zone.top(), zone.right() - zone.left(), zone.bottom() - zone.top());
     }
 
     private void drawHook(GraphicsContext gc) {
