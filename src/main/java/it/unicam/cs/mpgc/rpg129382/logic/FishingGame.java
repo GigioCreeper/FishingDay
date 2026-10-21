@@ -14,6 +14,7 @@ public class FishingGame {
     private final FishSpawner spawner;
     private final CatchDetector catchDetector;
     private final List<Fish> fishes = new ArrayList<>();
+    private final List<Fish> caughtFishes = new ArrayList<>();
     private double directionX;
     private double directionY;
     private double spawnCooldown;
@@ -33,6 +34,14 @@ public class FishingGame {
         return Collections.unmodifiableList(fishes);
     }
 
+    public List<Fish> getCaughtFishes() {
+        return Collections.unmodifiableList(caughtFishes);
+    }
+
+    public boolean hasHookedFish() {
+        return fishes.stream().anyMatch(Fish::isHooked);
+    }
+
     public void setDirection(double directionX, double directionY) {
         this.directionX = directionX;
         this.directionY = directionY;
@@ -42,18 +51,18 @@ public class FishingGame {
         moveHook(delta);
         updateFishes(delta);
         updateHookedFish();
+        collectFishAtSurface();
     }
 
     private void moveHook(double delta) {
         double distance = GameConfig.HOOK_SPEED * delta;
         hook.move(directionX * distance, directionY * distance);
-        keepHookInBounds();
+        keepHookInWater();
     }
 
-    private void keepHookInBounds() {
-        //TODO: implement this method to keep the hook within the LAKE bounds instead of the window bounds
+    private void keepHookInWater() {
         double x = Math.clamp(hook.getX(), 0, GameConfig.WINDOW_WIDTH);
-        double y = Math.clamp(hook.getY(), 0, GameConfig.WINDOW_HEIGHT);
+        double y = Math.clamp(hook.getY(), GameConfig.WATER_TOP, GameConfig.WINDOW_HEIGHT);
         hook.move(x - hook.getX(), y - hook.getY());
     }
 
@@ -82,11 +91,16 @@ public class FishingGame {
                 .forEach(this::attachToHook);
     }
 
-    public boolean hasHookedFish() {
-        return fishes.stream().anyMatch(Fish::isHooked);
-    }
-
     private void attachToHook(Fish fish) {
         fish.move(hook.getX() - fish.getX(), hook.getY() - fish.getY());
+    }
+
+    private void collectFishAtSurface() {
+        List<Fish> reachedSurface = fishes.stream()
+                .filter(Fish::isHooked)
+                .filter(fish -> fish.getY() <= GameConfig.CATCH_LINE)
+                .toList();
+        caughtFishes.addAll(reachedSurface);
+        fishes.removeAll(reachedSurface);
     }
 }
