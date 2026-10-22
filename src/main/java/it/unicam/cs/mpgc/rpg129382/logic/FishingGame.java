@@ -13,7 +13,7 @@ public class FishingGame {
     private final Controllable hook;
     private final FishPopulation population;
     private final CatchDetector catchDetector;
-    private final CatchZone catchZone;
+    private final Lake lake;
     private final Inventory inventory;
     private final Random random;
     private Fight fight;
@@ -21,11 +21,11 @@ public class FishingGame {
     private double directionY;
 
     public FishingGame(Controllable hook, FishPopulation population, CatchDetector catchDetector,
-                       CatchZone catchZone, Inventory inventory, Random random) {
+                       Lake lake, Inventory inventory, Random random) {
         this.hook = Objects.requireNonNull(hook);
         this.population = Objects.requireNonNull(population);
         this.catchDetector = Objects.requireNonNull(catchDetector);
-        this.catchZone = Objects.requireNonNull(catchZone);
+        this.lake = Objects.requireNonNull(lake);
         this.inventory = Objects.requireNonNull(inventory);
         this.random = Objects.requireNonNull(random);
     }
@@ -42,8 +42,8 @@ public class FishingGame {
         return inventory;
     }
 
-    public CatchZone getCatchZone() {
-        return catchZone;
+    public Area getCatchZone() {
+        return lake.catchZone();
     }
 
     public boolean hasHookedFish() {
@@ -89,9 +89,7 @@ public class FishingGame {
     }
 
     private void keepHookInWater() {
-        double x = Math.clamp(hook.getX(), 0, GameConfig.WINDOW_WIDTH);
-        double y = Math.clamp(hook.getY(), GameConfig.WATER_TOP, GameConfig.WINDOW_HEIGHT);
-        hook.move(x - hook.getX(), y - hook.getY());
+        lake.water().keepInside(hook);
     }
 
     private void updateFight(double delta) {
@@ -101,7 +99,7 @@ public class FishingGame {
         }
         fight.update(delta);
         attachToHook(fight.getFish());
-        if (hasHookLeftScreen()) {
+        if (hasHookLeftWater()) {
             breakLine();
         }
     }
@@ -116,10 +114,8 @@ public class FishingGame {
         fish.move(hook.getX() - fish.getX(), hook.getY() - fish.getY());
     }
 
-    private boolean hasHookLeftScreen() {
-        return hook.getX() < 0
-                || hook.getX() > GameConfig.WINDOW_WIDTH
-                || hook.getY() > GameConfig.WINDOW_HEIGHT;
+    private boolean hasHookLeftWater() {
+        return !lake.water().contains(hook.getX(), hook.getY());
     }
 
     private void breakLine() {
@@ -133,7 +129,7 @@ public class FishingGame {
             return;
         }
         Fish fish = fight.getFish();
-        if (catchZone.contains(fish.getX(), fish.getY())) {
+        if (lake.catchZone().contains(fish.getX(), fish.getY())) {
             inventory.add(fish.getType());
             population.remove(fish);
             fight = null;

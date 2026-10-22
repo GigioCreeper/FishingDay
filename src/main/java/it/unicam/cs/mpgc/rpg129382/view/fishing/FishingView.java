@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.controller.FishingController;
-import it.unicam.cs.mpgc.rpg129382.logic.CatchZone;
+import it.unicam.cs.mpgc.rpg129382.logic.Area;
 import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
@@ -91,7 +91,7 @@ public class FishingView extends Pane {
     }
 
     private void drawCatchZone(GraphicsContext gc) {
-        CatchZone zone = game.getCatchZone();
+        Area zone = game.getCatchZone();
         gc.setFill(Color.rgb(255, 255, 255, 0.25));
         gc.fillRect(zone.left(), zone.top(), zone.right() - zone.left(), zone.bottom() - zone.top());
     }
