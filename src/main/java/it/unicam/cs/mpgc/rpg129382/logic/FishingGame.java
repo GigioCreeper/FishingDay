@@ -5,34 +5,29 @@ import it.unicam.cs.mpgc.rpg129382.model.Controllable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
 public class FishingGame {
     private final Controllable hook;
-    private final FishSpawner spawner;
+    private final FishPopulation population;
     private final CatchDetector catchDetector;
     private final CatchZone catchZone;
     private final Inventory inventory;
     private final Random random;
-    private final List<Fish> fishes = new ArrayList<>();
     private Fight fight;
     private double directionX;
     private double directionY;
-    private double spawnCooldown;
 
-    public FishingGame(Controllable hook, FishSpawner spawner, CatchDetector catchDetector,
+    public FishingGame(Controllable hook, FishPopulation population, CatchDetector catchDetector,
                        CatchZone catchZone, Inventory inventory, Random random) {
         this.hook = Objects.requireNonNull(hook);
-        this.spawner = Objects.requireNonNull(spawner);
+        this.population = Objects.requireNonNull(population);
         this.catchDetector = Objects.requireNonNull(catchDetector);
         this.catchZone = Objects.requireNonNull(catchZone);
         this.inventory = Objects.requireNonNull(inventory);
         this.random = Objects.requireNonNull(random);
-        this.spawnCooldown = spawner.nextSpawnDelay();
     }
 
     public Controllable getHook() {
@@ -40,7 +35,7 @@ public class FishingGame {
     }
 
     public List<Fish> getFishes() {
-        return Collections.unmodifiableList(fishes);
+        return population.getFishes();
     }
 
     public Inventory getInventory() {
@@ -66,7 +61,7 @@ public class FishingGame {
 
     public void update(double delta) {
         moveHook(delta);
-        updateFishes(delta);
+        population.update(delta);
         updateFight(delta);
         collectFishInCatchZone();
     }
@@ -98,25 +93,9 @@ public class FishingGame {
         hook.move(x - hook.getX(), y - hook.getY());
     }
 
-    private void updateFishes(double delta) {
-        fishes.forEach(fish -> fish.swim(delta));
-        fishes.removeIf(this::hasLeftLake);
-
-        spawnCooldown -= delta;
-        if (spawnCooldown <= 0 && fishes.size() < GameConfig.MAX_FISH) {
-            fishes.add(spawner.spawn());
-            spawnCooldown = spawner.nextSpawnDelay();
-        }
-    }
-
-    private boolean hasLeftLake(Fish fish) {
-        return fish.getX() < -GameConfig.FISH_SPAWN_MARGIN
-                || fish.getX() > GameConfig.WINDOW_WIDTH + GameConfig.FISH_SPAWN_MARGIN;
-    }
-
     private void updateFight(double delta) {
         if (fight == null) {
-            catchDetector.findCatch(hook, fishes).ifPresent(this::startFight);
+            catchDetector.findCatch(hook, population.getFishes()).ifPresent(this::startFight);
             return;
         }
         fight.update(delta);
@@ -143,7 +122,7 @@ public class FishingGame {
     }
 
     private void breakLine() {
-        fishes.remove(fight.getFish());
+        population.remove(fight.getFish());
         fight = null;
         keepHookInWater();
     }
@@ -155,7 +134,7 @@ public class FishingGame {
         Fish fish = fight.getFish();
         if (catchZone.contains(fish.getX(), fish.getY())) {
             inventory.add(fish.getType());
-            fishes.remove(fish);
+            population.remove(fish);
             fight = null;
         }
     }
