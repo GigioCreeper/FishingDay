@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.controller.FishingController;
 import it.unicam.cs.mpgc.rpg129382.logic.CatchDetector;
@@ -28,10 +29,7 @@ public final class FishingScreenFactory implements ScreenFactory {
     public Parent createScreen() {
         Random random = new Random();
         Hook hook = new Hook(GameConfig.WINDOW_WIDTH / 2.0, GameConfig.WINDOW_HEIGHT / 2.0);
-        List<FishType> types = List.of(
-                new FishType("Persico", 5, 60, 50),
-                new FishType("Trota", 10, 80, 80),
-                new FishType("Luccio", 25, 110, 120));
+        List<FishType> types = FishCatalog.all();
         FishPopulation population = new FishPopulation(new FishSpawner(types, random));
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
         CatchZone catchZone = new CatchZone(
