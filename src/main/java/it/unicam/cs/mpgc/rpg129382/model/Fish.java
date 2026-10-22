@@ -2,9 +2,9 @@ package it.unicam.cs.mpgc.rpg129382.model;
 
 import java.util.Objects;
 
-public class Fish implements Controllable {
+public class Fish {
     private final FishType type;
-    private final Heading heading;
+    private Heading heading;
     private double x;
     private double y;
     private boolean hooked;
@@ -32,6 +32,10 @@ public class Fish implements Controllable {
         hooked = true;
     }
 
+    public void face(Heading heading) {
+        this.heading = Objects.requireNonNull(heading);
+    }
+
     public void swim(double deltaSeconds) {
         if (hooked) {
             return;
@@ -39,18 +43,15 @@ public class Fish implements Controllable {
         move(heading.sign() * type.speed() * deltaSeconds, 0);
     }
 
-    @Override
     public void move(double dx, double dy) {
         x += dx;
         y += dy;
     }
 
-    @Override
     public double getX() {
         return x;
     }
 
-    @Override
     public double getY() {
         return y;
     }

@@ -3,6 +3,8 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.controller.FishingController;
 import it.unicam.cs.mpgc.rpg129382.logic.CatchDetector;
+import it.unicam.cs.mpgc.rpg129382.logic.CatchZone;
+import it.unicam.cs.mpgc.rpg129382.logic.FishPopulation;
 import it.unicam.cs.mpgc.rpg129382.logic.FishSpawner;
 import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
@@ -22,12 +24,22 @@ public final class FishingScreenFactory implements ScreenFactory {
         this.inventory = Objects.requireNonNull(inventory);
     }
 
-
     @Override
     public Parent createScreen() {
+        Random random = new Random();
         Hook hook = new Hook(GameConfig.WINDOW_WIDTH / 2.0, GameConfig.WINDOW_HEIGHT / 2.0);
-        FishSpawner spawner = new FishSpawner(List.of(new FishType("Trota", 10, 80)), new Random());
-        FishingGame game = new FishingGame(hook, spawner, new CatchDetector(GameConfig.CATCH_RADIUS), inventory);
+        List<FishType> types = List.of(
+                new FishType("Persico", 5, 60, 50),
+                new FishType("Trota", 10, 80, 80),
+                new FishType("Luccio", 25, 110, 120));
+        FishPopulation population = new FishPopulation(new FishSpawner(types, random));
+        CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
+        CatchZone catchZone = new CatchZone(
+                GameConfig.CATCH_ZONE_LEFT,
+                GameConfig.CATCH_ZONE_RIGHT,
+                GameConfig.WATER_TOP,
+                GameConfig.CATCH_ZONE_BOTTOM);
+        FishingGame game = new FishingGame(hook, population, catchDetector, catchZone, inventory, random);
         FishingController controller = new FishingController(game);
         return new FishingView(game, controller);
     }
