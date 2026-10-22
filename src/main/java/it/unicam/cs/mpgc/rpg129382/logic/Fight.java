@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.logic;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
+import it.unicam.cs.mpgc.rpg129382.model.Heading;
 
 import java.util.Objects;
 import java.util.Random;
@@ -12,13 +13,13 @@ public class Fight {
 
     private final Fish fish;
     private final Random random;
-    private boolean fishPulling = true;
+    private boolean fishPulling;
     private double timeLeft;
 
     public Fight(Fish fish, Random random) {
         this.fish = Objects.requireNonNull(fish);
         this.random = Objects.requireNonNull(random);
-        this.timeLeft = pullDuration();
+        startPull();
     }
 
     public Fish getFish() {
@@ -41,19 +42,33 @@ public class Fight {
         return fish.getType().strength();
     }
 
-    public void update(double delta) {
-        timeLeft -= delta;
-        if (timeLeft <= 0) {
-            fishPulling = !fishPulling;
-            timeLeft = fishPulling ? pullDuration() : controlDuration();
+    public void turnTowards(double directionX) {
+        if (directionX > 0) {
+            fish.face(Heading.RIGHT);
+        } else if (directionX < 0) {
+            fish.face(Heading.LEFT);
         }
     }
 
-    private double pullDuration() {
-        return random.nextDouble(GameConfig.PULL_MIN_SECONDS, GameConfig.PULL_MAX_SECONDS);
+    public void update(double delta) {
+        timeLeft -= delta;
+        if (timeLeft <= 0) {
+            if (fishPulling) {
+                startControl();
+            } else {
+                startPull();
+            }
+        }
     }
 
-    private double controlDuration() {
-        return random.nextDouble(GameConfig.CONTROL_MIN_SECONDS, GameConfig.CONTROL_MAX_SECONDS);
+    private void startPull() {
+        fishPulling = true;
+        timeLeft = random.nextDouble(GameConfig.PULL_MIN_SECONDS, GameConfig.PULL_MAX_SECONDS);
+        fish.face(random.nextBoolean() ? Heading.RIGHT : Heading.LEFT);
+    }
+
+    private void startControl() {
+        fishPulling = false;
+        timeLeft = random.nextDouble(GameConfig.CONTROL_MIN_SECONDS, GameConfig.CONTROL_MAX_SECONDS);
     }
 }

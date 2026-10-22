@@ -72,6 +72,7 @@ public class FishingGame {
         } else if (fight.isFishPulling()) {
             pullHook(delta);
         } else {
+            fight.turnTowards(directionX);
             moveByPlayer(GameConfig.HOOKED_SPEED, delta);
         }
     }
