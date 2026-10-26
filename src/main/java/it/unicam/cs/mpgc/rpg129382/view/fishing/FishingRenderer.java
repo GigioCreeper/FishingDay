@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
@@ -29,11 +30,11 @@ final class FishingRenderer {
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.fishSprites = new FishSprites();
-        fishSprites.register("perch", "perch");
-        fishSprites.register("trout", "trout");
-        fishSprites.register("pike", "pike");
-        fishSprites.register("bass", "bass");
-        fishSprites.register("chub", "chub");
+        fishSprites.register(FishCatalog.PERCH, "perch");
+        fishSprites.register(FishCatalog.TROUT, "trout");
+        fishSprites.register(FishCatalog.PIKE, "pike");
+        fishSprites.register(FishCatalog.BASS, "bass");
+        fishSprites.register(FishCatalog.CHUB, "chub");
         this.hud = new FishingHud(state);
     }
 
