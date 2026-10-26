@@ -25,7 +25,7 @@ public final class SpriteSheet {
 
     public void drawFrame(GraphicsContext gc, int frame, double centerX, double centerY,
                           double width, boolean flipped) {
-        int index = frame % (columns * rows);
+        int index = Math.floorMod(frame, columns * rows);
         double sourceX = (index % columns) * frameWidth;
         double sourceY = (index / columns) * frameHeight;
         double height = width * frameHeight / frameWidth;

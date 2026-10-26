@@ -14,6 +14,7 @@ import java.util.Objects;
 
 final class FishingRenderer {
     private static final double FISH_DRAW_WIDTH = 120;
+    private static final int PIXELS_PER_FRAME = 25;
 
     private final FishingState state;
     private final boolean showCatchZone;
@@ -54,7 +55,7 @@ final class FishingRenderer {
 
     private void drawFishes(GraphicsContext gc) {
         for (ReadOnlyFish fish : state.getFishes()) {
-            fishSprites.spriteFor(fish).drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
+            fishSprites.spriteFor(fish).drawFrame(gc, frameFor(fish), fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
                     fish.getHeading() == Heading.LEFT);
         }
     }
@@ -66,5 +67,9 @@ final class FishingRenderer {
         gc.drawImage(hookImage,
                 state.getHook().getX() - hookImage.getWidth() / 2,
                 state.getHook().getY() - hookImage.getHeight() / 2);
+    }
+
+    private int frameFor(ReadOnlyFish fish) {
+        return (int) (fish.getX() / PIXELS_PER_FRAME);
     }
 }
