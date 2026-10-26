@@ -1,6 +1,9 @@
 package it.unicam.cs.mpgc.rpg129382.logic;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.Displacement;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.Fight;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.model.Controllable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
@@ -8,58 +11,65 @@ import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
-public class FishingGame {
+public class FishingGame implements FishingState, FishingCommands {
     private final Controllable hook;
     private final FishPopulation population;
     private final CatchDetector catchDetector;
     private final Lake lake;
     private final Inventory inventory;
-    private final Random random;
+    private final FightFactory fightFactory;
     private Fight fight;
     private double directionX;
     private double directionY;
 
     public FishingGame(Controllable hook, FishPopulation population, CatchDetector catchDetector,
-                       Lake lake, Inventory inventory, Random random) {
+                       Lake lake, Inventory inventory, FightFactory fightFactory) {
         this.hook = Objects.requireNonNull(hook);
         this.population = Objects.requireNonNull(population);
         this.catchDetector = Objects.requireNonNull(catchDetector);
         this.lake = Objects.requireNonNull(lake);
         this.inventory = Objects.requireNonNull(inventory);
-        this.random = Objects.requireNonNull(random);
+        this.fightFactory = Objects.requireNonNull(fightFactory);
     }
 
+    @Override
     public Positioned getHook() {
         return hook;
     }
 
+    @Override
     public List<Fish> getFishes() {
         return population.getFishes();
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
-
+    @Override
     public Area getCatchZone() {
         return lake.catchZone();
     }
 
+    @Override
     public boolean hasHookedFish() {
         return fight != null;
     }
 
+    @Override
     public boolean isFishPulling() {
-        return fight != null && fight.isFishPulling();
+        return fight != null && !fight.playerControls();
     }
 
+    @Override
+    public int getInventoryCount() {
+        return inventory.totalCount();
+    }
+
+    @Override
     public void setDirection(double directionX, double directionY) {
         this.directionX = directionX;
         this.directionY = directionY;
     }
 
+    @Override
     public void update(double delta) {
         moveHook(delta);
         population.update(delta);
@@ -69,24 +79,20 @@ public class FishingGame {
 
     private void moveHook(double delta) {
         if (fight == null) {
-            moveByPlayer(GameConfig.HOOK_SPEED, delta);
-        } else if (fight.isFishPulling()) {
-            pullHook(delta);
-        } else {
-            fight.turnTowards(directionX);
-            moveByPlayer(GameConfig.HOOKED_SPEED, delta);
+            moveFreeHook(delta);
+            return;
+        }
+        Displacement displacement = fight.step(directionX, directionY, delta);
+        hook.move(displacement.dx(), displacement.dy());
+        if (fight.keepsHookInWater()) {
+            keepHookInWater();
         }
     }
 
-    private void moveByPlayer(double speed, double delta) {
-        double distance = speed * delta;
+    private void moveFreeHook(double delta) {
+        double distance = GameConfig.HOOK_SPEED * delta;
         hook.move(directionX * distance, directionY * distance);
         keepHookInWater();
-    }
-
-    private void pullHook(double delta) {
-        double distance = fight.pullSpeed() * delta;
-        hook.move(fight.pullDirectionX() * distance, fight.pullDirectionY() * distance);
     }
 
     private void keepHookInWater() {
@@ -107,7 +113,7 @@ public class FishingGame {
 
     private void startFight(Fish fish) {
         fish.hook();
-        fight = new Fight(fish, random);
+        fight = fightFactory.create(fish);
         attachToHook(fish);
     }
 

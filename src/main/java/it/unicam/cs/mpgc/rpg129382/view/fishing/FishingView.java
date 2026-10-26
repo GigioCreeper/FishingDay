@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.controller.FishingController;
-import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
+import it.unicam.cs.mpgc.rpg129382.logic.FishingState;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
@@ -15,10 +15,10 @@ public class FishingView extends Pane {
     private final FishingController controller;
     private final AnimationTimer timer;
 
-    public FishingView(FishingGame game, FishingController controller) {
+    public FishingView(FishingState state, FishingController controller) {
         this.controller = Objects.requireNonNull(controller);
         this.canvas = new Canvas(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
-        this.renderer = new FishingRenderer(Objects.requireNonNull(game));
+        this.renderer = new FishingRenderer(Objects.requireNonNull(state));
         this.timer = createTimer();
         this.getChildren().add(canvas);
         setupInput();

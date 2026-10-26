@@ -9,11 +9,16 @@ import it.unicam.cs.mpgc.rpg129382.logic.FishPopulation;
 import it.unicam.cs.mpgc.rpg129382.logic.FishSpawner;
 import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
 import it.unicam.cs.mpgc.rpg129382.logic.Lake;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.ControlPhase;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.Fight;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.FightFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.PullPhase;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import javafx.scene.Parent;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -37,7 +42,8 @@ public final class FishingScreenFactory implements ScreenFactory {
                 GameConfig.WATER_TOP,
                 GameConfig.CATCH_ZONE_BOTTOM);
         Lake lake = new Lake(water, catchZone);
-        FishingGame game = new FishingGame(hook, population, catchDetector, lake, inventory, random);
+        FightFactory fightFactory = fish -> new Fight(fish, List.of(new PullPhase(random), new ControlPhase(random)));
+        FishingGame game = new FishingGame(hook, population, catchDetector, lake, inventory, fightFactory);
         FishingController controller = new FishingController(game);
         return new FishingView(game, controller);
     }
