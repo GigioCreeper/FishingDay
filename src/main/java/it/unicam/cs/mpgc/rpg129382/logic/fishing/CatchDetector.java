@@ -1,7 +1,7 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
-import it.unicam.cs.mpgc.rpg129382.model.Controllable;
+import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class CatchDetector {
         this.radius = radius;
     }
 
-    public Optional<Fish> findCatch(Controllable hook, List<Fish> fishes) {
+    public Optional<Fish> findCatch(Positioned hook, List<Fish> fishes) {
         Objects.requireNonNull(hook);
         Objects.requireNonNull(fishes);
         return fishes.stream()
@@ -25,7 +25,7 @@ public class CatchDetector {
                 .findFirst();
     }
 
-    private boolean isTouching(Controllable hook, Fish fish) {
+    private boolean isTouching(Positioned hook, Positioned fish) {
         double distance = Math.hypot(fish.getX() - hook.getX(), fish.getY() - hook.getY());
         return distance <= radius;
     }

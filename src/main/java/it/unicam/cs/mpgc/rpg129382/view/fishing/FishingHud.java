@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -14,16 +14,16 @@ final class FishingHud {
     private static final double Y = 50;
     private static final double LINE_HEIGHT = 40;
 
-    private final FishingGame game;
+    private final FishingState state;
 
-    FishingHud(FishingGame game) {
-        this.game = Objects.requireNonNull(game);
+    FishingHud(FishingState state) {
+        this.state = Objects.requireNonNull(state);
     }
 
     void draw(GraphicsContext gc) {
         gc.setFont(FONT);
-        drawLine(gc, "Pesci pescati: " + game.getInventory().totalCount(), Y);
-        if (game.isFishPulling()) {
+        drawLine(gc, "Pesci pescati: " + state.getInventoryCount(), Y);
+        if (state.isFishPulling()) {
             drawLine(gc, "Il pesce tira!", Y + LINE_HEIGHT);
         }
     }

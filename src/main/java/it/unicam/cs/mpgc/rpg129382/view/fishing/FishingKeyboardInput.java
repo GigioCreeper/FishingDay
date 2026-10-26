@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.controller.FishingController;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingCommands;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -9,11 +9,11 @@ import java.util.Objects;
 import java.util.Set;
 
 public class FishingKeyboardInput {
-    private final FishingController controller;
+    private final FishingCommands commands;
     private final Set<KeyCode> pressedKeys = EnumSet.noneOf(KeyCode.class);
 
-    public FishingKeyboardInput(FishingController controller) {
-        this.controller = Objects.requireNonNull(controller);
+    public FishingKeyboardInput(FishingCommands commands) {
+        this.commands = Objects.requireNonNull(commands);
     }
 
     public void onKeyPressed(KeyEvent event) {
@@ -27,7 +27,7 @@ public class FishingKeyboardInput {
     }
 
     private void updateDirection() {
-        controller.setDirection(
+        commands.setDirection(
                 axis(KeyCode.RIGHT, KeyCode.LEFT),
                 axis(KeyCode.DOWN, KeyCode.UP));
     }

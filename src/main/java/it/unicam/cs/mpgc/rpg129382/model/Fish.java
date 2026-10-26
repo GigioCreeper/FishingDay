@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.model;
 
 import java.util.Objects;
 
-public class Fish {
+public class Fish implements ReadOnlyFish, Movable {
     private final FishType type;
     private Heading heading;
     private double x;
@@ -16,14 +16,17 @@ public class Fish {
         this.y = y;
     }
 
+    @Override
     public FishType getType() {
         return type;
     }
 
+    @Override
     public Heading getHeading() {
         return heading;
     }
 
+    @Override
     public boolean isHooked() {
         return hooked;
     }
@@ -43,15 +46,18 @@ public class Fish {
         move(heading.sign() * type.speed() * deltaSeconds, 0);
     }
 
+    @Override
     public void move(double dx, double dy) {
         x += dx;
         y += dy;
     }
 
+    @Override
     public double getX() {
         return x;
     }
 
+    @Override
     public double getY() {
         return y;
     }

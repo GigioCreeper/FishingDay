@@ -1,18 +1,21 @@
 package it.unicam.cs.mpgc.rpg129382.view.utils;
 
-import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingView;
 import javafx.scene.image.Image;
 
+import java.net.URL;
 import java.util.Objects;
 
-
-/**
- * Utility class for loading images from resources.
- */
 public final class ImageLoader {
+
+    private ImageLoader() {
+    }
+
     public static Image loadImage(String path) {
-        return new Image(Objects.requireNonNull(
-                FishingView.class.getResourceAsStream(path),
-                "Immagine non trovata: " + path));
+        Objects.requireNonNull(path);
+        URL resource = ImageLoader.class.getResource(path);
+        if (resource == null) {
+            throw new IllegalArgumentException("Image not found: " + path);
+        }
+        return new Image(resource.toExternalForm());
     }
 }
