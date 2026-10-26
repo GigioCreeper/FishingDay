@@ -1,15 +1,15 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
+import it.unicam.cs.mpgc.rpg129382.view.utils.FontLoader;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.util.Objects;
 
 final class FishingHud {
-    private static final Font FONT = Font.font("Arial", FontWeight.BOLD, 32);
+    private static final Font FONT = FontLoader.loadFont("/fonts/PixelifySans.ttf", 32);
     private static final double X = 30;
     private static final double Y = 50;
     private static final double LINE_HEIGHT = 40;
