@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.logic.FishingCommands;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingCommands;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 

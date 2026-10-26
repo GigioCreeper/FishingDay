@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
+package it.unicam.cs.mpgc.rpg129382.logic.shop;
 
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.model.Player;

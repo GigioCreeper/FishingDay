@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 /**
  * Rules for spawning fish around the water.

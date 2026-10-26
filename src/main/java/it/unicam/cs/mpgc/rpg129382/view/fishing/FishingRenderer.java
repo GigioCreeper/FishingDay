@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
-import it.unicam.cs.mpgc.rpg129382.logic.FishingState;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;

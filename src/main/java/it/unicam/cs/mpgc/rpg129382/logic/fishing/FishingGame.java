@@ -1,7 +1,8 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.logic.fight.Fight;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.FightFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;

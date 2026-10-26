@@ -1,12 +1,12 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.ControlPhase;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.DurationRange;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.Fight;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.FightFactory;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.PullPhase;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.ControlPhase;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.PullPhase;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;

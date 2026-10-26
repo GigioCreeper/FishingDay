@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.logic.FishingGame;
-import it.unicam.cs.mpgc.rpg129382.logic.FishingGameFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingGame;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingGameFactory;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import javafx.scene.Parent;

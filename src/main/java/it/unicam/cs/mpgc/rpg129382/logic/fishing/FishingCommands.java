@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 /**
  * Commands that the player's input can send to a fishing session.

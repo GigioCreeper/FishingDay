@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic.fight;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing.fight;
 
 import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
