@@ -1,0 +1,61 @@
+package it.unicam.cs.mpgc.rpg129382.logic;
+
+import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
+import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.ControlPhase;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.Fight;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.FightFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.fight.PullPhase;
+import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.Hook;
+import it.unicam.cs.mpgc.rpg129382.model.Inventory;
+import it.unicam.cs.mpgc.rpg129382.model.Lake;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+
+/**
+ * Builds a fishing session from the values in {@link GameConfig} and {@link FishCatalog}.
+ */
+public final class FishingGameFactory {
+
+    private FishingGameFactory() {
+    }
+
+    public static FishingGame create(Inventory inventory, Random random) {
+        Objects.requireNonNull(inventory);
+        Objects.requireNonNull(random);
+        Lake lake = createLake();
+        Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
+        SpawnRules spawnRules = new SpawnRules(
+                GameConfig.FISH_SPAWN_MARGIN,
+                GameConfig.SPAWN_MIN_SECONDS,
+                GameConfig.SPAWN_MAX_SECONDS);
+        FishSpawner spawner = new FishSpawner(FishCatalog.all(), lake.water(), spawnRules, random);
+        FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
+        CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
+        return new FishingGame(hook, GameConfig.HOOK_SPEED, population, catchDetector,
+                lake, inventory, createFightFactory(random));
+    }
+
+    private static Lake createLake() {
+        Area water = new Area(0, GameConfig.WINDOW_WIDTH, GameConfig.WATER_TOP, GameConfig.WINDOW_HEIGHT);
+        Area catchZone = new Area(
+                GameConfig.CATCH_ZONE_LEFT,
+                GameConfig.CATCH_ZONE_RIGHT,
+                GameConfig.WATER_TOP,
+                GameConfig.CATCH_ZONE_BOTTOM);
+        return new Lake(water, catchZone);
+    }
+
+    private static FightFactory createFightFactory(Random random) {
+        PullPhase pull = new PullPhase(random,
+                new DurationRange(GameConfig.PULL_MIN_SECONDS, GameConfig.PULL_MAX_SECONDS));
+        ControlPhase control = new ControlPhase(random,
+                new DurationRange(GameConfig.CONTROL_MIN_SECONDS, GameConfig.CONTROL_MAX_SECONDS),
+                GameConfig.HOOKED_SPEED);
+        return fish -> new Fight(fish, List.of(pull, control));
+    }
+}

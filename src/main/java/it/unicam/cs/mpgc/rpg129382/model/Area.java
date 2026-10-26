@@ -1,6 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic;
-
-import it.unicam.cs.mpgc.rpg129382.model.Controllable;
+package it.unicam.cs.mpgc.rpg129382.model;
 
 public record Area(double left, double right, double top, double bottom) {
 
@@ -14,9 +12,11 @@ public record Area(double left, double right, double top, double bottom) {
         return x >= left && x <= right && y >= top && y <= bottom;
     }
 
-    public void keepInside(Controllable object) {
-        double x = Math.clamp(object.getX(), left, right);
-        double y = Math.clamp(object.getY(), top, bottom);
-        object.move(x - object.getX(), y - object.getY());
+    public double clampX(double x) {
+        return Math.clamp(x, left, right);
+    }
+
+    public double clampY(double y) {
+        return Math.clamp(y, top, bottom);
     }
 }

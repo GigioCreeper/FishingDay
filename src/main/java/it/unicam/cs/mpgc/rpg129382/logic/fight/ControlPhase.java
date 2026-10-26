@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fight;
 
-import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
+import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
 
@@ -9,14 +9,21 @@ import java.util.Random;
 
 public final class ControlPhase implements FightPhase {
     private final Random random;
+    private final DurationRange durations;
+    private final double hookedSpeed;
 
-    public ControlPhase(Random random) {
+    public ControlPhase(Random random, DurationRange durations, double hookedSpeed) {
+        if (hookedSpeed <= 0) {
+            throw new IllegalArgumentException("hookedSpeed must be positive");
+        }
         this.random = Objects.requireNonNull(random);
+        this.durations = Objects.requireNonNull(durations);
+        this.hookedSpeed = hookedSpeed;
     }
 
     @Override
-    public boolean playerControls() {
-        return true;
+    public boolean isFishPulling() {
+        return false;
     }
 
     @Override
@@ -25,12 +32,8 @@ public final class ControlPhase implements FightPhase {
     }
 
     @Override
-    public double duration() {
-        return random.nextDouble(GameConfig.CONTROL_MIN_SECONDS, GameConfig.CONTROL_MAX_SECONDS);
-    }
-
-    @Override
-    public void enter(Fish fish) {
+    public double nextDuration() {
+        return durations.next(random);
     }
 
     @Override
@@ -40,7 +43,7 @@ public final class ControlPhase implements FightPhase {
         } else if (directionX < 0) {
             fish.face(Heading.LEFT);
         }
-        double distance = GameConfig.HOOKED_SPEED * delta;
+        double distance = hookedSpeed * delta;
         return new Displacement(directionX * distance, directionY * distance);
     }
 }

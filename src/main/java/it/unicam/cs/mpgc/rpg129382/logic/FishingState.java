@@ -1,7 +1,8 @@
 package it.unicam.cs.mpgc.rpg129382.logic;
 
-import it.unicam.cs.mpgc.rpg129382.model.Fish;
+import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Positioned;
+import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface FishingState {
 
     Positioned getHook();
 
-    List<Fish> getFishes();
+    List<? extends ReadOnlyFish> getFishes();
 
     Area getCatchZone();
 

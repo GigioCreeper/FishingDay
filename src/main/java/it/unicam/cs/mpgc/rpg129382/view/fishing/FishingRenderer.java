@@ -1,12 +1,11 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
-import it.unicam.cs.mpgc.rpg129382.logic.Area;
 import it.unicam.cs.mpgc.rpg129382.logic.FishingState;
-import it.unicam.cs.mpgc.rpg129382.model.Fish;
+import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
+import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 import it.unicam.cs.mpgc.rpg129382.view.utils.ImageLoader;
-import it.unicam.cs.mpgc.rpg129382.view.utils.SpriteSheet;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -15,27 +14,26 @@ import java.util.Objects;
 
 final class FishingRenderer {
     private static final double FISH_DRAW_WIDTH = 120;
-    private static final boolean SHOW_CATCH_ZONE = true;
 
     private final FishingState state;
+    private final boolean showCatchZone;
     private final Image background;
     private final Image hookImage;
-    private final SpriteSheet fishSprite;
-    private final SpriteSheet hookedFishSprite;
+    private final FishSprites fishSprites;
     private final FishingHud hud;
 
-    FishingRenderer(FishingState state) {
+    FishingRenderer(FishingState state, boolean showCatchZone) {
         this.state = Objects.requireNonNull(state);
+        this.showCatchZone = showCatchZone;
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
-        this.fishSprite = new SpriteSheet(ImageLoader.loadImage("/images/trout.png"), 2, 2);
-        this.hookedFishSprite = new SpriteSheet(ImageLoader.loadImage("/images/hookedTrout.png"), 2, 2);
+        this.fishSprites = new FishSprites();
         this.hud = new FishingHud(state);
     }
 
     void draw(GraphicsContext gc) {
         gc.drawImage(background, 0, 0, GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
-        if (SHOW_CATCH_ZONE) {
+        if (showCatchZone) {
             drawCatchZone(gc);
         }
         drawFishes(gc);
@@ -50,9 +48,8 @@ final class FishingRenderer {
     }
 
     private void drawFishes(GraphicsContext gc) {
-        for (Fish fish : state.getFishes()) {
-            SpriteSheet sprite = fish.isHooked() ? hookedFishSprite : fishSprite;
-            sprite.drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
+        for (ReadOnlyFish fish : state.getFishes()) {
+            fishSprites.spriteFor(fish).drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
                     fish.getHeading() == Heading.LEFT);
         }
     }

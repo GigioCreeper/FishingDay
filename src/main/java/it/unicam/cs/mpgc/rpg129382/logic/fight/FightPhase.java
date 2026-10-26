@@ -1,17 +1,19 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fight;
 
+import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 
 /**
  * A phase of a fight between the player and a hooked fish.
- * Each phase defines its own duration and how the hook moves while it lasts.
+ * Each phase is a strategy that defines its own duration and how the hook moves while it lasts;
+ * the {@link Fight} decides when to move on to the next one.
  */
 public interface FightPhase {
 
     /**
-     * @return true if the player's input moves the hook during this phase.
+     * @return true if the fish is pulling the hook and the player has no control over it.
      */
-    boolean playerControls();
+    boolean isFishPulling();
 
     /**
      * @return true if the hook must be kept inside the water during this phase.
@@ -19,15 +21,16 @@ public interface FightPhase {
     boolean keepsHookInWater();
 
     /**
-     * @return how long this phase lasts, in seconds.
+     * @return a new duration for this phase, in seconds.
      */
-    double duration();
+    double nextDuration();
 
     /**
      * Called once when the fight enters this phase.
      * @param fish the hooked fish.
      */
-    void enter(Fish fish);
+    default void enter(Fish fish) {
+    }
 
     /**
      * Advances the phase by one tick.

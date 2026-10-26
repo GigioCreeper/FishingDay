@@ -1,19 +1,22 @@
 package it.unicam.cs.mpgc.rpg129382.logic;
 
-import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
-import it.unicam.cs.mpgc.rpg129382.logic.fight.Displacement;
 import it.unicam.cs.mpgc.rpg129382.logic.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fight.FightFactory;
-import it.unicam.cs.mpgc.rpg129382.model.Controllable;
+import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
+import it.unicam.cs.mpgc.rpg129382.model.Lake;
+import it.unicam.cs.mpgc.rpg129382.model.Movable;
 import it.unicam.cs.mpgc.rpg129382.model.Positioned;
+import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
 import java.util.List;
 import java.util.Objects;
 
-public class FishingGame implements FishingState, FishingCommands {
-    private final Controllable hook;
+public class FishingGame implements FishingState, FishingCommands, Updatable {
+    private final Movable hook;
+    private final double hookSpeed;
     private final FishPopulation population;
     private final CatchDetector catchDetector;
     private final Lake lake;
@@ -23,9 +26,13 @@ public class FishingGame implements FishingState, FishingCommands {
     private double directionX;
     private double directionY;
 
-    public FishingGame(Controllable hook, FishPopulation population, CatchDetector catchDetector,
+    public FishingGame(Movable hook, double hookSpeed, FishPopulation population, CatchDetector catchDetector,
                        Lake lake, Inventory inventory, FightFactory fightFactory) {
+        if (hookSpeed <= 0) {
+            throw new IllegalArgumentException("hookSpeed must be positive");
+        }
         this.hook = Objects.requireNonNull(hook);
+        this.hookSpeed = hookSpeed;
         this.population = Objects.requireNonNull(population);
         this.catchDetector = Objects.requireNonNull(catchDetector);
         this.lake = Objects.requireNonNull(lake);
@@ -39,7 +46,7 @@ public class FishingGame implements FishingState, FishingCommands {
     }
 
     @Override
-    public List<Fish> getFishes() {
+    public List<? extends ReadOnlyFish> getFishes() {
         return population.getFishes();
     }
 
@@ -55,7 +62,7 @@ public class FishingGame implements FishingState, FishingCommands {
 
     @Override
     public boolean isFishPulling() {
-        return fight != null && !fight.playerControls();
+        return fight != null && fight.isFishPulling();
     }
 
     @Override
@@ -74,7 +81,6 @@ public class FishingGame implements FishingState, FishingCommands {
         moveHook(delta);
         population.update(delta);
         updateFight(delta);
-        collectFishInCatchZone();
     }
 
     private void moveHook(double delta) {
@@ -90,24 +96,25 @@ public class FishingGame implements FishingState, FishingCommands {
     }
 
     private void moveFreeHook(double delta) {
-        double distance = GameConfig.HOOK_SPEED * delta;
+        double distance = hookSpeed * delta;
         hook.move(directionX * distance, directionY * distance);
         keepHookInWater();
     }
 
     private void keepHookInWater() {
-        lake.water().keepInside(hook);
+        Area water = lake.water();
+        hook.move(water.clampX(hook.getX()) - hook.getX(), water.clampY(hook.getY()) - hook.getY());
     }
 
     private void updateFight(double delta) {
         if (fight == null) {
             catchDetector.findCatch(hook, population.getFishes()).ifPresent(this::startFight);
-            return;
+        } else {
+            fight.update(delta);
+            attachToHook(fight.getFish());
         }
-        fight.update(delta);
-        attachToHook(fight.getFish());
-        if (hasHookLeftWater()) {
-            breakLine();
+        if (fight != null) {
+            resolveFight();
         }
     }
 
@@ -121,25 +128,23 @@ public class FishingGame implements FishingState, FishingCommands {
         fish.move(hook.getX() - fish.getX(), hook.getY() - fish.getY());
     }
 
-    private boolean hasHookLeftWater() {
-        return !lake.water().contains(hook.getX(), hook.getY());
+    private void resolveFight() {
+        switch (fight.outcome(hook, lake)) {
+            case CAUGHT -> {
+                inventory.add(fight.getFish().getType());
+                endFight();
+            }
+            case LINE_BROKEN -> {
+                endFight();
+                keepHookInWater();
+            }
+            case ONGOING -> {
+            }
+        }
     }
 
-    private void breakLine() {
+    private void endFight() {
         population.remove(fight.getFish());
         fight = null;
-        keepHookInWater();
-    }
-
-    private void collectFishInCatchZone() {
-        if (fight == null) {
-            return;
-        }
-        Fish fish = fight.getFish();
-        if (lake.catchZone().contains(fish.getX(), fish.getY())) {
-            inventory.add(fish.getType());
-            population.remove(fish);
-            fight = null;
-        }
     }
 }

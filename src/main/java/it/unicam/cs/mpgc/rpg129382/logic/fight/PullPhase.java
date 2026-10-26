@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fight;
 
-import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
+import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
 
@@ -12,14 +12,16 @@ public final class PullPhase implements FightPhase {
     private static final double PULL_Y = 0.6;
 
     private final Random random;
+    private final DurationRange durations;
 
-    public PullPhase(Random random) {
+    public PullPhase(Random random, DurationRange durations) {
         this.random = Objects.requireNonNull(random);
+        this.durations = Objects.requireNonNull(durations);
     }
 
     @Override
-    public boolean playerControls() {
-        return false;
+    public boolean isFishPulling() {
+        return true;
     }
 
     @Override
@@ -28,8 +30,8 @@ public final class PullPhase implements FightPhase {
     }
 
     @Override
-    public double duration() {
-        return random.nextDouble(GameConfig.PULL_MIN_SECONDS, GameConfig.PULL_MAX_SECONDS);
+    public double nextDuration() {
+        return durations.next(random);
     }
 
     @Override
