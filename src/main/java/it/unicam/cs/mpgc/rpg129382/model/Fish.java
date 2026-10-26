@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.model;
 
 import java.util.Objects;
 
-public class Fish {
+public class Fish implements Positioned{
     private final FishType type;
     private Heading heading;
     private double x;
@@ -47,11 +47,12 @@ public class Fish {
         x += dx;
         y += dy;
     }
-
+    @Override
     public double getX() {
         return x;
     }
 
+    @Override
     public double getY() {
         return y;
     }

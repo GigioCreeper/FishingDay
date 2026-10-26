@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.model.Controllable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
+import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +31,7 @@ public class FishingGame {
         this.random = Objects.requireNonNull(random);
     }
 
-    public Controllable getHook() {
+    public Positioned getHook() {
         return hook;
     }
 
