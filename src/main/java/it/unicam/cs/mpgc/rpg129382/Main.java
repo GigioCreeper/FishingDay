@@ -5,18 +5,25 @@ import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.menu.MainMenuScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.StageNavigator;
+import it.unicam.cs.mpgc.rpg129382.view.window.FullScreenToggle;
 import javafx.application.Application;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
         StageNavigator navigator = new StageNavigator(stage);
         Player player = new Player();
-        navigator.register(GameScreen.MAIN_MENU,new MainMenuScreenFactory(navigator));
+        navigator.register(GameScreen.MAIN_MENU, new MainMenuScreenFactory(navigator));
         navigator.register(GameScreen.FISHING, new FishingScreenFactory(player.getInventory()));
 
         stage.setTitle("Fishing Day");
+        stage.setResizable(false);
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, new FullScreenToggle(stage, KeyCode.F11));
+
         navigator.navigateTo(GameScreen.MAIN_MENU);
         stage.show();
     }
