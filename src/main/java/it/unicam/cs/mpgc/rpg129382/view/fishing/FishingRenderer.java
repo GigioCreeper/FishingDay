@@ -28,6 +28,11 @@ final class FishingRenderer {
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.fishSprites = new FishSprites();
+        fishSprites.register("perch", "perch");
+        fishSprites.register("trout", "trout");
+        fishSprites.register("pike", "pike");
+        fishSprites.register("bass", "bass");
+        fishSprites.register("chub", "chub");
         this.hud = new FishingHud(state);
     }
 

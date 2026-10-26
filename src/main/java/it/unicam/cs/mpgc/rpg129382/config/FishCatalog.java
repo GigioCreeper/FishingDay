@@ -6,9 +6,11 @@ import java.util.List;
 
 public final class FishCatalog {
     private static final List<FishType> TYPES = List.of(
-            new FishType("Persico", 5, 60, 50),
-            new FishType("Trota", 10, 80, 80),
-            new FishType("Luccio", 25, 110, 120));
+            new FishType("perch", 5, 60, 50),
+            new FishType("trout", 10, 80, 80),
+            new FishType("pike", 25, 110, 120),
+            new FishType("bass", 30, 100, 100),
+            new FishType("chub", 15, 90, 70));
 
     private FishCatalog() {
     }

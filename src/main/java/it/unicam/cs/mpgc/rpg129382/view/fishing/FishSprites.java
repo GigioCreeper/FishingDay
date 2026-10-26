@@ -31,7 +31,11 @@ final class FishSprites {
 
     private static Sprites load(String imageName) {
         String hookedName = "hooked" + Character.toUpperCase(imageName.charAt(0)) + imageName.substring(1);
-        return new Sprites(sheet(imageName), sheet(hookedName));
+        SpriteSheet swimming = sheet(imageName);
+        SpriteSheet hooked = ImageLoader.findImage("/images/" + hookedName + ".png")
+                .map(img -> new SpriteSheet(img, 2, 2))
+                .orElse(swimming);
+        return new Sprites(swimming, hooked);
     }
 
     private static SpriteSheet sheet(String imageName) {
