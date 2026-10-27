@@ -15,7 +15,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public final class FishingScreenFactory implements ScreenFactory {
-    private static final KeyCode SHOP_KEY = KeyCode.B;
+    private static final KeyCode SHOP_KEY = KeyCode.N;
+    private static final KeyCode MENU_KEY = KeyCode.ESCAPE;
 
     private final Player player;
     private final ScreenNavigator navigator;
@@ -34,6 +35,7 @@ public final class FishingScreenFactory implements ScreenFactory {
         FishingGame game = FishingGameFactory.create(player, new Random());
         FishingView view = new FishingView(game, game, game);
         view.addEventHandler(KeyEvent.KEY_PRESSED, new NavigationShortcut(SHOP_KEY, navigator, GameScreen.SHOP));
+        view.addEventHandler(KeyEvent.KEY_PRESSED, new NavigationShortcut(MENU_KEY, navigator, GameScreen.MAIN_MENU));
         return view;
     }
 }

@@ -11,6 +11,7 @@ import it.unicam.cs.mpgc.rpg129382.view.shop.ShopScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.window.FullScreenToggle;
 import javafx.application.Application;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -28,7 +29,7 @@ public class Main extends Application {
         stage.setTitle("Fishing Day");
         stage.setResizable(false);
         stage.addEventFilter(KeyEvent.KEY_PRESSED, new FullScreenToggle(stage, KeyCode.F11));
-
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         navigator.navigateTo(GameScreen.MAIN_MENU);
         stage.show();
     }
