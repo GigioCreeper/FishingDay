@@ -1,0 +1,69 @@
+/* Shop screen: fonts and .main-button come from MainMenu.css. */
+.shop {
+    -fx-background-image: url("/images/shop/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-spacing: 14;
+}
+
+.shop-title {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 48px;
+    -fx-text-fill: #f2c14e;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 6, 0.5, 0, 2);
+}
+
+.shop-money {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 32px;
+    -fx-text-fill: #f2c14e;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 6, 0.5, 0, 2);
+}
+
+.shop-label {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 24px;
+    -fx-text-fill: #f8ecd4;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 6, 0.5, 0, 2);
+}
+
+/* Keeps its height even when empty, so the layout does not jump. */
+.shop-message {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 24px;
+    -fx-text-fill: #f2c14e;
+    -fx-min-height: 32px;
+}
+
+.rod-card {
+    -fx-alignment: center;
+    -fx-spacing: 6;
+    -fx-padding: 16;
+    -fx-pref-width: 300px;
+    -fx-background-color: #3b2412, rgba(43, 26, 12, 0.88);
+    -fx-background-insets: 0, 3;
+    -fx-background-radius: 14, 11;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 12, 0.3, 0, 4);
+}
+
+.rod-name {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 28px;
+    -fx-text-fill: #f8ecd4;
+}
+
+.rod-detail {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 20px;
+    -fx-text-fill: #d9c6a5;
+}
+.rod-card.equipped {
+    -fx-background-color: #f2c14e, #3b2412, rgba(43, 26, 12, 0.88);
+    -fx-background-insets: -3, 0, 3;
+    -fx-background-radius: 16, 14, 11;
+}
+
+/* Rods that need previous upgrades are dimmed. */
+.rod-card.locked {
+    -fx-opacity: 0.5;
+}

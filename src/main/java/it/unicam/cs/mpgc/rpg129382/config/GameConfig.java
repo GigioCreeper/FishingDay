@@ -29,7 +29,7 @@ public final class GameConfig {
     public static final double PULL_MAX_SECONDS = 2.5;
     public static final double CONTROL_MIN_SECONDS = 1.5;
     public static final double CONTROL_MAX_SECONDS = 3;
-
+    public static final int LINE_BROKEN_PENALTY = 10;
     private GameConfig() {
     }
 }

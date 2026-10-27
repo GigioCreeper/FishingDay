@@ -6,9 +6,9 @@ import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
-import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
 import it.unicam.cs.mpgc.rpg129382.model.Movable;
+import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
@@ -21,24 +21,29 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private final FishPopulation population;
     private final CatchDetector catchDetector;
     private final Lake lake;
-    private final Inventory inventory;
+    private final Player player;
     private final FightFactory fightFactory;
+    private final int lineBrokenPenalty;
     private Fight fight;
     private double directionX;
     private double directionY;
 
     public FishingGame(Movable hook, double hookSpeed, FishPopulation population, CatchDetector catchDetector,
-                       Lake lake, Inventory inventory, FightFactory fightFactory) {
+                       Lake lake, Player player, FightFactory fightFactory, int lineBrokenPenalty) {
         if (hookSpeed <= 0) {
             throw new IllegalArgumentException("hookSpeed must be positive");
+        }
+        if (lineBrokenPenalty < 0) {
+            throw new IllegalArgumentException("lineBrokenPenalty must not be negative");
         }
         this.hook = Objects.requireNonNull(hook);
         this.hookSpeed = hookSpeed;
         this.population = Objects.requireNonNull(population);
         this.catchDetector = Objects.requireNonNull(catchDetector);
         this.lake = Objects.requireNonNull(lake);
-        this.inventory = Objects.requireNonNull(inventory);
+        this.player = Objects.requireNonNull(player);
         this.fightFactory = Objects.requireNonNull(fightFactory);
+        this.lineBrokenPenalty = lineBrokenPenalty;
     }
 
     @Override
@@ -68,7 +73,12 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
 
     @Override
     public int getInventoryCount() {
-        return inventory.totalCount();
+        return player.getInventory().totalCount();
+    }
+
+    @Override
+    public int getMoney() {
+        return player.getMoney();
     }
 
     @Override
@@ -132,16 +142,21 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private void resolveFight() {
         switch (fight.outcome(hook, lake)) {
             case CAUGHT -> {
-                inventory.add(fight.getFish().getType());
+                player.getInventory().add(fight.getFish().getType());
                 endFight();
             }
             case LINE_BROKEN -> {
                 endFight();
+                payLineBrokenPenalty();
                 keepHookInWater();
             }
             case ONGOING -> {
             }
         }
+    }
+
+    private void payLineBrokenPenalty() {
+        player.spend(Math.min(lineBrokenPenalty, player.getMoney()));
     }
 
     private void endFight() {
