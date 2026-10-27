@@ -1,11 +1,34 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
+import java.util.Objects;
+
 public class Player {
     private final Inventory inventory = new Inventory();
+    private Rod rod;
     private int money;
+
+    /**
+     * Creates a new player.
+     * @param startingRod the rod the player starts with.
+     */
+    public Player(Rod startingRod) {
+        this.rod = Objects.requireNonNull(startingRod);
+    }
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public Rod getRod() {
+        return rod;
+    }
+
+    /**
+     * Replaces the rod the player is using.
+     * @param rod the new rod.
+     */
+    public void equip(Rod rod) {
+        this.rod = Objects.requireNonNull(rod);
     }
 
     public int getMoney() {
