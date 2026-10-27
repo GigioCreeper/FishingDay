@@ -1,0 +1,25 @@
+/* Shop screen: fonts and .main-button come from MainMenu.css. */
+.shop {
+    -fx-background-color: linear-gradient(to bottom, #2b4a5e, #16303f);
+    -fx-spacing: 16;
+}
+
+.shop-title {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 48px;
+    -fx-text-fill: #f2c14e;
+    -fx-padding: 0 0 16 0;
+}
+
+.shop-label {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 24px;
+    -fx-text-fill: #f8ecd4;
+}
+
+.shop-message {
+    -fx-font-family: "Pixelify Sans";
+    -fx-font-size: 24px;
+    -fx-text-fill: #f2c14e;
+    -fx-min-height: 32px;
+}
