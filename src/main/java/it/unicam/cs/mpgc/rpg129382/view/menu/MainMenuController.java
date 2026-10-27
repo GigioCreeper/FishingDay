@@ -2,7 +2,9 @@ package it.unicam.cs.mpgc.rpg129382.view.menu;
 
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+
 import java.util.Objects;
 
 public class MainMenuController {
@@ -16,9 +18,9 @@ public class MainMenuController {
     private void onPlayButtonClicked() {
         screenNavigator.navigateTo(GameScreen.FISHING);
     }
+
     @FXML
-    private void onAudioButtonClicked() {
-        System.out.println("Audio button clicked");
-        //TODO: Implement audio settings functionality
+    private void onExitButtonClicked() {
+        Platform.exit();
     }
 }
