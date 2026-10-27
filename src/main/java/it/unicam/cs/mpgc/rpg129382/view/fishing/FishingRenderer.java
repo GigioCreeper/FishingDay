@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
@@ -14,6 +15,7 @@ import java.util.Objects;
 
 final class FishingRenderer {
     private static final double FISH_DRAW_WIDTH = 120;
+    private static final int PIXELS_PER_FRAME = 25;
 
     private final FishingState state;
     private final boolean showCatchZone;
@@ -28,6 +30,11 @@ final class FishingRenderer {
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.fishSprites = new FishSprites();
+        fishSprites.register(FishCatalog.PERCH, "perch");
+        fishSprites.register(FishCatalog.TROUT, "trout");
+        fishSprites.register(FishCatalog.PIKE, "pike");
+        fishSprites.register(FishCatalog.BASS, "bass");
+        fishSprites.register(FishCatalog.CHUB, "chub");
         this.hud = new FishingHud(state);
     }
 
@@ -49,7 +56,7 @@ final class FishingRenderer {
 
     private void drawFishes(GraphicsContext gc) {
         for (ReadOnlyFish fish : state.getFishes()) {
-            fishSprites.spriteFor(fish).drawFrame(gc, 0, fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
+            fishSprites.spriteFor(fish).drawFrame(gc, frameFor(fish), fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
                     fish.getHeading() == Heading.LEFT);
         }
     }
@@ -61,5 +68,9 @@ final class FishingRenderer {
         gc.drawImage(hookImage,
                 state.getHook().getX() - hookImage.getWidth() / 2,
                 state.getHook().getY() - hookImage.getHeight() / 2);
+    }
+
+    private int frameFor(ReadOnlyFish fish) {
+        return (int) (fish.getX() / PIXELS_PER_FRAME);
     }
 }

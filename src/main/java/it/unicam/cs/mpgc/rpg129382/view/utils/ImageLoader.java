@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class ImageLoader {
 
@@ -11,11 +12,15 @@ public final class ImageLoader {
     }
 
     public static Image loadImage(String path) {
+        return findImage(path).orElseThrow(() -> new IllegalArgumentException("Image not found: " + path));
+    }
+
+    public static Optional<Image> findImage(String path) {
         Objects.requireNonNull(path);
         URL resource = ImageLoader.class.getResource(path);
         if (resource == null) {
-            throw new IllegalArgumentException("Image not found: " + path);
+            return Optional.empty();
         }
-        return new Image(resource.toExternalForm());
+        return Optional.of(new Image(resource.toExternalForm()));
     }
 }

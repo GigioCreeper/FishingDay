@@ -25,9 +25,11 @@ public final class SpriteSheet {
 
     public void drawFrame(GraphicsContext gc, int frame, double centerX, double centerY,
                           double width, boolean flipped) {
-        int index = frame % (columns * rows);
-        double sourceX = (index % columns) * frameWidth;
-        double sourceY = (index / columns) * frameHeight;
+        int index = Math.floorMod(frame, columns * rows);
+        int column = index % columns;
+        int row = index / columns;
+        double sourceX = column * frameWidth;
+        double sourceY = row * frameHeight;
         double height = width * frameHeight / frameWidth;
 
         gc.save();
