@@ -22,4 +22,6 @@ public interface FishingState {
     boolean isFishPulling();
 
     int getInventoryCount();
+
+    int getMoney();
 }

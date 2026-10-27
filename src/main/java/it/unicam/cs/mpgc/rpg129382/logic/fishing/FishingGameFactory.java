@@ -9,9 +9,8 @@ import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.PullPhase;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
-import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
-import it.unicam.cs.mpgc.rpg129382.model.Rod;
+import it.unicam.cs.mpgc.rpg129382.model.Player;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,9 +25,8 @@ public final class FishingGameFactory {
     private FishingGameFactory() {
     }
 
-    public static FishingGame create(Inventory inventory, Rod rod, Random random) {
-        Objects.requireNonNull(inventory);
-        Objects.requireNonNull(rod);
+    public static FishingGame create(Player player, Random random) {
+        Objects.requireNonNull(player);
         Objects.requireNonNull(random);
         Lake lake = createLake();
         Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
@@ -40,7 +38,8 @@ public final class FishingGameFactory {
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
         return new FishingGame(hook, GameConfig.HOOK_SPEED, population, catchDetector,
-                lake, inventory, createFightFactory(random, rod.power()));
+                lake, player, createFightFactory(random, player.getRod().power()),
+                GameConfig.LINE_BROKEN_PENALTY);
     }
 
     private static Lake createLake() {

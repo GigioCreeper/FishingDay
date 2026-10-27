@@ -7,33 +7,41 @@ import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.model.Rod;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
+import it.unicam.cs.mpgc.rpg129382.view.utils.ImageLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
- * Connects the shop screen to the shop rules and keeps its labels up to date.
+ * Connects the shop screen to the shop rules and keeps it up to date.
  */
 public final class ShopController {
+    private static final String COIN_IMAGE = "/images/shop/coin.png";
+
     private final Shop shop;
     private final Player player;
     private final ScreenNavigator navigator;
+    private final Map<Rod, RodCard> rodCards = new LinkedHashMap<>();
 
+    @FXML
+    private ImageView moneyIcon;
     @FXML
     private Label moneyLabel;
     @FXML
     private Label catchLabel;
     @FXML
-    private Button sellButton;
-    @FXML
-    private Label rodLabel;
-    @FXML
-    private Button upgradeButton;
+    private HBox rodCardsBox;
     @FXML
     private Label messageLabel;
+    @FXML
+    private Button sellButton;
 
     /**
      * Creates a new ShopController.
@@ -49,6 +57,13 @@ public final class ShopController {
 
     @FXML
     private void initialize() {
+        Image coin = ImageLoader.loadImage(COIN_IMAGE);
+        moneyIcon.setImage(coin);
+        for (Rod rod : shop.rods()) {
+            RodCard card = new RodCard(rod, coin, this::buyNextRod);
+            rodCards.put(rod, card);
+            rodCardsBox.getChildren().add(card);
+        }
         refresh();
     }
 
@@ -60,28 +75,21 @@ public final class ShopController {
     }
 
     @FXML
-    private void onUpgradeClicked() {
-        messageLabel.setText(describe(shop.buyNextRod(player)));
-        refresh();
-    }
-
-    @FXML
     private void onBackClicked() {
         navigator.navigateTo(GameScreen.FISHING);
     }
 
+    private void buyNextRod() {
+        messageLabel.setText(describe(shop.buyNextRod(player)));
+        refresh();
+    }
+
     private void refresh() {
         Inventory inventory = player.getInventory();
-        moneyLabel.setText("Monete: " + player.getMoney());
+        moneyLabel.setText(String.valueOf(player.getMoney()));
         catchLabel.setText("Pescato: " + inventory.totalCount() + " pesci (" + inventory.totalValue() + " monete)");
         sellButton.setDisable(inventory.totalCount() == 0);
-
-        String currentRod = "Canna: " + player.getRod().name();
-        Optional<Rod> next = shop.nextRod(player);
-        rodLabel.setText(next.map(rod -> currentRod + " - prossima: " + rod.name())
-                .orElse(currentRod + " (livello massimo)"));
-        upgradeButton.setText(next.map(rod -> "Compra (" + rod.price() + ")").orElse("Al massimo"));
-        upgradeButton.setDisable(next.isEmpty());
+        rodCards.forEach((rod, card) -> card.show(shop.statusOf(rod, player)));
     }
 
     private String describe(PurchaseResult result) {

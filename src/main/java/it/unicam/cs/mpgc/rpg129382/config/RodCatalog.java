@@ -9,12 +9,20 @@ import java.util.Optional;
  * The rods the player can own, ordered from the starting one to the best one.
  */
 public final class RodCatalog {
-    public static final Rod BAMBOO = new Rod("bamboo", 0, 75);
-    public static final Rod FIBERGLASS = new Rod("fiberglass", 120, 110);
-    public static final Rod CARBON = new Rod("carbon", 350, 200);
+    public static final Rod BAMBOO = new Rod("Bamboo", 0, 75);
+    public static final Rod FIBERGLASS = new Rod("Fiberglass", 120, 110);
+    public static final Rod CARBON = new Rod("Carbon", 350, 200);
+
     private static final List<Rod> LEVELS = List.of(BAMBOO, FIBERGLASS, CARBON);
 
     private RodCatalog() {}
+
+    /**
+     * @return every rod, from the starting one to the best one.
+     */
+    public static List<Rod> all() {
+        return LEVELS;
+    }
 
     /**
      * @return the rod the player starts with.

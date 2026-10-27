@@ -22,13 +22,15 @@ final class FishingHud {
 
     void draw(GraphicsContext gc) {
         gc.setFont(FONT);
-        drawLine(gc, "Pesci pescati: " + state.getInventoryCount(), Y);
+        drawLine(gc, "Pesci pescati: " + state.getInventoryCount(), 0);
+        drawLine(gc, "Monete: " + state.getMoney(), 1);
         if (state.isFishPulling()) {
-            drawLine(gc, "Il pesce tira!", Y + LINE_HEIGHT);
+            drawLine(gc, "Il pesce tira!", 2);
         }
     }
 
-    private void drawLine(GraphicsContext gc, String text, double y) {
+    private void drawLine(GraphicsContext gc, String text, int line) {
+        double y = Y + line * LINE_HEIGHT;
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(4);
         gc.strokeText(text, X, y);

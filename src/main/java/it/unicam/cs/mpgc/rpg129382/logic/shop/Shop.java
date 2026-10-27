@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.model.Rod;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -25,6 +26,38 @@ public final class Shop {
         inventory.clear();
         player.addMoney(total);
         return total;
+    }
+
+    /**
+     * @return every rod sold by the shop, from the starting one to the best one.
+     */
+    public List<Rod> rods() {
+        return RodCatalog.all();
+    }
+
+    /**
+     * @param rod a rod of the catalog.
+     * @param player the player who looks at it.
+     * @return how the rod relates to what the player owns.
+     * @throws IllegalArgumentException if the rod is not in the catalog.
+     */
+    public RodStatus statusOf(Rod rod, Player player) {
+        Objects.requireNonNull(player);
+        int rodLevel = rods().indexOf(Objects.requireNonNull(rod));
+        if (rodLevel < 0) {
+            throw new IllegalArgumentException("Unknown rod: " + rod);
+        }
+        int currentLevel = rods().indexOf(player.getRod());
+        if (rodLevel == currentLevel) {
+            return RodStatus.EQUIPPED;
+        }
+        if (rodLevel < currentLevel) {
+            return RodStatus.OWNED;
+        }
+        if (rodLevel == currentLevel + 1) {
+            return RodStatus.AVAILABLE;
+        }
+        return RodStatus.LOCKED;
     }
 
     /**
