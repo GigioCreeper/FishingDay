@@ -11,21 +11,24 @@ import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import it.unicam.cs.mpgc.rpg129382.model.Inventory;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
+import it.unicam.cs.mpgc.rpg129382.model.Rod;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
 /**
- * Builds a fishing session from the values in {@link GameConfig} and {@link FishCatalog}.
+ * Builds a fishing session from the values in {@link GameConfig} and {@link FishCatalog}
+ * and the rod the player is using.
  */
 public final class FishingGameFactory {
 
     private FishingGameFactory() {
     }
 
-    public static FishingGame create(Inventory inventory, Random random) {
+    public static FishingGame create(Inventory inventory, Rod rod, Random random) {
         Objects.requireNonNull(inventory);
+        Objects.requireNonNull(rod);
         Objects.requireNonNull(random);
         Lake lake = createLake();
         Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
@@ -37,7 +40,7 @@ public final class FishingGameFactory {
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
         return new FishingGame(hook, GameConfig.HOOK_SPEED, population, catchDetector,
-                lake, inventory, createFightFactory(random));
+                lake, inventory, createFightFactory(random, rod.power()));
     }
 
     private static Lake createLake() {
@@ -50,9 +53,10 @@ public final class FishingGameFactory {
         return new Lake(water, catchZone);
     }
 
-    private static FightFactory createFightFactory(Random random) {
+    private static FightFactory createFightFactory(Random random, double rodPower) {
         PullPhase pull = new PullPhase(random,
-                new DurationRange(GameConfig.PULL_MIN_SECONDS, GameConfig.PULL_MAX_SECONDS));
+                new DurationRange(GameConfig.PULL_MIN_SECONDS, GameConfig.PULL_MAX_SECONDS),
+                rodPower);
         ControlPhase control = new ControlPhase(random,
                 new DurationRange(GameConfig.CONTROL_MIN_SECONDS, GameConfig.CONTROL_MAX_SECONDS),
                 GameConfig.HOOKED_SPEED);

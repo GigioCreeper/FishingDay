@@ -19,7 +19,7 @@ public class Main extends Application {
         StageNavigator navigator = new StageNavigator(stage);
         Player player = new Player(RodCatalog.starter());
         navigator.register(GameScreen.MAIN_MENU, new MainMenuScreenFactory(navigator));
-        navigator.register(GameScreen.FISHING, new FishingScreenFactory(player.getInventory()));
+        navigator.register(GameScreen.FISHING, new FishingScreenFactory(player));
 
         stage.setTitle("Fishing Day");
         stage.setResizable(false);

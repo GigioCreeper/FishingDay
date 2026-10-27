@@ -10,8 +10,8 @@ import java.util.Optional;
  */
 public final class RodCatalog {
     public static final Rod BAMBOO = new Rod("bamboo", 0, 75);
-    public static final Rod FIBERGLASS = new Rod("fiberglass", 120, 100);
-    public static final Rod CARBON = new Rod("carbon", 350, 130);
+    public static final Rod FIBERGLASS = new Rod("fiberglass", 120, 110);
+    public static final Rod CARBON = new Rod("carbon", 350, 200);
     private static final List<Rod> LEVELS = List.of(BAMBOO, FIBERGLASS, CARBON);
 
     private RodCatalog() {}
