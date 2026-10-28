@@ -34,7 +34,8 @@ public final class FishingGameFactory {
                 GameConfig.FISH_SPAWN_MARGIN,
                 GameConfig.SPAWN_MIN_SECONDS,
                 GameConfig.SPAWN_MAX_SECONDS);
-        FishSpawner spawner = new FishSpawner(FishCatalog.all(), lake.water(), spawnRules, random);
+        Area spawnArea = new Area(0, GameConfig.WINDOW_WIDTH, GameConfig.FISH_SPAWN_TOP, GameConfig.WINDOW_HEIGHT);
+        FishSpawner spawner = new FishSpawner(FishCatalog.all(), spawnArea, spawnRules, random);
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
         return new FishingGame(hook, GameConfig.HOOK_SPEED, population, catchDetector,
@@ -47,7 +48,7 @@ public final class FishingGameFactory {
         Area catchZone = new Area(
                 GameConfig.CATCH_ZONE_LEFT,
                 GameConfig.CATCH_ZONE_RIGHT,
-                GameConfig.WATER_TOP,
+                GameConfig.CATCH_ZONE_TOP,
                 GameConfig.CATCH_ZONE_BOTTOM);
         return new Lake(water, catchZone);
     }
