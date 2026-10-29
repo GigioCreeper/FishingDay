@@ -22,4 +22,7 @@ public record StoryMessage(Kind kind, String text) {
         Objects.requireNonNull(kind);
         Objects.requireNonNull(text);
     }
+    public boolean isEnding(){
+        return kind != Kind.BOTTLE;
+    }
 }

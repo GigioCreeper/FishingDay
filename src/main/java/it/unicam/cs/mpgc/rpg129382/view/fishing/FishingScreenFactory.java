@@ -36,7 +36,7 @@ public final class FishingScreenFactory implements ScreenFactory {
     @Override
     public Parent createScreen() {
         FishingGame game = FishingGameFactory.create(player, story, new Random());
-        FishingView view = new FishingView(game, game, game);
+        FishingView view = new FishingView(game, game, game, () -> navigator.navigateTo(GameScreen.MAIN_MENU));
         view.addEventHandler(KeyEvent.KEY_PRESSED, new NavigationShortcut(SHOP_KEY, navigator, GameScreen.SHOP));
         view.addEventHandler(KeyEvent.KEY_PRESSED, new NavigationShortcut(MENU_KEY, navigator, GameScreen.MAIN_MENU));
         return view;

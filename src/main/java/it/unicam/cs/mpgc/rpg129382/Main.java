@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         StageNavigator navigator = new StageNavigator(stage);
-        Player player = new Player(RodCatalog.CARBON);
+        Player player = new Player(RodCatalog.starter());
         Shop shop = new Shop();
         StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"), player);
         navigator.register(GameScreen.MAIN_MENU, new MainMenuScreenFactory(navigator));
