@@ -40,8 +40,11 @@ public final class FishingGameFactory {
         FishSpawner spawner = new FishSpawner(FishCatalog.all(), spawnArea, spawnRules, random);
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         StoryBottles bottles = createStoryBottles(story, lake.water(), random);
+        FinalFish finalFish = new FinalFish(story, FishCatalog.LEGEND, spawner, population,
+                new DurationRange(GameConfig.FINAL_FISH_MIN_SECONDS, GameConfig.FINAL_FISH_MAX_SECONDS),
+                random);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
-        return new FishingGame(hook, GameConfig.HOOK_SPEED, population, bottles, catchDetector,
+        return new FishingGame(hook, GameConfig.HOOK_SPEED, population, bottles, finalFish, catchDetector,
                 lake, player, createFightFactory(random, player.getRod().power()),
                 GameConfig.LINE_BROKEN_PENALTY);
     }

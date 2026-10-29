@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -8,13 +9,14 @@ import javafx.scene.layout.VBox;
 import java.util.Objects;
 
 /**
- * A parchment shown over the lake with the message found in a bottle.
+ * A parchment shown over the lake with a piece of the story: a bottle message or an ending.
  * Its look is defined in Story.css.
  */
 final class StoryPanel extends VBox {
     private static final double WIDTH = 760;
     private static final double TOP = 110;
 
+    private final Label title = new Label();
     private final Label text = new Label();
     private final Button continueButton = new Button("Continua");
 
@@ -29,7 +31,6 @@ final class StoryPanel extends VBox {
         setLayoutX((GameConfig.WINDOW_WIDTH - WIDTH) / 2);
         setLayoutY(TOP);
 
-        Label title = new Label("Un messaggio nella bottiglia");
         title.getStyleClass().add("story-title");
         text.getStyleClass().add("story-text");
         text.setWrapText(true);
@@ -45,8 +46,9 @@ final class StoryPanel extends VBox {
      * Shows the panel with the given message.
      * @param message the message to show.
      */
-    void show(String message) {
-        text.setText(Objects.requireNonNull(message));
+    void show(StoryMessage message) {
+        title.setText(titleOf(message.kind()));
+        text.setText(message.text());
         if (!isVisible()) {
             setVisible(true);
             continueButton.requestFocus();
@@ -58,6 +60,14 @@ final class StoryPanel extends VBox {
      */
     void hide() {
         setVisible(false);
+    }
+
+    private static String titleOf(StoryMessage.Kind kind) {
+        return switch (kind) {
+            case BOTTLE -> "Un messaggio nella bottiglia";
+            case VICTORY -> "Il Signore del Lago";
+            case DEFEAT -> "Trascinato negli abissi";
+        };
     }
 
     private static String stylesheet(String path) {

@@ -26,7 +26,15 @@ public class FishSpawner {
     }
 
     public Fish spawn() {
-        FishType type = types.get(random.nextInt(types.size()));
+        return spawn(types.get(random.nextInt(types.size())));
+    }
+
+    /**
+     * @param type the type of the fish to spawn, even if it is not among the common ones.
+     * @return a new fish entering the water from one of its sides.
+     */
+    public Fish spawn(FishType type) {
+        Objects.requireNonNull(type);
         Heading heading = random.nextBoolean() ? Heading.RIGHT : Heading.LEFT;
         double x = heading == Heading.RIGHT
                 ? water.left() - rules.margin()

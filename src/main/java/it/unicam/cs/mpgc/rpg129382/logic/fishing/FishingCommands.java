@@ -8,7 +8,7 @@ public interface FishingCommands {
     void setDirection(double directionX, double directionY);
 
     /**
-     * Closes the message of the bottle and resumes fishing.
+     * Closes the story message and resumes fishing.
      */
     void closeStoryMessage();
 }

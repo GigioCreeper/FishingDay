@@ -3,6 +3,7 @@ package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
@@ -21,18 +22,19 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private final double hookSpeed;
     private final FishPopulation population;
     private final StoryBottles bottles;
+    private final FinalFish finalFish;
     private final CatchDetector catchDetector;
     private final Lake lake;
     private final Player player;
     private final FightFactory fightFactory;
     private final int lineBrokenPenalty;
     private Fight fight;
-    private String storyMessage;
+    private StoryMessage storyMessage;
     private double directionX;
     private double directionY;
 
     public FishingGame(Movable hook, double hookSpeed, FishPopulation population, StoryBottles bottles,
-                       CatchDetector catchDetector, Lake lake, Player player, FightFactory fightFactory,
+                       FinalFish finalFish, CatchDetector catchDetector, Lake lake, Player player, FightFactory fightFactory,
                        int lineBrokenPenalty) {
         if (hookSpeed <= 0) {
             throw new IllegalArgumentException("hookSpeed must be positive");
@@ -44,6 +46,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
         this.hookSpeed = hookSpeed;
         this.population = Objects.requireNonNull(population);
         this.bottles = Objects.requireNonNull(bottles);
+        this.finalFish = Objects.requireNonNull(finalFish);
         this.catchDetector = Objects.requireNonNull(catchDetector);
         this.lake = Objects.requireNonNull(lake);
         this.player = Objects.requireNonNull(player);
@@ -92,7 +95,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     }
 
     @Override
-    public Optional<String> getStoryMessage() {
+    public Optional<StoryMessage> getStoryMessage() {
         return Optional.ofNullable(storyMessage);
     }
 
@@ -115,6 +118,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
         moveHook(delta);
         population.update(delta);
         bottles.update(delta);
+        finalFish.update(delta);
         updateFight(delta);
         pickUpBottle();
     }
@@ -174,15 +178,23 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     }
 
     private void resolveFight() {
+        Fish fish = fight.getFish();
         switch (fight.outcome(hook, lake)) {
             case CAUGHT -> {
-                player.getInventory().add(fight.getFish().getType());
                 endFight();
+                if (finalFish.is(fish)) {
+                    storyMessage = finalFish.caught();
+                } else {
+                    player.getInventory().add(fish.getType());
+                }
             }
             case LINE_BROKEN -> {
                 endFight();
                 payLineBrokenPenalty();
                 keepHookInWater();
+                if (finalFish.is(fish)) {
+                    storyMessage = finalFish.escaped();
+                }
             }
             case ONGOING -> {
             }

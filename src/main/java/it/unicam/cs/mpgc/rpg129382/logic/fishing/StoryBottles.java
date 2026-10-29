@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
@@ -81,15 +82,15 @@ public final class StoryBottles {
 
     /**
      * Takes the bottle out of the water and reads its message.
-     * @return the chapter of the story carried by the bottle.
+     * @return the message carrying the chapter of the story found in the bottle.
      * @throws IllegalStateException if there is no bottle on the lake.
      */
-    public String pickUp() {
+    public StoryMessage pickUp() {
         if (bottle == null) {
             throw new IllegalStateException("no bottle to pick up");
         }
         removeBottle();
-        return story.readNextChapter();
+        return new StoryMessage(StoryMessage.Kind.BOTTLE, story.readNextChapter());
     }
 
     private MessageBottle spawn() {

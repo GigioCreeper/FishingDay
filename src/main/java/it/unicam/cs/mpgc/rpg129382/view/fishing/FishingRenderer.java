@@ -16,6 +16,7 @@ import java.util.Objects;
 
 final class FishingRenderer {
     private static final double FISH_DRAW_WIDTH = 120;
+    private static final double FINAL_FISH_DRAW_WIDTH = 260;
     private static final double BOTTLE_DRAW_WIDTH = 60;
     private static final int PIXELS_PER_FRAME = 25;
 
@@ -33,12 +34,13 @@ final class FishingRenderer {
         this.background = ImageLoader.loadImage("/images/lake.png");
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.bottleImage = ImageLoader.loadImage("/images/story/bottle.png");
-        this.fishSprites = new FishSprites();
+        this.fishSprites = new FishSprites(FISH_DRAW_WIDTH);
         fishSprites.register(FishCatalog.PERCH, "perch");
         fishSprites.register(FishCatalog.TROUT, "trout");
         fishSprites.register(FishCatalog.PIKE, "pike");
         fishSprites.register(FishCatalog.BASS, "bass");
         fishSprites.register(FishCatalog.CHUB, "chub");
+        fishSprites.register(FishCatalog.LEGEND, "legend", FINAL_FISH_DRAW_WIDTH);
         this.hud = new FishingHud(state);
     }
 
@@ -61,7 +63,7 @@ final class FishingRenderer {
 
     private void drawFishes(GraphicsContext gc) {
         for (ReadOnlyFish fish : state.getFishes()) {
-            fishSprites.spriteFor(fish).drawFrame(gc, frameFor(fish), fish.getX(), fish.getY(), FISH_DRAW_WIDTH,
+            fishSprites.spriteFor(fish).drawFrame(gc, frameFor(fish), fish.getX(), fish.getY(), fishSprites.widthFor(fish),
                     fish.getHeading() == Heading.LEFT);
         }
     }

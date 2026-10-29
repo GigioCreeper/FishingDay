@@ -8,11 +8,13 @@ import java.util.Objects;
 /**
  * Keeps track of how far the player has read the story.
  * The first chapter is unlocked from the start, every rod upgrade unlocks one more.
+ * Once every chapter is read the final fish awakes, and catching it concludes the story.
  */
 public final class StoryProgress {
     private final StoryBook book;
     private final Player player;
     private int chaptersRead;
+    private boolean concluded;
 
     /**
      * @param book the chapters of the story.
@@ -42,6 +44,41 @@ public final class StoryProgress {
         String chapter = book.chapter(chaptersRead);
         chaptersRead++;
         return chapter;
+    }
+
+    /**
+     * @return true if every chapter is read and the final fish has not been caught yet.
+     */
+    public boolean awaitsFinal() {
+        return chaptersRead == book.chapterCount() && !concluded;
+    }
+
+    /**
+     * Concludes the story, because the player caught the final fish.
+     * @return the message of the happy ending.
+     * @throws IllegalStateException if the final fish is not awake.
+     */
+    public StoryMessage winFinal() {
+        requireFinal();
+        concluded = true;
+        return new StoryMessage(StoryMessage.Kind.VICTORY, book.victory());
+    }
+
+    /**
+     * The final fish broke the line: the story is concluded and the player died.
+     * @return the message of the bad ending.
+     * @throws IllegalStateException if the final fish is not awake.
+     */
+    public StoryMessage loseFinal() {
+        requireFinal();
+        concluded = true;
+        return new StoryMessage(StoryMessage.Kind.DEFEAT, book.defeat());
+    }
+
+    private void requireFinal() {
+        if (!awaitsFinal()) {
+            throw new IllegalStateException("the finale is not available");
+        }
     }
 
     private int unlockedChapters() {

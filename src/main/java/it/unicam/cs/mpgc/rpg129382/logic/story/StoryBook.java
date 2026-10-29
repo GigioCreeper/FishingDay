@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.logic.story;
 
 /**
- * The chapters of the story, in reading order.
+ * The texts of the story: the chapters, in reading order, and the two endings.
  */
 public interface StoryBook {
 
@@ -16,4 +16,14 @@ public interface StoryBook {
      * @throws IndexOutOfBoundsException if there is no chapter at that position.
      */
     String chapter(int index);
+
+    /**
+     * @return the text shown when the player catches the final fish.
+     */
+    String victory();
+
+    /**
+     * @return the text shown when the final fish breaks the line.
+     */
+    String defeat();
 }

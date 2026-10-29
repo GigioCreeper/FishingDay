@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
@@ -32,7 +33,7 @@ public interface FishingState {
     Optional<? extends Positioned> getBottle();
 
     /**
-     * @return the message of the bottle the player is reading; while present, the session is paused.
+     * @return the piece of story the player is reading; while present, the session is paused.
      */
-    Optional<String> getStoryMessage();
+    Optional<StoryMessage> getStoryMessage();
 }

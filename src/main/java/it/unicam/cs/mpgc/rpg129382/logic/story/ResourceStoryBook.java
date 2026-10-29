@@ -9,19 +9,24 @@ import java.util.ResourceBundle;
  */
 public final class ResourceStoryBook implements StoryBook {
     private static final String KEY_PREFIX = "chapter.";
+    private static final String VICTORY_KEY = "ending.victory";
+    private static final String DEFEAT_KEY = "ending.defeat";
 
     private final ResourceBundle bundle;
     private final int chapterCount;
 
     /**
-     * @param bundle the bundle that holds the chapters.
-     * @throws IllegalArgumentException if the bundle has no chapter.
+     * @param bundle the bundle that holds the chapters and the endings.
+     * @throws IllegalArgumentException if the bundle has no chapter or misses an ending.
      */
     public ResourceStoryBook(ResourceBundle bundle) {
         this.bundle = Objects.requireNonNull(bundle);
         this.chapterCount = countChapters();
         if (chapterCount == 0) {
             throw new IllegalArgumentException("the story has no chapters");
+        }
+        if (!bundle.containsKey(VICTORY_KEY) || !bundle.containsKey(DEFEAT_KEY)) {
+            throw new IllegalArgumentException("the story has no endings");
         }
     }
 
@@ -43,6 +48,16 @@ public final class ResourceStoryBook implements StoryBook {
     public String chapter(int index) {
         Objects.checkIndex(index, chapterCount);
         return bundle.getString(KEY_PREFIX + index);
+    }
+
+    @Override
+    public String victory() {
+        return bundle.getString(VICTORY_KEY);
+    }
+
+    @Override
+    public String defeat() {
+        return bundle.getString(DEFEAT_KEY);
     }
 
     private int countChapters() {

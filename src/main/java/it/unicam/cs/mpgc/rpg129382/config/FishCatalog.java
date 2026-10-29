@@ -11,6 +11,12 @@ public final class FishCatalog {
     public static final FishType BASS = new FishType("bass", 30, 100, 100);
     public static final FishType CHUB = new FishType("chub", 15, 90, 70);
 
+    /**
+     * The fish the story is about. It is not among the common types: only the story makes it appear.
+     */
+    // Tuned so that, with the best rod, even a flawless fight ends with the line broken about half of the time.
+    public static final FishType LEGEND = new FishType("legend", 0, 45, 155);
+
     private static final List<FishType> TYPES = List.of(PERCH, TROUT, PIKE, BASS, CHUB);
 
     private FishCatalog() {}

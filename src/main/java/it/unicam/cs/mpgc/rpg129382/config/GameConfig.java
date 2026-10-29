@@ -40,7 +40,11 @@ public final class GameConfig {
     public static final double BOTTLE_SPEED = 40;
     public static final double BOTTLE_MIN_SECONDS = 3;
     public static final double BOTTLE_MAX_SECONDS = 8;
-    
+
+    // Final fish
+    public static final double FINAL_FISH_MIN_SECONDS = 5;
+    public static final double FINAL_FISH_MAX_SECONDS = 12;
+
     private GameConfig() {
     }
 }
