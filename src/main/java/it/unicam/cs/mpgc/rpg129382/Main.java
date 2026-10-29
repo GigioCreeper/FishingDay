@@ -2,6 +2,8 @@ package it.unicam.cs.mpgc.rpg129382;
 
 import it.unicam.cs.mpgc.rpg129382.config.RodCatalog;
 import it.unicam.cs.mpgc.rpg129382.logic.shop.Shop;
+import it.unicam.cs.mpgc.rpg129382.logic.story.ResourceStoryBook;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.menu.MainMenuScreenFactory;
@@ -22,8 +24,9 @@ public class Main extends Application {
         StageNavigator navigator = new StageNavigator(stage);
         Player player = new Player(RodCatalog.starter());
         Shop shop = new Shop();
+        StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"), player);
         navigator.register(GameScreen.MAIN_MENU, new MainMenuScreenFactory(navigator));
-        navigator.register(GameScreen.FISHING, new FishingScreenFactory(player, navigator));
+        navigator.register(GameScreen.FISHING, new FishingScreenFactory(player, story, navigator));
         navigator.register(GameScreen.SHOP, new ShopScreenFactory(shop, player, navigator));
 
         stage.setTitle("Fishing Day");

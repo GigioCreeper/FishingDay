@@ -13,17 +13,25 @@ import java.util.Objects;
 public class FishingView extends Pane {
     private static final boolean SHOW_CATCH_ZONE = true;
 
+    private final FishingState state;
     private final SharpCanvas canvas;
     private final FishingRenderer renderer;
+    private final StoryPanel storyPanel;
     private final Updatable game;
     private final AnimationTimer timer;
 
     public FishingView(FishingState state, FishingCommands commands, Updatable game) {
+        this.state = Objects.requireNonNull(state);
         this.game = Objects.requireNonNull(game);
+        Objects.requireNonNull(commands);
         this.canvas = new SharpCanvas(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
-        this.renderer = new FishingRenderer(Objects.requireNonNull(state), SHOW_CATCH_ZONE);
+        this.renderer = new FishingRenderer(state, SHOW_CATCH_ZONE);
+        this.storyPanel = new StoryPanel(() -> {
+            commands.closeStoryMessage();
+            requestFocus();
+        });
         this.timer = createTimer();
-        this.getChildren().add(canvas);
+        this.getChildren().addAll(canvas, storyPanel);
         setupInput(new FishingKeyboardInput(commands));
         draw();
     }
@@ -59,5 +67,6 @@ public class FishingView extends Pane {
 
     private void draw() {
         renderer.draw(canvas.beginFrame());
+        state.getStoryMessage().ifPresentOrElse(storyPanel::show, storyPanel::hide);
     }
 }

@@ -6,4 +6,9 @@ package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 public interface FishingCommands {
 
     void setDirection(double directionX, double directionY);
+
+    /**
+     * Closes the message of the bottle and resumes fishing.
+     */
+    void closeStoryMessage();
 }

@@ -21,12 +21,19 @@ public class CatchDetector {
         Objects.requireNonNull(hook);
         Objects.requireNonNull(fishes);
         return fishes.stream()
-                .filter(fish -> isTouching(hook, fish))
+                .filter(fish -> touches(hook, fish))
                 .findFirst();
     }
 
-    private boolean isTouching(Positioned hook, Positioned fish) {
-        double distance = Math.hypot(fish.getX() - hook.getX(), fish.getY() - hook.getY());
+    /**
+     * @param hook the hook.
+     * @param target something in the water.
+     * @return true if the target is close enough to the hook to be caught.
+     */
+    public boolean touches(Positioned hook, Positioned target) {
+        Objects.requireNonNull(hook);
+        Objects.requireNonNull(target);
+        double distance = Math.hypot(target.getX() - hook.getX(), target.getY() - hook.getY());
         return distance <= radius;
     }
 }

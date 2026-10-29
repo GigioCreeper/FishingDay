@@ -14,22 +14,26 @@ import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class FishingGame implements FishingState, FishingCommands, Updatable {
     private final Movable hook;
     private final double hookSpeed;
     private final FishPopulation population;
+    private final StoryBottles bottles;
     private final CatchDetector catchDetector;
     private final Lake lake;
     private final Player player;
     private final FightFactory fightFactory;
     private final int lineBrokenPenalty;
     private Fight fight;
+    private String storyMessage;
     private double directionX;
     private double directionY;
 
-    public FishingGame(Movable hook, double hookSpeed, FishPopulation population, CatchDetector catchDetector,
-                       Lake lake, Player player, FightFactory fightFactory, int lineBrokenPenalty) {
+    public FishingGame(Movable hook, double hookSpeed, FishPopulation population, StoryBottles bottles,
+                       CatchDetector catchDetector, Lake lake, Player player, FightFactory fightFactory,
+                       int lineBrokenPenalty) {
         if (hookSpeed <= 0) {
             throw new IllegalArgumentException("hookSpeed must be positive");
         }
@@ -39,6 +43,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
         this.hook = Objects.requireNonNull(hook);
         this.hookSpeed = hookSpeed;
         this.population = Objects.requireNonNull(population);
+        this.bottles = Objects.requireNonNull(bottles);
         this.catchDetector = Objects.requireNonNull(catchDetector);
         this.lake = Objects.requireNonNull(lake);
         this.player = Objects.requireNonNull(player);
@@ -82,16 +87,36 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     }
 
     @Override
+    public Optional<? extends Positioned> getBottle() {
+        return bottles.getBottle();
+    }
+
+    @Override
+    public Optional<String> getStoryMessage() {
+        return Optional.ofNullable(storyMessage);
+    }
+
+    @Override
     public void setDirection(double directionX, double directionY) {
         this.directionX = directionX;
         this.directionY = directionY;
     }
 
     @Override
+    public void closeStoryMessage() {
+        storyMessage = null;
+    }
+
+    @Override
     public void update(double delta) {
+        if (storyMessage != null) {
+            return;
+        }
         moveHook(delta);
         population.update(delta);
+        bottles.update(delta);
         updateFight(delta);
+        pickUpBottle();
     }
 
     private void moveHook(double delta) {
@@ -127,6 +152,15 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
         if (fight != null) {
             resolveFight();
         }
+    }
+
+    private void pickUpBottle() {
+        if (fight != null) {
+            return;
+        }
+        bottles.getBottle()
+                .filter(bottle -> catchDetector.touches(hook, bottle))
+                .ifPresent(_ -> storyMessage = bottles.pickUp());
     }
 
     private void startFight(Fish fish) {
