@@ -56,4 +56,14 @@ public final class RodCatalog {
         }
         return Optional.of(LEVELS.get(next));
     }
+
+    /**
+     * @param name the name of a rod.
+     * @return the rod with that name, or empty if the catalog has none.
+     */
+    public static Optional<Rod> findByName(String name) {
+        return LEVELS.stream()
+                .filter(rod -> rod.name().equals(name))
+                .findFirst();
+    }
 }

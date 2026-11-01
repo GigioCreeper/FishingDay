@@ -3,6 +3,7 @@ package it.unicam.cs.mpgc.rpg129382.config;
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class FishCatalog {
     public static final FishType PERCH = new FishType("perch", 5, 60, 50);
@@ -23,5 +24,11 @@ public final class FishCatalog {
 
     public static List<FishType> all() {
         return TYPES;
+    }
+
+    public static Optional<FishType> findByName(String name) {
+        return TYPES.stream()
+                .filter(type -> type.name().equals(name))
+                .findFirst();
     }
 }

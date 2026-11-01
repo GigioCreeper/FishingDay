@@ -9,8 +9,15 @@ public class Inventory {
     private final Map<FishType, Integer> fishes = new LinkedHashMap<>();
 
     public void add(FishType type) {
+        add(type, 1);
+    }
+
+    public void add(FishType type, int count) {
         Objects.requireNonNull(type);
-        fishes.merge(type, 1, Integer::sum);
+        if (count <= 0) {
+            throw new IllegalArgumentException("Count must be positive");
+        }
+        fishes.merge(type, count, Integer::sum);
     }
 
     public int count(FishType type) {
