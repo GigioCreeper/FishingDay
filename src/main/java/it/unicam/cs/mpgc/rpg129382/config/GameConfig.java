@@ -34,6 +34,17 @@ public final class GameConfig {
     public static final double CONTROL_MIN_SECONDS = 1.5;
     public static final double CONTROL_MAX_SECONDS = 3;
     public static final int LINE_BROKEN_PENALTY = 10;
+
+    // Story bottles
+    public static final double BOTTLE_SURFACE_Y = WATER_TOP + 15;
+    public static final double BOTTLE_SPEED = 40;
+    public static final double BOTTLE_MIN_SECONDS = 3;
+    public static final double BOTTLE_MAX_SECONDS = 8;
+
+    // Final fish
+    public static final double FINAL_FISH_MIN_SECONDS = 5;
+    public static final double FINAL_FISH_MAX_SECONDS = 12;
+
     private GameConfig() {
     }
 }

@@ -26,6 +26,14 @@ public class FishPopulation {
         return Collections.unmodifiableList(fishes);
     }
 
+    /**
+     * Adds a fish that does not come from the spawner, ignoring the population limit.
+     * @param fish the fish to add.
+     */
+    public void add(Fish fish) {
+        fishes.add(Objects.requireNonNull(fish));
+    }
+
     public void remove(Fish fish) {
         fishes.remove(fish);
     }

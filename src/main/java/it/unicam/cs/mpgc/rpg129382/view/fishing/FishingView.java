@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingCommands;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.view.utils.SharpCanvas;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
@@ -13,17 +14,31 @@ import java.util.Objects;
 public class FishingView extends Pane {
     private static final boolean SHOW_CATCH_ZONE = true;
 
+    private final FishingState state;
     private final SharpCanvas canvas;
     private final FishingRenderer renderer;
+    private final StoryPanel storyPanel;
     private final Updatable game;
     private final AnimationTimer timer;
 
-    public FishingView(FishingState state, FishingCommands commands, Updatable game) {
+    public FishingView(FishingState state, FishingCommands commands, Updatable game, Runnable onStoryEnd) {
+        this.state = Objects.requireNonNull(state);
         this.game = Objects.requireNonNull(game);
+        Objects.requireNonNull(onStoryEnd);
+        Objects.requireNonNull(commands);
         this.canvas = new SharpCanvas(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
-        this.renderer = new FishingRenderer(Objects.requireNonNull(state), SHOW_CATCH_ZONE);
+        this.renderer = new FishingRenderer(state, SHOW_CATCH_ZONE);
+        this.storyPanel = new StoryPanel(() -> {
+            boolean isEnding = state.getStoryMessage().map(StoryMessage::isEnding).orElse(false);
+            commands.closeStoryMessage();
+            if (isEnding) {
+                onStoryEnd.run();
+            } else {
+                requestFocus();
+            }
+        });
         this.timer = createTimer();
-        this.getChildren().add(canvas);
+        this.getChildren().addAll(canvas, storyPanel);
         setupInput(new FishingKeyboardInput(commands));
         draw();
     }
@@ -59,5 +74,6 @@ public class FishingView extends Pane {
 
     private void draw() {
         renderer.draw(canvas.beginFrame());
+        state.getStoryMessage().ifPresentOrElse(storyPanel::show, storyPanel::hide);
     }
 }

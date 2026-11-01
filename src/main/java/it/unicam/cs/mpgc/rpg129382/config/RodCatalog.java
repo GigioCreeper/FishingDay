@@ -32,18 +32,28 @@ public final class RodCatalog {
     }
 
     /**
+     * @param rod a rod of the catalog.
+     * @return its level, starting from 0 for the starting rod.
+     * @throws IllegalArgumentException if the rod is not in the catalog.
+     */
+    public static int levelOf(Rod rod) {
+        int index = LEVELS.indexOf(rod);
+        if (index < 0) {
+            throw new IllegalArgumentException("Unknown rod: " + rod);
+        }
+        return index;
+    }
+
+    /**
      * @param current the rod the player owns.
      * @return the next rod level, or empty if the current one is the best.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public static Optional<Rod> nextAfter(Rod current) {
-        int index = LEVELS.indexOf(current);
-        if (index < 0) {
-            throw new IllegalArgumentException("Unknown rod: " + current);
-        }
-        if (index + 1 >= LEVELS.size()) {
+        int next = levelOf(current) + 1;
+        if (next >= LEVELS.size()) {
             return Optional.empty();
         }
-        return Optional.of(LEVELS.get(index + 1));
+        return Optional.of(LEVELS.get(next));
     }
 }

@@ -7,6 +7,7 @@ import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.PullPhase;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
@@ -17,16 +18,17 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * Builds a fishing session from the values in {@link GameConfig} and {@link FishCatalog}
- * and the rod the player is using.
+ * Builds a fishing session from the values in {@link GameConfig} and {@link FishCatalog},
+ * the rod the player is using and the story the bottles carry.
  */
 public final class FishingGameFactory {
 
     private FishingGameFactory() {
     }
 
-    public static FishingGame create(Player player, Random random) {
+    public static FishingGame create(Player player, StoryProgress story, Random random) {
         Objects.requireNonNull(player);
+        Objects.requireNonNull(story);
         Objects.requireNonNull(random);
         Lake lake = createLake();
         Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
@@ -37,8 +39,12 @@ public final class FishingGameFactory {
         Area spawnArea = new Area(0, GameConfig.WINDOW_WIDTH, GameConfig.FISH_SPAWN_TOP, GameConfig.WINDOW_HEIGHT);
         FishSpawner spawner = new FishSpawner(FishCatalog.all(), spawnArea, spawnRules, random);
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
+        StoryBottles bottles = createStoryBottles(story, lake.water(), random);
+        FinalFish finalFish = new FinalFish(story, FishCatalog.LEGEND, spawner, population,
+                new DurationRange(GameConfig.FINAL_FISH_MIN_SECONDS, GameConfig.FINAL_FISH_MAX_SECONDS),
+                random);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
-        return new FishingGame(hook, GameConfig.HOOK_SPEED, population, catchDetector,
+        return new FishingGame(hook, GameConfig.HOOK_SPEED, population, bottles, finalFish, catchDetector,
                 lake, player, createFightFactory(random, player.getRod().power()),
                 GameConfig.LINE_BROKEN_PENALTY);
     }
@@ -51,6 +57,15 @@ public final class FishingGameFactory {
                 GameConfig.CATCH_ZONE_TOP,
                 GameConfig.CATCH_ZONE_BOTTOM);
         return new Lake(water, catchZone);
+    }
+
+    private static StoryBottles createStoryBottles(StoryProgress story, Area water, Random random) {
+        return new StoryBottles(story, water,
+                GameConfig.BOTTLE_SURFACE_Y,
+                GameConfig.FISH_SPAWN_MARGIN,
+                GameConfig.BOTTLE_SPEED,
+                new DurationRange(GameConfig.BOTTLE_MIN_SECONDS, GameConfig.BOTTLE_MAX_SECONDS),
+                random);
     }
 
     private static FightFactory createFightFactory(Random random, double rodPower) {

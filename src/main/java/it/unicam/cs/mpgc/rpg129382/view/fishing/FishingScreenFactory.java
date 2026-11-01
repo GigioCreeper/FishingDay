@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingGame;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingGameFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.NavigationShortcut;
@@ -19,10 +20,12 @@ public final class FishingScreenFactory implements ScreenFactory {
     private static final KeyCode MENU_KEY = KeyCode.ESCAPE;
 
     private final Player player;
+    private final StoryProgress story;
     private final ScreenNavigator navigator;
 
-    public FishingScreenFactory(Player player, ScreenNavigator navigator) {
+    public FishingScreenFactory(Player player, StoryProgress story, ScreenNavigator navigator) {
         this.player = Objects.requireNonNull(player);
+        this.story = Objects.requireNonNull(story);
         this.navigator = Objects.requireNonNull(navigator);
     }
 
@@ -32,8 +35,8 @@ public final class FishingScreenFactory implements ScreenFactory {
      */
     @Override
     public Parent createScreen() {
-        FishingGame game = FishingGameFactory.create(player, new Random());
-        FishingView view = new FishingView(game, game, game);
+        FishingGame game = FishingGameFactory.create(player, story, new Random());
+        FishingView view = new FishingView(game, game, game, () -> navigator.navigateTo(GameScreen.MAIN_MENU));
         view.addEventHandler(KeyEvent.KEY_PRESSED, new NavigationShortcut(SHOP_KEY, navigator, GameScreen.SHOP));
         view.addEventHandler(KeyEvent.KEY_PRESSED, new NavigationShortcut(MENU_KEY, navigator, GameScreen.MAIN_MENU));
         return view;
