@@ -70,7 +70,7 @@ public final class ShopController {
     @FXML
     private void onSellClicked() {
         int earned = shop.sellAll(player);
-        messageLabel.setText("Hai guadagnato " + earned + " monete");
+        messageLabel.setText("You earned " + earned + " coins");
         refresh();
     }
 
@@ -87,16 +87,16 @@ public final class ShopController {
     private void refresh() {
         Inventory inventory = player.getInventory();
         moneyLabel.setText(String.valueOf(player.getMoney()));
-        catchLabel.setText("Pescato: " + inventory.totalCount() + " pesci (" + inventory.totalValue() + " monete)");
+        catchLabel.setText("Caught: " + inventory.totalCount() + " fish (" + inventory.totalValue() + " coins)");
         sellButton.setDisable(inventory.totalCount() == 0);
         rodCards.forEach((rod, card) -> card.show(shop.statusOf(rod, player)));
     }
 
     private String describe(PurchaseResult result) {
         return switch (result) {
-            case PURCHASED -> "Nuova canna: " + player.getRod().name();
-            case NOT_ENOUGH_MONEY -> "Non hai abbastanza monete";
-            case MAX_LEVEL_REACHED -> "Hai già la canna migliore";
+            case PURCHASED -> "New rod: " + player.getRod().name();
+            case NOT_ENOUGH_MONEY -> "Not enough coins";
+            case MAX_LEVEL_REACHED -> "You already have the best rod";
         };
     }
 }

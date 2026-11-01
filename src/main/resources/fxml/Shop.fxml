@@ -16,7 +16,7 @@
         <URL value="@../css/MainMenu.css"/>
         <URL value="@../css/Shop.css"/>
     </stylesheets>
-    <Label styleClass="shop-title" text="Negozio"/>
+    <Label styleClass="shop-title" text="Shop"/>
     <HBox alignment="CENTER" spacing="8">
         <ImageView fx:id="moneyIcon" fitHeight="36" preserveRatio="true"/>
         <Label fx:id="moneyLabel" styleClass="shop-money"/>
@@ -25,7 +25,7 @@
     <HBox fx:id="rodCardsBox" alignment="CENTER" spacing="28"/>
     <Label fx:id="messageLabel" styleClass="shop-message"/>
     <HBox alignment="CENTER" spacing="24">
-        <Button fx:id="sellButton" mnemonicParsing="false" onAction="#onSellClicked" styleClass="main-button" text="Vendi tutto"/>
-        <Button mnemonicParsing="false" onAction="#onBackClicked" styleClass="main-button" text="Torna al lago"/>
+        <Button fx:id="sellButton" mnemonicParsing="false" onAction="#onSellClicked" styleClass="main-button" text="Sell all"/>
+        <Button mnemonicParsing="false" onAction="#onBackClicked" styleClass="main-button" text="Back"/>
     </HBox>
 </VBox>

@@ -7,6 +7,6 @@
 <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" styleClass="main-menu"
       stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/25"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.rpg129382.view.menu.MainMenuController">
-   <Button mnemonicParsing="false" onAction="#onPlayButtonClicked" styleClass="main-button" text="Gioca"/>
-   <Button mnemonicParsing="false" onAction="#onExitButtonClicked" styleClass="main-button, exit-button" text="Esci"/>
+   <Button mnemonicParsing="false" onAction="#onPlayButtonClicked" styleClass="main-button" text="Play"/>
+   <Button mnemonicParsing="false" onAction="#onExitButtonClicked" styleClass="main-button, exit-button" text="Exit"/>
 </VBox>

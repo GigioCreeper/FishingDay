@@ -36,7 +36,7 @@ public final class MainMenuScreenFactory implements ScreenFactory {
             controller.setScreenNavigator(navigator);
             return root;
         } catch (IOException e) {
-            throw new UncheckedIOException("Impossibile caricare MainMenu.fxml", e);
+            throw new UncheckedIOException("Could not load MainMenu.fxml", e);
         }
     }
 }

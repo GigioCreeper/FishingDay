@@ -18,7 +18,7 @@ final class StoryPanel extends VBox {
 
     private final Label title = new Label();
     private final Label text = new Label();
-    private final Button continueButton = new Button("Continua");
+    private final Button continueButton = new Button("Continue");
 
     /**
      * @param onContinue what to do when the player closes the message.
@@ -64,9 +64,9 @@ final class StoryPanel extends VBox {
 
     private static String titleOf(StoryMessage.Kind kind) {
         return switch (kind) {
-            case BOTTLE -> "Un messaggio nella bottiglia";
-            case VICTORY -> "Il Signore del Lago";
-            case DEFEAT -> "Trascinato negli abissi";
+            case BOTTLE -> "A message in a bottle";
+            case VICTORY -> "The Lord of the Lake";
+            case DEFEAT -> "Dragged into the deep";
         };
     }
 

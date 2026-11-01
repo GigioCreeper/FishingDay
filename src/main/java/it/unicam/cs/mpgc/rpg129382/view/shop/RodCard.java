@@ -31,7 +31,7 @@ final class RodCard extends VBox {
 
     private final HBox priceBox;
     private final Label statusLabel = new Label();
-    private final Button buyButton = new Button("Compra");
+    private final Button buyButton = new Button("Buy");
 
     /**
      * @param rod the rod shown by the card.
@@ -50,7 +50,7 @@ final class RodCard extends VBox {
 
         Label name = new Label(rod.name());
         name.getStyleClass().add("rod-name");
-        Label power = new Label("Potenza " + Math.round(rod.power()));
+        Label power = new Label("Power " + Math.round(rod.power()));
         power.getStyleClass().add("rod-detail");
 
         ImageView coinIcon = new ImageView(Objects.requireNonNull(coin));
@@ -81,7 +81,7 @@ final class RodCard extends VBox {
         boolean forSale = status == RodStatus.AVAILABLE || status == RodStatus.LOCKED;
         priceBox.setVisible(forSale);
         statusLabel.setVisible(!forSale);
-        statusLabel.setText(status == RodStatus.EQUIPPED ? "In uso" : "Posseduta");
+        statusLabel.setText(status == RodStatus.EQUIPPED ? "In use" : "Owned");
         buyButton.setVisible(status == RodStatus.AVAILABLE);
     }
 

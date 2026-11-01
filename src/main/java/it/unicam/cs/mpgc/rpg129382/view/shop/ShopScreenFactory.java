@@ -40,7 +40,7 @@ public final class ShopScreenFactory implements ScreenFactory {
             loader.setControllerFactory(_ -> new ShopController(shop, player, navigator));
             return loader.load();
         } catch (IOException e) {
-            throw new UncheckedIOException("Impossibile caricare Shop.fxml", e);
+            throw new UncheckedIOException("Could not load Shop.fxml", e);
         }
     }
 }
