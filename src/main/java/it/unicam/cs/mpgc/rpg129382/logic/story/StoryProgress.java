@@ -82,6 +82,10 @@ public final class StoryProgress {
         return concluded;
     }
 
+    public int chapterCount() {
+        return book.chapterCount();
+    }
+
     /**
      * Puts the story back in a saved state.
      * @param chaptersRead how many chapters the player has read.
