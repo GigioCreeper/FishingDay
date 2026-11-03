@@ -5,16 +5,18 @@ import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
 
 import java.util.Objects;
 
 public class MainMenuController {
     @FXML
     private Button continueButton;
-
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private StackPane confirmOverlay;
     private ScreenNavigator screenNavigator;
     private GameSession session;
 
@@ -35,11 +37,12 @@ public class MainMenuController {
 
     @FXML
     private void onNewGameButtonClicked() {
-        if (session.canContinue() && !confirmNewGame()) {
+        if (session.canContinue()) {
+            confirmOverlay.setVisible(true);
+            cancelButton.requestFocus();
             return;
         }
-        session.newGame();
-        screenNavigator.navigateTo(GameScreen.FISHING);
+        startNewGame();
     }
 
     @FXML
@@ -47,9 +50,18 @@ public class MainMenuController {
         Platform.exit();
     }
 
-    private static boolean confirmNewGame() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your saved game will be lost. Start a new game?");
-        alert.setHeaderText(null);
-        return alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
+    @FXML
+    private void onCancelNewGame() {
+        confirmOverlay.setVisible(false);
+    }
+
+    @FXML
+    private void onConfirmNewGame() {
+        startNewGame();
+    }
+
+    private void startNewGame() {
+        session.newGame();
+        screenNavigator.navigateTo(GameScreen.FISHING);
     }
 }
