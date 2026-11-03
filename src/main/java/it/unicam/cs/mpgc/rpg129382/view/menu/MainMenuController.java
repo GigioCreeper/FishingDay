@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.menu;
 
-import it.unicam.cs.mpgc.rpg129382.persistence.GameSession;
+import it.unicam.cs.mpgc.rpg129382.logic.session.GameSession;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
 import javafx.application.Platform;

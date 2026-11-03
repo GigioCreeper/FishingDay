@@ -1,10 +1,12 @@
-package it.unicam.cs.mpgc.rpg129382.persistence;
+package it.unicam.cs.mpgc.rpg129382.logic.session;
 
 import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.RodCatalog;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
+import it.unicam.cs.mpgc.rpg129382.persistence.SaveData;
+import it.unicam.cs.mpgc.rpg129382.persistence.SaveStorage;
 
 import java.util.HashMap;
 import java.util.Map;

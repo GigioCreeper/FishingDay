@@ -5,7 +5,7 @@ import it.unicam.cs.mpgc.rpg129382.logic.shop.Shop;
 import it.unicam.cs.mpgc.rpg129382.logic.story.ResourceStoryBook;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
-import it.unicam.cs.mpgc.rpg129382.persistence.GameSession;
+import it.unicam.cs.mpgc.rpg129382.logic.session.GameSession;
 import it.unicam.cs.mpgc.rpg129382.persistence.JsonSaveStorage;
 import it.unicam.cs.mpgc.rpg129382.view.fishing.FishingScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.menu.MainMenuScreenFactory;
