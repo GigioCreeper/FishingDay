@@ -16,8 +16,9 @@ public final class MainMenuScreenFactory implements ScreenFactory {
 
     /**
      * Creates a new MainMenuScreenFactory.
+     *
      * @param navigator the ScreenNavigator to use for navigation.
-     * @param session the game session the menu starts and saves.
+     * @param session   the game session the menu starts and saves.
      */
     public MainMenuScreenFactory(ScreenNavigator navigator, GameSession session) {
         this.navigator = Objects.requireNonNull(navigator);
@@ -27,6 +28,7 @@ public final class MainMenuScreenFactory implements ScreenFactory {
 
     /**
      * Creates and returns the content of the main menu screen.
+     *
      * @return the Parent node representing the main menu screen.
      * @throws UncheckedIOException if there is an error loading the FXML file.
      */
@@ -36,11 +38,8 @@ public final class MainMenuScreenFactory implements ScreenFactory {
             // Every way back to the menu passes here, and Continue must see the latest save.
             session.save();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-            Parent root = loader.load();
-            MainMenuController controller = loader.getController();
-            controller.setScreenNavigator(navigator);
-            controller.setGameSession(session);
-            return root;
+            loader.setControllerFactory(_ -> new MainMenuController(navigator, session));
+            return loader.load();
         } catch (IOException e) {
             throw new UncheckedIOException("Could not load MainMenu.fxml", e);
         }
