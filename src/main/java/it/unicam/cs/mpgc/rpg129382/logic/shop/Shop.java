@@ -16,6 +16,7 @@ public final class Shop {
 
     /**
      * Sells every fish in the player's inventory.
+     *
      * @param player the player who sells.
      * @return the money earned.
      */
@@ -36,18 +37,16 @@ public final class Shop {
     }
 
     /**
-     * @param rod a rod of the catalog.
+     * @param rod    a rod of the catalog.
      * @param player the player who looks at it.
      * @return how the rod relates to what the player owns.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public RodStatus statusOf(Rod rod, Player player) {
+        Objects.requireNonNull(rod);
         Objects.requireNonNull(player);
-        int rodLevel = rods().indexOf(Objects.requireNonNull(rod));
-        if (rodLevel < 0) {
-            throw new IllegalArgumentException("Unknown rod: " + rod);
-        }
-        int currentLevel = rods().indexOf(player.getRod());
+        int rodLevel = RodCatalog.levelOf(rod);
+        int currentLevel = RodCatalog.levelOf(player.getRod());
         if (rodLevel == currentLevel) {
             return RodStatus.EQUIPPED;
         }
@@ -60,17 +59,10 @@ public final class Shop {
         return RodStatus.LOCKED;
     }
 
-    /**
-     * @param player the player who wants to upgrade.
-     * @return the rod the player can buy next, or empty if the current one is the best.
-     */
-    public Optional<Rod> nextRod(Player player) {
-        Objects.requireNonNull(player);
-        return RodCatalog.nextAfter(player.getRod());
-    }
 
     /**
      * Buys the next rod level and equips it, if the player can afford it.
+     *
      * @param player the player who buys.
      * @return the result of the purchase.
      */
@@ -86,5 +78,14 @@ public final class Shop {
         player.spend(rod.price());
         player.equip(rod);
         return PurchaseResult.PURCHASED;
+    }
+
+    /**
+     * @param player the player who wants to upgrade.
+     * @return the rod the player can buy next, or empty if the current one is the best.
+     */
+    private Optional<Rod> nextRod(Player player) {
+        Objects.requireNonNull(player);
+        return RodCatalog.nextAfter(player.getRod());
     }
 }
