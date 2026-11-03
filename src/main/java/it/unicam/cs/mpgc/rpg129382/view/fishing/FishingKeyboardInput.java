@@ -8,20 +8,20 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class FishingKeyboardInput {
+final class FishingKeyboardInput {
     private final FishingCommands commands;
     private final Set<KeyCode> pressedKeys = EnumSet.noneOf(KeyCode.class);
 
-    public FishingKeyboardInput(FishingCommands commands) {
+    FishingKeyboardInput(FishingCommands commands) {
         this.commands = Objects.requireNonNull(commands);
     }
 
-    public void onKeyPressed(KeyEvent event) {
+    void onKeyPressed(KeyEvent event) {
         pressedKeys.add(event.getCode());
         updateDirection();
     }
 
-    public void onKeyReleased(KeyEvent event) {
+    void onKeyReleased(KeyEvent event) {
         pressedKeys.remove(event.getCode());
         updateDirection();
     }
