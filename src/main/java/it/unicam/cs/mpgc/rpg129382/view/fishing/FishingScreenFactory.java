@@ -31,6 +31,7 @@ public final class FishingScreenFactory implements ScreenFactory {
 
     /**
      * Creates a new fishing session that uses the rod the player has right now.
+     *
      * @return the Parent node representing the fishing screen.
      */
     @Override

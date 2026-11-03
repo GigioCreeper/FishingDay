@@ -28,6 +28,7 @@ public class FishPopulation {
 
     /**
      * Adds a fish that does not come from the spawner, ignoring the population limit.
+     *
      * @param fish the fish to add.
      */
     public void add(Fish fish) {

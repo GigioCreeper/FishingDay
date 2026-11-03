@@ -1,7 +1,9 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
-import it.unicam.cs.mpgc.rpg129382.model.*;
+import it.unicam.cs.mpgc.rpg129382.model.Fish;
+import it.unicam.cs.mpgc.rpg129382.model.FishType;
+import it.unicam.cs.mpgc.rpg129382.model.Heading;
 
 import java.util.List;
 import java.util.Objects;

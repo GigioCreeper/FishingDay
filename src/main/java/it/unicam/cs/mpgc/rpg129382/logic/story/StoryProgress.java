@@ -17,7 +17,7 @@ public final class StoryProgress {
     private boolean concluded;
 
     /**
-     * @param book the chapters of the story.
+     * @param book   the chapters of the story.
      * @param player the player whose rod unlocks the chapters.
      */
     public StoryProgress(StoryBook book, Player player) {
@@ -34,6 +34,7 @@ public final class StoryProgress {
 
     /**
      * Reads the first unread chapter.
+     *
      * @return the text of the chapter.
      * @throws IllegalStateException if there is no unread chapter.
      */
@@ -55,6 +56,7 @@ public final class StoryProgress {
 
     /**
      * Concludes the story, because the player caught the final fish.
+     *
      * @return the message of the happy ending.
      * @throws IllegalStateException if the final fish is not awake.
      */
@@ -66,6 +68,7 @@ public final class StoryProgress {
 
     /**
      * The final fish broke the line: the story is concluded and the player died.
+     *
      * @return the message of the bad ending.
      * @throws IllegalStateException if the final fish is not awake.
      */
@@ -74,6 +77,7 @@ public final class StoryProgress {
         concluded = true;
         return new StoryMessage(StoryMessage.Kind.DEFEAT, book.defeat());
     }
+
     public int getChaptersRead() {
         return chaptersRead;
     }
@@ -88,8 +92,9 @@ public final class StoryProgress {
 
     /**
      * Puts the story back in a saved state.
+     *
      * @param chaptersRead how many chapters the player has read.
-     * @param concluded true if the story has reached an ending.
+     * @param concluded    true if the story has reached an ending.
      * @throws IllegalArgumentException if the book has fewer chapters.
      */
     public void restore(int chaptersRead, boolean concluded) {

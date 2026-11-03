@@ -20,7 +20,8 @@ public final class SharpCanvas extends Pane {
 
     /**
      * Creates a new SharpCanvas with the specified virtual size.
-     * @param virtualWidth the width used by drawing code.
+     *
+     * @param virtualWidth  the width used by drawing code.
      * @param virtualHeight the height used by drawing code.
      */
     public SharpCanvas(double virtualWidth, double virtualHeight) {
@@ -34,6 +35,7 @@ public final class SharpCanvas extends Pane {
 
     /**
      * Prepares the canvas for a new frame.
+     *
      * @return a GraphicsContext that accepts virtual coordinates.
      */
     public GraphicsContext beginFrame() {

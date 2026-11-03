@@ -16,9 +16,10 @@ public final class NavigationShortcut implements EventHandler<KeyEvent> {
 
     /**
      * Creates a new NavigationShortcut.
-     * @param key the key that triggers the navigation.
+     *
+     * @param key       the key that triggers the navigation.
      * @param navigator the navigator used to change screen.
-     * @param target the screen to navigate to.
+     * @param target    the screen to navigate to.
      */
     public NavigationShortcut(KeyCode key, ScreenNavigator navigator, GameScreen target) {
         this.key = Objects.requireNonNull(key);

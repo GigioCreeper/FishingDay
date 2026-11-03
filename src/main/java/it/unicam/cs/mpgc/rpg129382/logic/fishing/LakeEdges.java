@@ -8,7 +8,8 @@ import java.util.Objects;
 
 /**
  * The left and right sides of an area, where things enter and leave it.
- * @param area the area things move across.
+ *
+ * @param area   the area things move across.
  * @param margin how far outside the area things enter and leave.
  */
 public record LakeEdges(Area area, double margin) {

@@ -20,6 +20,7 @@ public final class StageNavigator implements ScreenNavigator {
 
     /**
      * Creates a new StageNavigator and sets up the stage's scene.
+     *
      * @param stage the stage to use for navigation.
      */
     public StageNavigator(Stage stage) {
@@ -29,7 +30,8 @@ public final class StageNavigator implements ScreenNavigator {
 
     /**
      * Registers a game screen with the factory that creates it.
-     * @param screen the game screen to register.
+     *
+     * @param screen  the game screen to register.
      * @param factory the factory that creates the screen's content.
      */
     public void register(GameScreen screen, ScreenFactory factory) {
@@ -38,6 +40,7 @@ public final class StageNavigator implements ScreenNavigator {
 
     /**
      * Navigates to the specified game screen by creating its content and showing it in the viewport.
+     *
      * @param screen the game screen to navigate to.
      * @throws IllegalArgumentException if the screen is not registered.
      */

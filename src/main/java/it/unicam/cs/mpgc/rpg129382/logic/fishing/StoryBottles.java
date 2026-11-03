@@ -25,12 +25,12 @@ public final class StoryBottles {
     private double cooldown;
 
     /**
-     * @param story the story to be read from the bottles.
-     * @param edges the lake edges, used to spawn and remove bottles.
+     * @param story    the story to be read from the bottles.
+     * @param edges    the lake edges, used to spawn and remove bottles.
      * @param surfaceY the vertical position of the water surface.
-     * @param speed the speed at which the bottle drifts across the lake.
-     * @param delays the range of time between two consecutive bottles.
-     * @param random a source of randomness.
+     * @param speed    the speed at which the bottle drifts across the lake.
+     * @param delays   the range of time between two consecutive bottles.
+     * @param random   a source of randomness.
      */
     public StoryBottles(StoryProgress story, LakeEdges edges, double surfaceY, double speed,
                         DurationRange delays, Random random) {
@@ -75,6 +75,7 @@ public final class StoryBottles {
 
     /**
      * Takes the bottle out of the water and reads its message.
+     *
      * @return the message carrying the chapter of the story found in the bottle.
      * @throws IllegalStateException if there is no bottle on the lake.
      */

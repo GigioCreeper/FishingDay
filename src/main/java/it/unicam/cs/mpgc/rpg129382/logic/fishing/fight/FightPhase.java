@@ -27,6 +27,7 @@ public interface FightPhase {
 
     /**
      * Called once when the fight enters this phase.
+     *
      * @param fish the hooked fish.
      */
     default void enter(Fish fish) {
@@ -34,10 +35,11 @@ public interface FightPhase {
 
     /**
      * Advances the phase by one tick.
-     * @param fish the hooked fish, which the phase may turn.
+     *
+     * @param fish       the hooked fish, which the phase may turn.
      * @param directionX the horizontal direction pressed by the player.
      * @param directionY the vertical direction pressed by the player.
-     * @param delta the seconds elapsed since the last tick.
+     * @param delta      the seconds elapsed since the last tick.
      * @return how far the hook moves in this tick.
      */
     Displacement step(Fish fish, double directionX, double directionY, double delta);

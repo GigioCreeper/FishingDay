@@ -18,7 +18,8 @@ public final class LetterboxPane extends Pane {
 
     /**
      * Creates a new LetterboxPane with the specified virtual resolution.
-     * @param virtualWidth the width the content is designed for.
+     *
+     * @param virtualWidth  the width the content is designed for.
      * @param virtualHeight the height the content is designed for.
      */
     public LetterboxPane(double virtualWidth, double virtualHeight) {
@@ -35,6 +36,7 @@ public final class LetterboxPane extends Pane {
 
     /**
      * Replaces the displayed content.
+     *
      * @param content the new content, sized to the virtual resolution.
      */
     public void setContent(Parent content) {

@@ -25,8 +25,8 @@ public final class GameSession {
         this.storage = Objects.requireNonNull(storage);
     }
 
-    public void save(){
-        if(started){
+    public void save() {
+        if (started) {
             storage.save(snapshot());
         }
     }

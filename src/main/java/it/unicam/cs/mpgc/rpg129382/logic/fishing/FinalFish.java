@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
@@ -23,12 +23,12 @@ public final class FinalFish {
     private double cooldown;
 
     /**
-     * @param story the story the final fish concludes.
-     * @param type the type of the final fish.
-     * @param spawner where the final fish enters the water.
+     * @param story      the story the final fish concludes.
+     * @param type       the type of the final fish.
+     * @param spawner    where the final fish enters the water.
      * @param population the fishes of the lake, which the final fish joins.
-     * @param delays how long to wait before the final fish appears.
-     * @param random the source of randomness.
+     * @param delays     how long to wait before the final fish appears.
+     * @param random     the source of randomness.
      */
     public FinalFish(StoryProgress story, FishType type, FishSpawner spawner, FishPopulation population,
                      DurationRange delays, Random random) {

@@ -44,6 +44,7 @@ final class StoryPanel extends VBox {
 
     /**
      * Shows the panel with the given message.
+     *
      * @param message the message to show.
      */
     void show(StoryMessage message) {

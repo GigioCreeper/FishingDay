@@ -34,8 +34,8 @@ final class RodCard extends VBox {
     private final Button buyButton = new Button("Buy");
 
     /**
-     * @param rod the rod shown by the card.
-     * @param coin the coin icon shown next to the price.
+     * @param rod   the rod shown by the card.
+     * @param coin  the coin icon shown next to the price.
      * @param onBuy what to do when the player buys the rod.
      */
     RodCard(Rod rod, Image coin, Runnable onBuy) {
@@ -73,6 +73,7 @@ final class RodCard extends VBox {
 
     /**
      * Updates the card to show the given status.
+     *
      * @param status how the rod relates to the player.
      */
     void show(RodStatus status) {
