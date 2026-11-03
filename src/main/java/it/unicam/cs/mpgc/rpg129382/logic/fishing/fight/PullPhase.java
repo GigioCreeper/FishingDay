@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing.fight;
 
 import it.unicam.cs.mpgc.rpg129382.model.Displacement;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
 

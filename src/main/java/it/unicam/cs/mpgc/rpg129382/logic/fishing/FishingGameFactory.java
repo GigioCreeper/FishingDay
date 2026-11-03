@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.ControlPhase;
-import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.PullPhase;

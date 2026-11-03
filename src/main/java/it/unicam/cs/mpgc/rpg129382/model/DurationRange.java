@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic.fishing.fight;
+package it.unicam.cs.mpgc.rpg129382.model;
 
 import java.util.Random;
 

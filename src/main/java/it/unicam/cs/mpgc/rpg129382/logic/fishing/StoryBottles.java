@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
