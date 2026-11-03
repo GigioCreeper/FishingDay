@@ -10,6 +10,7 @@ public class Player {
 
     /**
      * Creates a new player.
+     *
      * @param startingRod the rod the player starts with.
      */
     public Player(Rod startingRod) {
@@ -26,6 +27,7 @@ public class Player {
 
     /**
      * Replaces the rod the player is using.
+     *
      * @param rod the new rod.
      */
     public void equip(Rod rod) {
@@ -43,6 +45,7 @@ public class Player {
         this.money += amount;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean canAfford(int amount) {
         return this.money >= amount;
     }
@@ -59,8 +62,9 @@ public class Player {
 
     /**
      * Puts the player back in a saved state, replacing what they have now.
-     * @param rod the rod to use.
-     * @param money the coins to own.
+     *
+     * @param rod    the rod to use.
+     * @param money  the coins to own.
      * @param fishes the fish to own, with their quantities.
      */
     public void restore(Rod rod, int money, Map<FishType, Integer> fishes) {

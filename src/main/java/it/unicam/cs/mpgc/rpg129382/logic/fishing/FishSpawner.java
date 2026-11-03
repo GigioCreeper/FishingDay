@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
@@ -11,17 +11,17 @@ import java.util.Random;
 
 public class FishSpawner {
     private final List<FishType> types;
-    private final Area water;
-    private final SpawnRules rules;
+    private final LakeEdges edges;
+    private final DurationRange delays;
     private final Random random;
 
-    public FishSpawner(List<FishType> types, Area water, SpawnRules rules, Random random) {
+    public FishSpawner(List<FishType> types, LakeEdges edges, DurationRange delays, Random random) {
         if (types.isEmpty()) {
             throw new IllegalArgumentException("at least one fish type is required");
         }
         this.types = List.copyOf(types);
-        this.water = Objects.requireNonNull(water);
-        this.rules = Objects.requireNonNull(rules);
+        this.edges = Objects.requireNonNull(edges);
+        this.delays = Objects.requireNonNull(delays);
         this.random = Objects.requireNonNull(random);
     }
 
@@ -35,20 +35,17 @@ public class FishSpawner {
      */
     public Fish spawn(FishType type) {
         Objects.requireNonNull(type);
-        Heading heading = random.nextBoolean() ? Heading.RIGHT : Heading.LEFT;
-        double x = heading == Heading.RIGHT
-                ? water.left() - rules.margin()
-                : water.right() + rules.margin();
-        double y = random.nextDouble(water.top(), water.bottom());
+        Heading heading = Heading.random(random);
+        double x = edges.entryX(heading);
+        double y = random.nextDouble(edges.area().top(), edges.area().bottom());
         return new Fish(type, heading, x, y);
     }
 
     public double nextSpawnDelay() {
-        return random.nextDouble(rules.minDelay(), rules.maxDelay());
+        return delays.next(random);
     }
 
     public boolean hasLeft(Fish fish) {
-        return fish.getX() < water.left() - rules.margin()
-                || fish.getX() > water.right() + rules.margin();
+        return edges.hasLeft(fish);
     }
 }

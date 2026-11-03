@@ -1,9 +1,8 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
-import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
-import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
 import it.unicam.cs.mpgc.rpg129382.model.MessageBottle;
 
@@ -17,9 +16,8 @@ import java.util.Random;
  */
 public final class StoryBottles {
     private final StoryProgress story;
-    private final Area water;
+    private final LakeEdges edges;
     private final double surfaceY;
-    private final double margin;
     private final double speed;
     private final DurationRange delays;
     private final Random random;
@@ -27,26 +25,21 @@ public final class StoryBottles {
     private double cooldown;
 
     /**
-     * @param story the story the bottles carry.
-     * @param water the water the bottles drift across.
-     * @param surfaceY the height at which the bottles float.
-     * @param margin how far outside the water bottles appear and disappear.
-     * @param speed how fast the bottles drift.
-     * @param delays how long to wait before a new bottle appears.
-     * @param random the source of randomness.
+     * @param story    the story to be read from the bottles.
+     * @param edges    the lake edges, used to spawn and remove bottles.
+     * @param surfaceY the vertical position of the water surface.
+     * @param speed    the speed at which the bottle drifts across the lake.
+     * @param delays   the range of time between two consecutive bottles.
+     * @param random   a source of randomness.
      */
-    public StoryBottles(StoryProgress story, Area water, double surfaceY, double margin, double speed,
+    public StoryBottles(StoryProgress story, LakeEdges edges, double surfaceY, double speed,
                         DurationRange delays, Random random) {
-        if (margin < 0) {
-            throw new IllegalArgumentException("margin must not be negative");
-        }
         if (speed <= 0) {
             throw new IllegalArgumentException("speed must be positive");
         }
         this.story = Objects.requireNonNull(story);
-        this.water = Objects.requireNonNull(water);
+        this.edges = Objects.requireNonNull(edges);
         this.surfaceY = surfaceY;
-        this.margin = margin;
         this.speed = speed;
         this.delays = Objects.requireNonNull(delays);
         this.random = Objects.requireNonNull(random);
@@ -63,7 +56,7 @@ public final class StoryBottles {
     public void update(double delta) {
         if (bottle != null) {
             bottle.drift(delta);
-            if (hasLeft(bottle)) {
+            if (edges.hasLeft(bottle)) {
                 removeBottle();
             }
             return;
@@ -82,6 +75,7 @@ public final class StoryBottles {
 
     /**
      * Takes the bottle out of the water and reads its message.
+     *
      * @return the message carrying the chapter of the story found in the bottle.
      * @throws IllegalStateException if there is no bottle on the lake.
      */
@@ -94,13 +88,9 @@ public final class StoryBottles {
     }
 
     private MessageBottle spawn() {
-        Heading heading = random.nextBoolean() ? Heading.RIGHT : Heading.LEFT;
-        double x = heading == Heading.RIGHT ? water.left() - margin : water.right() + margin;
+        Heading heading = Heading.random(random);
+        double x = edges.entryX(heading);
         return new MessageBottle(heading, speed, x, surfaceY);
-    }
-
-    private boolean hasLeft(MessageBottle bottle) {
-        return bottle.getX() < water.left() - margin || bottle.getX() > water.right() + margin;
     }
 
     private void removeBottle() {

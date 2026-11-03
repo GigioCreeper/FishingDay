@@ -32,6 +32,7 @@ public final class ResourceStoryBook implements StoryBook {
 
     /**
      * Loads the story from a properties file on the classpath.
+     *
      * @param baseName the name of the file without ".properties", e.g. "story".
      * @return the loaded story.
      */

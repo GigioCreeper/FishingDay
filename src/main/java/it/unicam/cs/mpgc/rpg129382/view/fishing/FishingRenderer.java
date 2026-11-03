@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.Heading;
 import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
@@ -35,12 +36,10 @@ final class FishingRenderer {
         this.hookImage = ImageLoader.loadImage("/images/hook.png");
         this.bottleImage = ImageLoader.loadImage("/images/story/bottle.png");
         this.fishSprites = new FishSprites(FISH_DRAW_WIDTH);
-        fishSprites.register(FishCatalog.PERCH, "perch");
-        fishSprites.register(FishCatalog.TROUT, "trout");
-        fishSprites.register(FishCatalog.PIKE, "pike");
-        fishSprites.register(FishCatalog.BASS, "bass");
-        fishSprites.register(FishCatalog.CHUB, "chub");
-        fishSprites.register(FishCatalog.LEGEND, "legend", FINAL_FISH_DRAW_WIDTH);
+        for (FishType type : FishCatalog.all()) {
+            fishSprites.register(type);
+        }
+        fishSprites.register(FishCatalog.LEGEND, FINAL_FISH_DRAW_WIDTH);
         this.hud = new FishingHud(state);
     }
 

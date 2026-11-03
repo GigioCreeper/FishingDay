@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
+import java.util.Random;
+
 public enum Heading {
     LEFT(-1),
     RIGHT(1);
@@ -12,5 +14,9 @@ public enum Heading {
 
     public int sign() {
         return sign;
+    }
+
+    public static Heading random(Random random) {
+        return random.nextBoolean() ? RIGHT : LEFT;
     }
 }

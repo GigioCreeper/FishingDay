@@ -33,14 +33,14 @@ public final class JsonSaveStorage implements SaveStorage {
 
     @Override
     public Optional<SaveData> load() {
-        if(Files.notExists(filePath)) {
+        if (Files.notExists(filePath)) {
             return Optional.empty();
         }
         try {
             return Optional.ofNullable(gson.fromJson(Files.readString(filePath), SaveData.class));
         } catch (IOException e) {
             throw new UncheckedIOException("Could not load the game", e);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return Optional.empty();
         }
     }

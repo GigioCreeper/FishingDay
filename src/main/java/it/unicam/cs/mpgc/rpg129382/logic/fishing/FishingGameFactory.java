@@ -3,12 +3,12 @@ package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.ControlPhase;
-import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.PullPhase;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
@@ -32,12 +32,10 @@ public final class FishingGameFactory {
         Objects.requireNonNull(random);
         Lake lake = createLake();
         Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
-        SpawnRules spawnRules = new SpawnRules(
-                GameConfig.FISH_SPAWN_MARGIN,
-                GameConfig.SPAWN_MIN_SECONDS,
-                GameConfig.SPAWN_MAX_SECONDS);
+        DurationRange spawnDelays = new DurationRange(GameConfig.SPAWN_MIN_SECONDS, GameConfig.SPAWN_MAX_SECONDS);
         Area spawnArea = new Area(0, GameConfig.WINDOW_WIDTH, GameConfig.FISH_SPAWN_TOP, GameConfig.WINDOW_HEIGHT);
-        FishSpawner spawner = new FishSpawner(FishCatalog.all(), spawnArea, spawnRules, random);
+        LakeEdges fishEdges = new LakeEdges(spawnArea, GameConfig.FISH_SPAWN_MARGIN);
+        FishSpawner spawner = new FishSpawner(FishCatalog.all(), fishEdges, spawnDelays, random);
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         StoryBottles bottles = createStoryBottles(story, lake.water(), random);
         FinalFish finalFish = new FinalFish(story, FishCatalog.LEGEND, spawner, population,
@@ -60,9 +58,8 @@ public final class FishingGameFactory {
     }
 
     private static StoryBottles createStoryBottles(StoryProgress story, Area water, Random random) {
-        return new StoryBottles(story, water,
+        return new StoryBottles(story, new LakeEdges(water, GameConfig.FISH_SPAWN_MARGIN),
                 GameConfig.BOTTLE_SURFACE_Y,
-                GameConfig.FISH_SPAWN_MARGIN,
                 GameConfig.BOTTLE_SPEED,
                 new DurationRange(GameConfig.BOTTLE_MIN_SECONDS, GameConfig.BOTTLE_MAX_SECONDS),
                 random);

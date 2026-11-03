@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Objects;
 
-public class FishingView extends Pane {
+final class FishingView extends Pane {
     private static final boolean SHOW_CATCH_ZONE = true;
 
     private final FishingState state;
@@ -21,7 +21,7 @@ public class FishingView extends Pane {
     private final Updatable game;
     private final AnimationTimer timer;
 
-    public FishingView(FishingState state, FishingCommands commands, Updatable game, Runnable onStoryEnd) {
+    FishingView(FishingState state, FishingCommands commands, Updatable game, Runnable onStoryEnd) {
         this.state = Objects.requireNonNull(state);
         this.game = Objects.requireNonNull(game);
         Objects.requireNonNull(onStoryEnd);

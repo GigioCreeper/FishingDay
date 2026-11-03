@@ -26,7 +26,7 @@ public class CatchDetector {
     }
 
     /**
-     * @param hook the hook.
+     * @param hook   the hook.
      * @param target something in the water.
      * @return true if the target is close enough to the hook to be caught.
      */

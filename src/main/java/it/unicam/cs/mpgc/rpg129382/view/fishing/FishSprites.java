@@ -10,50 +10,57 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Chooses the sprite of each fish by its type, falling back to a default one.
- * Giving a new fish type its own look only requires registering its sprites.
+ * Loads and stores the sprites used to draw fishes.
  */
 final class FishSprites {
+    private static final int COLUMNS = 2;
+    private static final int ROWS = 2;
     private final double defaultWidth;
-    private final Sprites fallback;
-    private final Map<FishType, Sprites> byTypeName = new HashMap<>();
+    private final Map<FishType, Sprites> byType = new HashMap<>();
 
     /**
      * @param defaultWidth how wide fishes are drawn, unless registered with their own width.
      */
     FishSprites(double defaultWidth) {
         this.defaultWidth = defaultWidth;
-        this.fallback = load("trout", defaultWidth);
     }
 
-    void register(FishType typeName, String imageName) {
-        register(typeName, imageName, defaultWidth);
+    void register(FishType type) {
+        register(type, defaultWidth);
     }
 
-    void register(FishType typeName, String imageName, double width) {
-        byTypeName.put(Objects.requireNonNull(typeName), load(imageName, width));
+    void register(FishType type, double width) {
+        byType.put(Objects.requireNonNull(type), load(type.name(), width));
     }
 
     double widthFor(ReadOnlyFish fish) {
-        return byTypeName.getOrDefault(fish.getType(), fallback).width();
+        return spritesFor(fish).width();
     }
 
     SpriteSheet spriteFor(ReadOnlyFish fish) {
-        Sprites sprites = byTypeName.getOrDefault(fish.getType(), fallback);
+        Sprites sprites = spritesFor(fish);
         return fish.isHooked() ? sprites.hooked() : sprites.swimming();
+    }
+
+    private Sprites spritesFor(ReadOnlyFish fish) {
+        Sprites sprites = byType.get(fish.getType());
+        if (sprites == null) {
+            throw new IllegalStateException("No sprites registered for " + fish.getType().name());
+        }
+        return sprites;
     }
 
     private static Sprites load(String imageName, double width) {
         String hookedName = "hooked" + Character.toUpperCase(imageName.charAt(0)) + imageName.substring(1);
         SpriteSheet swimming = sheet(imageName);
         SpriteSheet hooked = ImageLoader.findImage("/images/" + hookedName + ".png")
-                .map(img -> new SpriteSheet(img, 2, 2))
+                .map(img -> new SpriteSheet(img, COLUMNS, ROWS))
                 .orElse(swimming);
         return new Sprites(swimming, hooked, width);
     }
 
     private static SpriteSheet sheet(String imageName) {
-        return new SpriteSheet(ImageLoader.loadImage("/images/" + imageName + ".png"), 2, 2);
+        return new SpriteSheet(ImageLoader.loadImage("/images/" + imageName + ".png"), COLUMNS, ROWS);
     }
 
     private record Sprites(SpriteSheet swimming, SpriteSheet hooked, double width) {

@@ -18,8 +18,9 @@ public final class ShopScreenFactory implements ScreenFactory {
 
     /**
      * Creates a new ShopScreenFactory.
-     * @param shop the shop rules.
-     * @param player the player who uses the shop.
+     *
+     * @param shop      the shop rules.
+     * @param player    the player who uses the shop.
      * @param navigator the navigator used to leave the shop.
      */
     public ShopScreenFactory(Shop shop, Player player, ScreenNavigator navigator) {
@@ -30,6 +31,7 @@ public final class ShopScreenFactory implements ScreenFactory {
 
     /**
      * Creates and returns the content of the shop screen.
+     *
      * @return the Parent node representing the shop screen.
      * @throws UncheckedIOException if there is an error loading the FXML file.
      */

@@ -7,6 +7,7 @@ public interface Updatable {
 
     /**
      * Advances by one tick.
+     *
      * @param delta the seconds elapsed since the last tick.
      */
     void update(double delta);

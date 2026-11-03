@@ -45,8 +45,9 @@ public final class ShopController {
 
     /**
      * Creates a new ShopController.
-     * @param shop the shop rules.
-     * @param player the player who uses the shop.
+     *
+     * @param shop      the shop rules.
+     * @param player    the player who uses the shop.
      * @param navigator the navigator used to leave the shop.
      */
     public ShopController(Shop shop, Player player, ScreenNavigator navigator) {

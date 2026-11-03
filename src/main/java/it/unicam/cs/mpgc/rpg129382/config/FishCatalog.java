@@ -20,7 +20,8 @@ public final class FishCatalog {
 
     private static final List<FishType> TYPES = List.of(PERCH, TROUT, PIKE, BASS, CHUB);
 
-    private FishCatalog() {}
+    private FishCatalog() {
+    }
 
     public static List<FishType> all() {
         return TYPES;

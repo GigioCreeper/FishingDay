@@ -16,7 +16,8 @@ public final class FullScreenToggle implements EventHandler<KeyEvent> {
 
     /**
      * Creates a new FullScreenToggle.
-     * @param stage the stage whose full screen mode is toggled.
+     *
+     * @param stage     the stage whose full screen mode is toggled.
      * @param toggleKey the key that toggles full screen.
      */
     public FullScreenToggle(Stage stage, KeyCode toggleKey) {
@@ -27,6 +28,7 @@ public final class FullScreenToggle implements EventHandler<KeyEvent> {
     /**
      * Switches the stage between windowed and full screen mode
      * when the toggle key is pressed.
+     *
      * @param event the key event to handle.
      */
     @Override

@@ -15,7 +15,8 @@ public final class RodCatalog {
 
     private static final List<Rod> LEVELS = List.of(BAMBOO, FIBERGLASS, CARBON);
 
-    private RodCatalog() {}
+    private RodCatalog() {
+    }
 
     /**
      * @return every rod, from the starting one to the best one.
