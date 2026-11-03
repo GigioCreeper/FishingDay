@@ -32,12 +32,10 @@ public final class FishingGameFactory {
         Objects.requireNonNull(random);
         Lake lake = createLake();
         Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
-        SpawnRules spawnRules = new SpawnRules(
-                GameConfig.SPAWN_MIN_SECONDS,
-                GameConfig.SPAWN_MAX_SECONDS);
+        DurationRange spawnDelays = new DurationRange(GameConfig.SPAWN_MIN_SECONDS, GameConfig.SPAWN_MAX_SECONDS);
         Area spawnArea = new Area(0, GameConfig.WINDOW_WIDTH, GameConfig.FISH_SPAWN_TOP, GameConfig.WINDOW_HEIGHT);
         LakeEdges fishEdges = new LakeEdges(spawnArea, GameConfig.FISH_SPAWN_MARGIN);
-        FishSpawner spawner = new FishSpawner(FishCatalog.all(), fishEdges, spawnRules, random);
+        FishSpawner spawner = new FishSpawner(FishCatalog.all(), fishEdges, spawnDelays, random);
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         StoryBottles bottles = createStoryBottles(story, lake.water(), random);
         FinalFish finalFish = new FinalFish(story, FishCatalog.LEGEND, spawner, population,

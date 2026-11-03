@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.*;
 
 import java.util.List;
@@ -9,16 +10,16 @@ import java.util.Random;
 public class FishSpawner {
     private final List<FishType> types;
     private final LakeEdges edges;
-    private final SpawnRules rules;
+    private final DurationRange delays;
     private final Random random;
 
-    public FishSpawner(List<FishType> types, LakeEdges edges, SpawnRules rules, Random random) {
+    public FishSpawner(List<FishType> types, LakeEdges edges, DurationRange delays, Random random) {
         if (types.isEmpty()) {
             throw new IllegalArgumentException("at least one fish type is required");
         }
         this.types = List.copyOf(types);
         this.edges = Objects.requireNonNull(edges);
-        this.rules = Objects.requireNonNull(rules);
+        this.delays = Objects.requireNonNull(delays);
         this.random = Objects.requireNonNull(random);
     }
 
@@ -39,7 +40,7 @@ public class FishSpawner {
     }
 
     public double nextSpawnDelay() {
-        return random.nextDouble(rules.minDelay(), rules.maxDelay());
+        return delays.next(random);
     }
 
     public boolean hasLeft(Fish fish) {
