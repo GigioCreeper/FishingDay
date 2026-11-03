@@ -20,18 +20,13 @@ public class Inventory {
         fishes.merge(type, count, Integer::sum);
     }
 
-    public int count(FishType type) {
-        return fishes.getOrDefault(type, 0);
-    }
 
     public int totalCount() {
         return fishes.values().stream().mapToInt(Integer::intValue).sum();
     }
 
     public int totalValue() {
-        return fishes.entrySet().stream()
-                .mapToInt(entry -> entry.getKey().value() * entry.getValue())
-                .sum();
+        return fishes.entrySet().stream().mapToInt(entry -> entry.getKey().value() * entry.getValue()).sum();
     }
 
     public Map<FishType, Integer> getFishes() {
