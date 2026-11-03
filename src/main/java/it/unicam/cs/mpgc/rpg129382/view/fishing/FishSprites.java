@@ -25,12 +25,12 @@ final class FishSprites {
         this.defaultWidth = defaultWidth;
     }
 
-    void register(FishType type, String imageName) {
-        register(type, imageName, defaultWidth);
+    void register(FishType type) {
+        register(type, defaultWidth);
     }
 
-    void register(FishType type, String imageName, double width) {
-        byType.put(Objects.requireNonNull(type), load(imageName, width));
+    void register(FishType type, double width) {
+        byType.put(Objects.requireNonNull(type), load(type.name(), width));
     }
 
     double widthFor(ReadOnlyFish fish) {
