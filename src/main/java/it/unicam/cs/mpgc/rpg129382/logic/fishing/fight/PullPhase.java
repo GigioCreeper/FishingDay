@@ -45,7 +45,7 @@ public final class PullPhase implements FightPhase {
 
     @Override
     public void enter(Fish fish) {
-        fish.face(random.nextBoolean() ? Heading.RIGHT : Heading.LEFT);
+        fish.face(Heading.random(random));
     }
 
     @Override
