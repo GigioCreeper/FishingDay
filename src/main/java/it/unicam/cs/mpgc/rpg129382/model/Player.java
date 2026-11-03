@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Player {
@@ -54,5 +55,22 @@ public class Player {
             throw new IllegalArgumentException("Not enough money");
         }
         this.money -= amount;
+    }
+
+    /**
+     * Puts the player back in a saved state, replacing what they have now.
+     * @param rod the rod to use.
+     * @param money the coins to own.
+     * @param fishes the fish to own, with their quantities.
+     */
+    public void restore(Rod rod, int money, Map<FishType, Integer> fishes) {
+        Objects.requireNonNull(fishes);
+        if (money < 0) {
+            throw new IllegalArgumentException("Amount must be non-negative");
+        }
+        equip(rod);
+        this.money = money;
+        inventory.clear();
+        fishes.forEach(inventory::add);
     }
 }

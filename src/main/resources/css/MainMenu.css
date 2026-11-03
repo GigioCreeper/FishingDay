@@ -74,3 +74,7 @@
 .main-button.exit-button:focused:hover {
     -fx-background-color: #f2c14e, #3a1210, linear-gradient(to bottom, #cc5a4a, #92342a);
 }
+/* Overlay for confirming a new game: semi-transparent black, covering the whole menu. */
+.dialog-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.55);
+}

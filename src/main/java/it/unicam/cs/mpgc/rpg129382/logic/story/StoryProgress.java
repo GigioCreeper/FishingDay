@@ -74,6 +74,31 @@ public final class StoryProgress {
         concluded = true;
         return new StoryMessage(StoryMessage.Kind.DEFEAT, book.defeat());
     }
+    public int getChaptersRead() {
+        return chaptersRead;
+    }
+
+    public boolean isConcluded() {
+        return concluded;
+    }
+
+    public int chapterCount() {
+        return book.chapterCount();
+    }
+
+    /**
+     * Puts the story back in a saved state.
+     * @param chaptersRead how many chapters the player has read.
+     * @param concluded true if the story has reached an ending.
+     * @throws IllegalArgumentException if the book has fewer chapters.
+     */
+    public void restore(int chaptersRead, boolean concluded) {
+        if (chaptersRead < 0 || chaptersRead > book.chapterCount()) {
+            throw new IllegalArgumentException("Invalid chapters read: " + chaptersRead);
+        }
+        this.chaptersRead = chaptersRead;
+        this.concluded = concluded;
+    }
 
     private void requireFinal() {
         if (!awaitsFinal()) {

@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.view.menu;
 
+import it.unicam.cs.mpgc.rpg129382.persistence.GameSession;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
 import javafx.fxml.FXMLLoader;
@@ -11,14 +12,16 @@ import java.util.Objects;
 
 public final class MainMenuScreenFactory implements ScreenFactory {
     private final ScreenNavigator navigator;
-
+    private final GameSession session;
 
     /**
-     * Creates a new MainMenuScreenFactory with the specified ScreenNavigator.
+     * Creates a new MainMenuScreenFactory.
      * @param navigator the ScreenNavigator to use for navigation.
+     * @param session the game session the menu starts and saves.
      */
-    public MainMenuScreenFactory(ScreenNavigator navigator) {
+    public MainMenuScreenFactory(ScreenNavigator navigator, GameSession session) {
         this.navigator = Objects.requireNonNull(navigator);
+        this.session = Objects.requireNonNull(session);
     }
 
 
@@ -30,10 +33,13 @@ public final class MainMenuScreenFactory implements ScreenFactory {
     @Override
     public Parent createScreen() {
         try {
+            // Every way back to the menu passes here, and Continue must see the latest save.
+            session.save();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
             Parent root = loader.load();
             MainMenuController controller = loader.getController();
             controller.setScreenNavigator(navigator);
+            controller.setGameSession(session);
             return root;
         } catch (IOException e) {
             throw new UncheckedIOException("Could not load MainMenu.fxml", e);
