@@ -20,7 +20,6 @@ public record Area(double left, double right, double top, double bottom) {
     }
 
     /**
-     *
      * @param x the horizontal position.
      * @param y the vertical position.
      * @return true if the point is inside the area or on its borders.

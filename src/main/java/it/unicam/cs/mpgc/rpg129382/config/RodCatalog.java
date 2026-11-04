@@ -9,8 +9,11 @@ import java.util.Optional;
  * The rods the player can own, ordered from the starting one to the best one.
  */
 public final class RodCatalog {
+    /** The free rod the player starts with. */
     public static final Rod BAMBOO = new Rod("Bamboo", 0, 75);
+    /** The first upgrade. */
     public static final Rod FIBERGLASS = new Rod("Fiberglass", 120, 110);
+    /** The best rod: it unlocks the last chapter of the story, and with it the final fish. */
     public static final Rod CARBON = new Rod("Carbon", 350, 200);
 
     private static final List<Rod> LEVELS = List.of(BAMBOO, FIBERGLASS, CARBON);
