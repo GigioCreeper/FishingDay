@@ -14,6 +14,9 @@ import java.util.Objects;
  */
 public record LakeEdges(Area area, double margin) {
 
+    /**
+     * @throws IllegalArgumentException if the margin is negative.
+     */
     public LakeEdges {
         Objects.requireNonNull(area);
         if (margin < 0) {
@@ -21,12 +24,20 @@ public record LakeEdges(Area area, double margin) {
         }
     }
 
+    /**
+     * @param heading the direction something will move to.
+     * @return the horizontal position, just outside the area, where it must enter to move that way.
+     */
     double entryX(Heading heading) {
         return heading == Heading.RIGHT
                 ? area.left() - margin
                 : area.right() + margin;
     }
 
+    /**
+     * @param thing something moving across the area.
+     * @return true if it is farther than the margin from one of the sides.
+     */
     boolean hasLeft(Positioned thing) {
         return thing.getX() < area.left() - margin
                 || thing.getX() > area.right() + margin;
