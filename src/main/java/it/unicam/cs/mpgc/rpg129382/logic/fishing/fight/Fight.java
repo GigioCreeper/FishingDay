@@ -18,6 +18,13 @@ public class Fight {
     private int currentIndex;
     private double timeLeft;
 
+    /**
+     * Starts the fight from the first phase.
+     *
+     * @param fish   the hooked fish.
+     * @param phases the phases of the fight, in the order they repeat.
+     * @throws IllegalArgumentException if there are no phases.
+     */
     public Fight(Fish fish, List<FightPhase> phases) {
         this.fish = Objects.requireNonNull(fish);
         Objects.requireNonNull(phases);
@@ -28,22 +35,45 @@ public class Fight {
         enterPhase(0);
     }
 
+    /**
+     * @return the hooked fish.
+     */
     public Fish getFish() {
         return fish;
     }
 
+    /**
+     * @return true if, in the current phase, the fish is pulling and the player has no control.
+     */
     public boolean isFishPulling() {
         return currentPhase().isFishPulling();
     }
 
+    /**
+     * @return true if, in the current phase, the hook must be kept inside the water.
+     */
     public boolean keepsHookInWater() {
         return currentPhase().keepsHookInWater();
     }
 
+    /**
+     * Asks the current phase how the hook moves in this tick.
+     *
+     * @param directionX the horizontal direction pressed by the player.
+     * @param directionY the vertical direction pressed by the player.
+     * @param delta      the seconds elapsed since the last tick.
+     * @return how far the hook moves in this tick.
+     */
     public Displacement step(double directionX, double directionY, double delta) {
         return currentPhase().step(fish, directionX, directionY, delta);
     }
 
+    /**
+     * Lets time pass, and moves on to the next phase when the current one is over;
+     * after the last phase the first one comes back.
+     *
+     * @param delta the seconds elapsed since the last tick.
+     */
     public void update(double delta) {
         timeLeft -= delta;
         if (timeLeft <= 0) {
@@ -52,6 +82,9 @@ public class Fight {
     }
 
     /**
+     * Decides how the fight is going: the line breaks if the hook has left the water,
+     * the fish is caught if it has reached the catch zone.
+     *
      * @param hook the hook holding the fish.
      * @param lake the lake where the fight takes place.
      * @return whether the line broke, the fish was caught or the fight goes on.

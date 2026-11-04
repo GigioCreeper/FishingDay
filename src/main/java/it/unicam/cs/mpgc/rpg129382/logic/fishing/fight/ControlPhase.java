@@ -8,11 +8,21 @@ import it.unicam.cs.mpgc.rpg129382.model.Heading;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * The phase in which the fish rests and the player moves the hook, slowly, to bring the fish
+ * towards the catch zone. The fish turns to face the direction it is dragged to.
+ */
 public final class ControlPhase implements FightPhase {
     private final Random random;
     private final DurationRange durations;
     private final double hookedSpeed;
 
+    /**
+     * @param random      the source of randomness.
+     * @param durations   how long the phase can last.
+     * @param hookedSpeed how fast the player moves the hook, in pixels per second.
+     * @throws IllegalArgumentException if the speed is not positive.
+     */
     public ControlPhase(Random random, DurationRange durations, double hookedSpeed) {
         if (hookedSpeed <= 0) {
             throw new IllegalArgumentException("hookedSpeed must be positive");

@@ -16,7 +16,8 @@ public interface FightPhase {
     boolean isFishPulling();
 
     /**
-     * @return true if the hook must be kept inside the water during this phase.
+     * @return true if the hook must be kept inside the water during this phase;
+     * if false, the hook can leave it and the line breaks.
      */
     boolean keepsHookInWater();
 
