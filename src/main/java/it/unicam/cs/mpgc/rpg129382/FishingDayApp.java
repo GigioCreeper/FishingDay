@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 
 import java.nio.file.Path;
 
-public class Main extends Application {
+public class FishingDayApp extends Application {
     private static final Path SAVE_FILE = Path.of(System.getProperty("user.home"), ".fishingday", "save.json");
 
     private GameSession session;
@@ -48,9 +48,5 @@ public class Main extends Application {
     @Override
     public void stop() {
         session.save();
-    }
-
-    static void main(String[] args) {
-        launch(args);
     }
 }

@@ -28,6 +28,6 @@ javafx {
 }
 
 application {
-    mainClass.set("it.unicam.cs.mpgc.rpg129382.Main")
+    mainClass.set("it.unicam.cs.mpgc.rpg129382.Launcher")
     applicationDefaultJvmArgs = listOf("--enable-native-access=javafx.graphics")
 }
