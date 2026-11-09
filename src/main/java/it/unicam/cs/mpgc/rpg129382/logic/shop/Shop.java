@@ -59,9 +59,8 @@ public final class Shop {
         return RodStatus.LOCKED;
     }
 
-
     /**
-     * Buys the next rod level and equips it, if the player can afford it.
+     * Buys the next rod and equips it, if there is one and the player can afford it.
      *
      * @param player the player who buys.
      * @return the result of the purchase.
