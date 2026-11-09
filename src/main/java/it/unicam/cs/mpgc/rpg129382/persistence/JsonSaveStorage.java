@@ -10,10 +10,19 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Saves the game in a JSON file.
+ * The file is first written next to the old one and then moved over it in a single step,
+ * so that a crash while saving never leaves a half-written save.
+ * A file that is not valid JSON, or that holds invalid data, is treated as no save at all.
+ */
 public final class JsonSaveStorage implements SaveStorage {
     private final Gson gson = new Gson();
     private final Path filePath;
 
+    /**
+     * @param filePath the file where the game is saved; its folder is created when needed.
+     */
     public JsonSaveStorage(Path filePath) {
         this.filePath = Objects.requireNonNull(filePath);
     }
