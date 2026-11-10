@@ -5,10 +5,8 @@ import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.model.Area;
-import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
-import it.unicam.cs.mpgc.rpg129382.model.Movable;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.model.Positioned;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
@@ -23,8 +21,7 @@ import java.util.Optional;
  * each catch; while a story message is open, the session is paused.
  */
 public class FishingGame implements FishingState, FishingCommands, Updatable {
-    private final Movable hook;
-    private final double hookSpeed;
+    private final HookControl hookControl;
     private final FishPopulation population;
     private final StoryBottles bottles;
     private final FinalFish finalFish;
@@ -41,8 +38,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     /**
      * Creates a game with no fish on the hook and no story message open.
      *
-     * @param hook              the hook the player moves.
-     * @param hookSpeed         how fast the free hook moves, in pixels per second.
+     * @param hookControl       moves the hook the player controls.
      * @param population        the common fishes of the lake.
      * @param bottles           the bottles that carry the story.
      * @param finalFish         the final fish of the story.
@@ -51,19 +47,15 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
      * @param player            the player, who gets the caught fishes and pays the penalties.
      * @param fightFactory      creates the fight when a fish gets hooked.
      * @param lineBrokenPenalty the coins the player loses when the line breaks.
-     * @throws IllegalArgumentException if the hook speed is not positive or the penalty is negative.
+     * @throws IllegalArgumentException if the penalty is negative.
      */
-    public FishingGame(Movable hook, double hookSpeed, FishPopulation population, StoryBottles bottles,
+    public FishingGame(HookControl hookControl, FishPopulation population, StoryBottles bottles,
                        FinalFish finalFish, CatchDetector catchDetector, Lake lake, Player player,
                        FightFactory fightFactory, int lineBrokenPenalty) {
-        if (hookSpeed <= 0) {
-            throw new IllegalArgumentException("hookSpeed must be positive");
-        }
         if (lineBrokenPenalty < 0) {
             throw new IllegalArgumentException("lineBrokenPenalty must not be negative");
         }
-        this.hook = Objects.requireNonNull(hook);
-        this.hookSpeed = hookSpeed;
+        this.hookControl = Objects.requireNonNull(hookControl);
         this.population = Objects.requireNonNull(population);
         this.bottles = Objects.requireNonNull(bottles);
         this.finalFish = Objects.requireNonNull(finalFish);
@@ -76,7 +68,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
 
     @Override
     public Positioned getHook() {
-        return hook;
+        return hookControl.getHook();
     }
 
     @Override
@@ -145,33 +137,21 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
 
     private void moveHook(double delta) {
         if (fight == null) {
-            moveFreeHook(delta);
+            hookControl.moveFree(directionX, directionY, delta);
             return;
         }
-        Displacement displacement = fight.step(directionX, directionY, delta);
-        hook.move(displacement.dx(), displacement.dy());
+        hookControl.move(fight.step(directionX, directionY, delta));
         if (fight.keepsHookInWater()) {
-            keepHookInWater();
+            hookControl.keepInWater();
         }
-    }
-
-    private void moveFreeHook(double delta) {
-        double distance = hookSpeed * delta;
-        hook.move(directionX * distance, directionY * distance);
-        keepHookInWater();
-    }
-
-    private void keepHookInWater() {
-        Area water = lake.water();
-        hook.move(water.clampX(hook.getX()) - hook.getX(), water.clampY(hook.getY()) - hook.getY());
     }
 
     private void updateFight(double delta) {
         if (fight == null) {
-            catchDetector.findCatch(hook, population.getFishes()).ifPresent(this::startFight);
+            catchDetector.findCatch(hookControl.getHook(), population.getFishes()).ifPresent(this::startFight);
         } else {
             fight.update(delta);
-            attachToHook(fight.getFish());
+            hookControl.attach(fight.getFish());
         }
         if (fight != null) {
             resolveFight();
@@ -183,23 +163,19 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
             return;
         }
         bottles.getBottle()
-                .filter(bottle -> catchDetector.touches(hook, bottle))
+                .filter(bottle -> catchDetector.touches(hookControl.getHook(), bottle))
                 .ifPresent(_ -> storyMessage = bottles.pickUp());
     }
 
     private void startFight(Fish fish) {
         fish.hook();
         fight = fightFactory.create(fish);
-        attachToHook(fish);
-    }
-
-    private void attachToHook(Fish fish) {
-        fish.move(hook.getX() - fish.getX(), hook.getY() - fish.getY());
+        hookControl.attach(fish);
     }
 
     private void resolveFight() {
         Fish fish = fight.getFish();
-        switch (fight.outcome(hook, lake)) {
+        switch (fight.outcome(hookControl.getHook(), lake)) {
             case CAUGHT -> {
                 endFight();
                 if (finalFish.is(fish)) {
@@ -211,7 +187,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
             case LINE_BROKEN -> {
                 endFight();
                 payLineBrokenPenalty();
-                keepHookInWater();
+                hookControl.keepInWater();
                 if (finalFish.is(fish)) {
                     storyMessage = finalFish.escaped();
                 }
