@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Objects;
 
+/**
+ * Creates the main menu screen from its FXML file.
+ */
 public final class MainMenuScreenFactory implements ScreenFactory {
     private final ScreenNavigator navigator;
     private final GameSession session;
@@ -24,7 +27,6 @@ public final class MainMenuScreenFactory implements ScreenFactory {
         this.navigator = Objects.requireNonNull(navigator);
         this.session = Objects.requireNonNull(session);
     }
-
 
     /**
      * Creates and returns the content of the main menu screen.

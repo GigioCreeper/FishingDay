@@ -1,31 +1,30 @@
 package it.unicam.cs.mpgc.rpg129382.logic.story;
 
-import it.unicam.cs.mpgc.rpg129382.config.RodCatalog;
-import it.unicam.cs.mpgc.rpg129382.model.Player;
-
 import java.util.Objects;
+import java.util.function.IntSupplier;
 
 /**
  * Keeps track of how far the player has read the story.
- * The first chapter is unlocked from the start, every rod upgrade unlocks one more.
+ * How many chapters can be read is decided from outside; the story never unlocks more than it has.
  * Once every chapter is read the final fish awakes: the story is concluded when the player
  * catches it or when it breaks the line.
  */
 public final class StoryProgress {
     private final StoryBook book;
-    private final Player player;
+    private final IntSupplier unlockedChapters;
     private int chaptersRead;
     private boolean concluded;
 
     /**
      * Creates the progress of a story that has not been read yet.
      *
-     * @param book   the texts of the story.
-     * @param player the player whose rod unlocks the chapters.
+     * @param book             the texts of the story.
+     * @param unlockedChapters tells how many chapters the player can read now; it is asked again
+     *                         every time, so the count can grow while the game goes on.
      */
-    public StoryProgress(StoryBook book, Player player) {
+    public StoryProgress(StoryBook book, IntSupplier unlockedChapters) {
         this.book = Objects.requireNonNull(book);
-        this.player = Objects.requireNonNull(player);
+        this.unlockedChapters = Objects.requireNonNull(unlockedChapters);
     }
 
     /**
@@ -124,6 +123,6 @@ public final class StoryProgress {
     }
 
     private int unlockedChapters() {
-        return Math.min(RodCatalog.levelOf(player.getRod()) + 1, book.chapterCount());
+        return Math.min(unlockedChapters.getAsInt(), book.chapterCount());
     }
 }

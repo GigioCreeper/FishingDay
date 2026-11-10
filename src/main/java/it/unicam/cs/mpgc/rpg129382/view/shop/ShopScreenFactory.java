@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Objects;
 
+/**
+ * Creates the shop screen from its FXML file.
+ */
 public final class ShopScreenFactory implements ScreenFactory {
     private final Shop shop;
     private final Player player;
