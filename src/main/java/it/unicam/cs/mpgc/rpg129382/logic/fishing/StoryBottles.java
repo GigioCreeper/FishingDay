@@ -25,6 +25,8 @@ public final class StoryBottles {
     private double cooldown;
 
     /**
+     * Creates the bottles: the first one appears after a random wait.
+     *
      * @param story    the story to be read from the bottles.
      * @param edges    the lake edges, used to spawn and remove bottles.
      * @param surfaceY the height at which the bottles float.
@@ -48,7 +50,7 @@ public final class StoryBottles {
     }
 
     /**
-     * @return the bottle drifting on the lake, if any.
+     * {@return the bottle drifting on the lake, if any}
      */
     public Optional<MessageBottle> getBottle() {
         return Optional.ofNullable(bottle);

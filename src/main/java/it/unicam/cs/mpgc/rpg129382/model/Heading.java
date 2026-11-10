@@ -22,15 +22,16 @@ public enum Heading {
     }
 
     /**
-     * @return -1 for {@link #LEFT} and 1 for {@link #RIGHT}, to turn a speed into a horizontal offset.
+     * {@return -1 for {@link #LEFT} and 1 for {@link #RIGHT}, to turn a speed into a horizontal offset}
      */
     public int sign() {
         return sign;
     }
 
     /**
+     * {@return one of the two headings, with the same probability}
+     *
      * @param random the source of randomness.
-     * @return one of the two headings, with the same probability.
      */
     public static Heading random(Random random) {
         return random.nextBoolean() ? RIGHT : LEFT;

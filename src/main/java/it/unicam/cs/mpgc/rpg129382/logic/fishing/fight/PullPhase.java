@@ -24,6 +24,8 @@ public final class PullPhase implements FightPhase {
     private final double rodPower;
 
     /**
+     * Creates a pull phase for the given rod.
+     *
      * @param random    the source of randomness, also used to choose where the fish pulls.
      * @param durations how long the phase can last.
      * @param rodPower  the power of the rod the player is using.

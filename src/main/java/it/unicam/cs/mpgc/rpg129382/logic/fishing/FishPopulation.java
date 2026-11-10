@@ -18,6 +18,8 @@ public class FishPopulation {
     private double spawnCooldown;
 
     /**
+     * Creates an empty population: the first fish arrives after a random wait.
+     *
      * @param spawner where new fishes come from.
      * @param maxFish how many fishes the spawner can put in the lake at the same time.
      * @throws IllegalArgumentException if maxFish is not positive.
@@ -32,7 +34,7 @@ public class FishPopulation {
     }
 
     /**
-     * @return the fishes in the lake; the list cannot be modified.
+     * {@return the fishes in the lake; the list cannot be modified}
      */
     public List<Fish> getFishes() {
         return Collections.unmodifiableList(fishes);

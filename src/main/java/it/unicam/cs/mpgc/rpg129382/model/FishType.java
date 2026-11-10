@@ -13,6 +13,8 @@ import java.util.Objects;
 public record FishType(String name, int value, double speed, double strength) {
 
     /**
+     * Creates a type of fish, checking its characteristics.
+     *
      * @throws IllegalArgumentException if the name is blank, the value is negative,
      *                                  or the speed or the strength are not positive.
      */

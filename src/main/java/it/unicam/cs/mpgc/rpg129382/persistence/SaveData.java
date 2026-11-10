@@ -16,6 +16,8 @@ import java.util.Objects;
 public record SaveData(int money, String rodName, Map<String, Integer> fishes, int chaptersRead,
                        boolean storyCompleted) {
     /**
+     * Creates a save, checking that its data is complete and makes sense.
+     *
      * @throws NullPointerException     if the rod name or the fishes are missing.
      * @throws IllegalArgumentException if the money or the chapters read are negative,
      *                                  or a fish count is not positive.

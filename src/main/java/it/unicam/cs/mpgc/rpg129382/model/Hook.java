@@ -8,6 +8,8 @@ public class Hook implements Movable {
     private double y;
 
     /**
+     * Creates a hook at the given position.
+     *
      * @param x the starting horizontal position.
      * @param y the starting vertical position.
      */

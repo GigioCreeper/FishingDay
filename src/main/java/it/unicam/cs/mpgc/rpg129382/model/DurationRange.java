@@ -11,6 +11,8 @@ import java.util.Random;
 public record DurationRange(double min, double max) {
 
     /**
+     * Creates a range.
+     *
      * @throws IllegalArgumentException if min is not positive or max is less than min.
      */
     public DurationRange {
@@ -20,8 +22,9 @@ public record DurationRange(double min, double max) {
     }
 
     /**
+     * {@return a random duration between min and max, or exactly min if they are equal}
+     *
      * @param random the source of randomness.
-     * @return a random duration between min and max, or exactly min if they are equal.
      */
     public double next(Random random) {
         return min == max ? min : random.nextDouble(min, max);

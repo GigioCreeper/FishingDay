@@ -12,6 +12,12 @@ public class Inventory {
     private final Map<FishType, Integer> fishes = new LinkedHashMap<>();
 
     /**
+     * Creates an empty inventory.
+     */
+    public Inventory() {
+    }
+
+    /**
      * Adds one fish.
      *
      * @param type the type of the fish.
@@ -36,21 +42,21 @@ public class Inventory {
     }
 
     /**
-     * @return how many fish there are, of every type.
+     * {@return how many fish there are, of every type}
      */
     public int totalCount() {
         return fishes.values().stream().mapToInt(Integer::intValue).sum();
     }
 
     /**
-     * @return the coins all the fish are worth together.
+     * {@return the coins all the fish are worth together}
      */
     public int totalValue() {
         return fishes.entrySet().stream().mapToInt(entry -> entry.getKey().value() * entry.getValue()).sum();
     }
 
     /**
-     * @return how many fish there are of each type, in the order they were first caught; it cannot be modified.
+     * {@return how many fish there are of each type, in the order they were first caught; it cannot be modified}
      */
     public Map<FishType, Integer> getFishes() {
         return Collections.unmodifiableMap(fishes);

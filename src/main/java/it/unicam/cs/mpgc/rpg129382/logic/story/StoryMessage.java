@@ -29,6 +29,8 @@ public record StoryMessage(Kind kind, String text) {
     }
 
     /**
+     * Creates a message, checking that nothing is missing.
+     *
      * @throws NullPointerException if the kind or the text is null.
      */
     public StoryMessage {
@@ -37,7 +39,7 @@ public record StoryMessage(Kind kind, String text) {
     }
 
     /**
-     * @return true if the message is one of the two endings, after which the story is over.
+     * {@return true if the message is one of the two endings, after which the story is over}
      */
     public boolean isEnding() {
         return kind != Kind.BOTTLE;

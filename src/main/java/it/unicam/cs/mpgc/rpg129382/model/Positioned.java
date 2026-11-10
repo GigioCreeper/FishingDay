@@ -7,12 +7,12 @@ package it.unicam.cs.mpgc.rpg129382.model;
 public interface Positioned {
 
     /**
-     * @return the horizontal position.
+     * {@return the horizontal position}
      */
     double getX();
 
     /**
-     * @return the vertical position, growing downwards.
+     * {@return the vertical position, growing downwards}
      */
     double getY();
 }

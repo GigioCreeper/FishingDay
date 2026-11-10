@@ -21,6 +21,8 @@ public final class JsonSaveStorage implements SaveStorage {
     private final Path filePath;
 
     /**
+     * Creates a storage that uses the given file.
+     *
      * @param filePath the file where the game is saved; its folder is created when needed.
      */
     public JsonSaveStorage(Path filePath) {

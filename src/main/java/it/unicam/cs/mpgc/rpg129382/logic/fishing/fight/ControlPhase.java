@@ -18,6 +18,8 @@ public final class ControlPhase implements FightPhase {
     private final double hookedSpeed;
 
     /**
+     * Creates a control phase in which the player moves the hook at the given speed.
+     *
      * @param random      the source of randomness.
      * @param durations   how long the phase can last.
      * @param hookedSpeed how fast the player moves the hook, in pixels per second.

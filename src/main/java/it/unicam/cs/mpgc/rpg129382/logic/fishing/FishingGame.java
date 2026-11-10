@@ -39,6 +39,8 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private double directionY;
 
     /**
+     * Creates a game with no fish on the hook and no story message open.
+     *
      * @param hook              the hook the player moves.
      * @param hookSpeed         how fast the free hook moves, in pixels per second.
      * @param population        the common fishes of the lake.

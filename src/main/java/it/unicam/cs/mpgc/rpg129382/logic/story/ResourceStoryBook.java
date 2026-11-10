@@ -17,6 +17,8 @@ public final class ResourceStoryBook implements StoryBook {
     private final int chapterCount;
 
     /**
+     * Creates a story book from a bundle, checking that it holds the whole story.
+     *
      * @param bundle the bundle that holds the chapters and the endings.
      * @throws IllegalArgumentException if the bundle has no chapter or misses an ending.
      */

@@ -22,22 +22,23 @@ public final class RodCatalog {
     }
 
     /**
-     * @return every rod, from the starting one to the best one.
+     * {@return every rod, from the starting one to the best one}
      */
     public static List<Rod> all() {
         return LEVELS;
     }
 
     /**
-     * @return the rod the player starts with.
+     * {@return the rod the player starts with}
      */
     public static Rod starter() {
         return LEVELS.getFirst();
     }
 
     /**
+     * {@return the level of the rod, starting from 0 for the starting one}
+     *
      * @param rod a rod of the catalog.
-     * @return its level, starting from 0 for the starting rod.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public static int levelOf(Rod rod) {
@@ -49,8 +50,9 @@ public final class RodCatalog {
     }
 
     /**
+     * {@return the next rod level, or empty if the current one is the best}
+     *
      * @param current the rod the player owns.
-     * @return the next rod level, or empty if the current one is the best.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public static Optional<Rod> nextAfter(Rod current) {
@@ -62,8 +64,9 @@ public final class RodCatalog {
     }
 
     /**
+     * {@return the rod with that name, or empty if the catalog has none}
+     *
      * @param name the name of a rod.
-     * @return the rod with that name, or empty if the catalog has none.
      */
     public static Optional<Rod> findByName(String name) {
         return LEVELS.stream()

@@ -21,14 +21,14 @@ public class Player {
     }
 
     /**
-     * @return the fish the player has caught; changes to it change the player.
+     * {@return the fish the player has caught; changes to it change the player}
      */
     public Inventory getInventory() {
         return inventory;
     }
 
     /**
-     * @return the rod the player is using.
+     * {@return the rod the player is using}
      */
     public Rod getRod() {
         return rod;
@@ -44,13 +44,15 @@ public class Player {
     }
 
     /**
-     * @return the coins the player owns.
+     * {@return the coins the player owns}
      */
     public int getMoney() {
         return money;
     }
 
     /**
+     * Gives coins to the player.
+     *
      * @param amount the coins to add.
      * @throws IllegalArgumentException if the amount is negative.
      */
@@ -62,8 +64,9 @@ public class Player {
     }
 
     /**
+     * {@return true if the player owns at least that many coins}
+     *
      * @param amount a price.
-     * @return true if the player owns at least that many coins.
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean canAfford(int amount) {
@@ -71,6 +74,8 @@ public class Player {
     }
 
     /**
+     * Takes coins from the player.
+     *
      * @param amount the coins to pay.
      * @throws IllegalArgumentException if the amount is negative or the player cannot afford it.
      */

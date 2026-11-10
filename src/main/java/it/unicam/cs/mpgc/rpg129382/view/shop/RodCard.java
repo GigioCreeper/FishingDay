@@ -34,6 +34,8 @@ final class RodCard extends VBox {
     private final Button buyButton = new Button("Buy");
 
     /**
+     * Creates the card of a rod; its status is shown later, with {@link #show(RodStatus)}.
+     *
      * @param rod   the rod shown by the card.
      * @param coin  the coin icon shown next to the price.
      * @param onBuy what to do when the player buys the rod.

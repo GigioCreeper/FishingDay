@@ -32,15 +32,16 @@ public final class FishCatalog {
     }
 
     /**
-     * @return the common types of fish, without the final one.
+     * {@return the common types of fish, without the final one}
      */
     public static List<FishType> all() {
         return TYPES;
     }
 
     /**
+     * {@return the common type with that name, or empty if the catalog has none}
+     *
      * @param name the name of a type of fish.
-     * @return the common type with that name, or empty if the catalog has none.
      */
     public static Optional<FishType> findByName(String name) {
         return TYPES.stream()

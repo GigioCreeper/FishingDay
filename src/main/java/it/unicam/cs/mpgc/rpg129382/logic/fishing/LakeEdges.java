@@ -15,6 +15,8 @@ import java.util.Objects;
 public record LakeEdges(Area area, double margin) {
 
     /**
+     * Creates the edges of the given area.
+     *
      * @throws IllegalArgumentException if the margin is negative.
      */
     public LakeEdges {
@@ -25,8 +27,9 @@ public record LakeEdges(Area area, double margin) {
     }
 
     /**
+     * {@return the horizontal position, just outside the area, where it must enter to move that way}
+     *
      * @param heading the direction something will move to.
-     * @return the horizontal position, just outside the area, where it must enter to move that way.
      */
     double entryX(Heading heading) {
         return heading == Heading.RIGHT
@@ -35,8 +38,9 @@ public record LakeEdges(Area area, double margin) {
     }
 
     /**
+     * {@return true if it is farther than the margin from one of the sides}
+     *
      * @param thing something moving across the area.
-     * @return true if it is farther than the margin from one of the sides.
      */
     boolean hasLeft(Positioned thing) {
         return thing.getX() < area.left() - margin

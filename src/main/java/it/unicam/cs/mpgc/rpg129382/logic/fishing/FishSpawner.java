@@ -19,6 +19,8 @@ public class FishSpawner {
     private final Random random;
 
     /**
+     * Creates a spawner of the given types of fish.
+     *
      * @param types  the types of fish that can spawn, chosen at random.
      * @param edges  where fishes enter and leave; they swim at a random height inside its area.
      * @param delays how long to wait between two spawns.
@@ -36,15 +38,16 @@ public class FishSpawner {
     }
 
     /**
-     * @return a new fish of a random type, entering the water from one of its sides.
+     * {@return a new fish of a random type, entering the water from one of its sides}
      */
     public Fish spawn() {
         return spawn(types.get(random.nextInt(types.size())));
     }
 
     /**
+     * {@return a new fish entering the water from one of its sides}
+     *
      * @param type the type of the fish to spawn, even if it is not among the common ones.
-     * @return a new fish entering the water from one of its sides.
      */
     public Fish spawn(FishType type) {
         Objects.requireNonNull(type);
@@ -55,15 +58,16 @@ public class FishSpawner {
     }
 
     /**
-     * @return a random wait, in seconds, before the next spawn.
+     * {@return a random wait, in seconds, before the next spawn}
      */
     public double nextSpawnDelay() {
         return delays.next(random);
     }
 
     /**
+     * {@return true if the fish has swum past one of the sides}
+     *
      * @param fish a fish of the lake.
-     * @return true if the fish has swum past one of the sides.
      */
     public boolean hasLeft(Fish fish) {
         return edges.hasLeft(fish);

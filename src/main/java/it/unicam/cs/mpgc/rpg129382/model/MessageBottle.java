@@ -12,6 +12,8 @@ public class MessageBottle implements Positioned {
     private double x;
 
     /**
+     * Creates a bottle drifting along the surface.
+     *
      * @param heading the direction the bottle drifts to.
      * @param speed   how fast the bottle drifts, in pixels per second.
      * @param x       the starting horizontal position.

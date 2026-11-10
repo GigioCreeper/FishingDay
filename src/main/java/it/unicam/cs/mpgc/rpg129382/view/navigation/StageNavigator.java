@@ -39,7 +39,8 @@ public final class StageNavigator implements ScreenNavigator {
     }
 
     /**
-     * Navigates to the specified game screen by creating its content and showing it in the viewport.
+     * Navigates to the specified game screen by creating its content and showing it in the viewport,
+     * in place of the previous screen.
      *
      * @param screen the game screen to navigate to.
      * @throws IllegalArgumentException if the screen is not registered.

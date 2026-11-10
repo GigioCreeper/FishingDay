@@ -13,6 +13,8 @@ import java.util.Objects;
 public record Rod(String name, int price, double power) {
 
     /**
+     * Creates a rod, checking its characteristics.
+     *
      * @throws IllegalArgumentException if the name is blank, the price is negative or the power is not positive.
      */
     public Rod {

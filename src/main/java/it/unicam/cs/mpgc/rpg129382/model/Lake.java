@@ -10,6 +10,11 @@ import java.util.Objects;
  */
 public record Lake(Area water, Area catchZone) {
 
+    /**
+     * Creates a lake, checking that both areas are present.
+     *
+     * @throws NullPointerException if the water or the catch zone is null.
+     */
     public Lake {
         Objects.requireNonNull(water);
         Objects.requireNonNull(catchZone);

@@ -23,6 +23,8 @@ public final class FinalFish {
     private double cooldown;
 
     /**
+     * Creates the final fish, which waits a random time before its first appearance.
+     *
      * @param story      the story the final fish concludes.
      * @param type       the type of the final fish.
      * @param spawner    where the final fish enters the water.
@@ -42,8 +44,9 @@ public final class FinalFish {
     }
 
     /**
+     * {@return true if it is the final fish}
+     *
      * @param fish a fish of the lake.
-     * @return true if it is the final fish.
      */
     public boolean is(ReadOnlyFish fish) {
         return fish.getType().equals(type);

@@ -19,6 +19,8 @@ final class FishSprites {
     private final Map<FishType, Sprites> byType = new HashMap<>();
 
     /**
+     * Creates an empty set of sprites.
+     *
      * @param defaultWidth how wide fishes are drawn, unless registered with their own width.
      */
     FishSprites(double defaultWidth) {

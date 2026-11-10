@@ -18,6 +18,8 @@ public final class StoryProgress {
     private boolean concluded;
 
     /**
+     * Creates the progress of a story that has not been read yet.
+     *
      * @param book   the texts of the story.
      * @param player the player whose rod unlocks the chapters.
      */
@@ -27,7 +29,7 @@ public final class StoryProgress {
     }
 
     /**
-     * @return true if a chapter is unlocked but not read yet.
+     * {@return true if a chapter is unlocked but not read yet}
      */
     public boolean hasUnreadChapter() {
         return chaptersRead < unlockedChapters();
@@ -49,8 +51,7 @@ public final class StoryProgress {
     }
 
     /**
-     * @return true if every chapter is read and the story is not concluded yet,
-     * so the final fish can appear.
+     * {@return true if every chapter is read and the story is not concluded yet, so the final fish can appear}
      */
     public boolean awaitsFinal() {
         return chaptersRead == book.chapterCount() && !concluded;
@@ -81,21 +82,21 @@ public final class StoryProgress {
     }
 
     /**
-     * @return how many chapters the player has read.
+     * {@return how many chapters the player has read}
      */
     public int getChaptersRead() {
         return chaptersRead;
     }
 
     /**
-     * @return true if the story has reached one of its endings.
+     * {@return true if the story has reached one of its endings}
      */
     public boolean isConcluded() {
         return concluded;
     }
 
     /**
-     * @return how many chapters the story has.
+     * {@return how many chapters the story has}
      */
     public int chapterCount() {
         return book.chapterCount();

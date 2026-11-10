@@ -57,8 +57,8 @@ public final class GameSession {
     }
 
     /**
-     * @return true if there is a saved game that can be continued: it must be valid
-     * and its story must not be concluded yet.
+     * {@return true if there is a saved game that can be continued: it must be valid
+     * and its story must not be concluded yet}
      */
     public boolean canContinue() {
         return continuableSave().isPresent();

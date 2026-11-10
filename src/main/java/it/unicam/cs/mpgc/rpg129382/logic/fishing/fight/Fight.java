@@ -36,21 +36,21 @@ public class Fight {
     }
 
     /**
-     * @return the hooked fish.
+     * {@return the hooked fish}
      */
     public Fish getFish() {
         return fish;
     }
 
     /**
-     * @return true if, in the current phase, the fish is pulling and the player has no control.
+     * {@return true if, in the current phase, the fish is pulling and the player has no control}
      */
     public boolean isFishPulling() {
         return currentPhase().isFishPulling();
     }
 
     /**
-     * @return true if, in the current phase, the hook must be kept inside the water.
+     * {@return true if, in the current phase, the hook must be kept inside the water}
      */
     public boolean keepsHookInWater() {
         return currentPhase().keepsHookInWater();

@@ -9,8 +9,9 @@ import it.unicam.cs.mpgc.rpg129382.model.Fish;
 public interface FightFactory {
 
     /**
+     * {@return a new fight with that fish}
+     *
      * @param fish the fish that has just been hooked.
-     * @return a new fight with that fish.
      */
     Fight create(Fish fish);
 }

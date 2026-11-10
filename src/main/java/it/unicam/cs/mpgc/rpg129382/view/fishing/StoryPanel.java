@@ -21,6 +21,8 @@ final class StoryPanel extends VBox {
     private final Button continueButton = new Button("Continue");
 
     /**
+     * Creates the panel, hidden until a message is shown.
+     *
      * @param onContinue what to do when the player closes the message.
      */
     StoryPanel(Runnable onContinue) {
