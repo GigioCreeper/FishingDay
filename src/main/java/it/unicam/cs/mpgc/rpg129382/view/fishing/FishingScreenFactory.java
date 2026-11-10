@@ -15,6 +15,10 @@ import javafx.scene.input.KeyEvent;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * Creates the fishing screen: a new fishing session every time the player goes fishing.
+ * From there, N opens the shop and Esc goes back to the main menu.
+ */
 public final class FishingScreenFactory implements ScreenFactory {
     private static final KeyCode SHOP_KEY = KeyCode.N;
     private static final KeyCode MENU_KEY = KeyCode.ESCAPE;
@@ -23,6 +27,13 @@ public final class FishingScreenFactory implements ScreenFactory {
     private final StoryProgress story;
     private final ScreenNavigator navigator;
 
+    /**
+     * Creates a factory of fishing screens.
+     *
+     * @param player    the player who fishes.
+     * @param story     the story carried by the bottles.
+     * @param navigator the navigator used to leave the screen.
+     */
     public FishingScreenFactory(Player player, StoryProgress story, ScreenNavigator navigator) {
         this.player = Objects.requireNonNull(player);
         this.story = Objects.requireNonNull(story);

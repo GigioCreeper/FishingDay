@@ -14,7 +14,7 @@ import java.util.Optional;
  * Saves the game in a JSON file.
  * The file is first written next to the old one and then moved over it in a single step,
  * so that a crash while saving never leaves a half-written save.
- * A file that is not valid JSON, or that holds invalid data, is treated as no save at all.
+ * A file that cannot be read, is not valid JSON or holds invalid data is treated as no save at all.
  */
 public final class JsonSaveStorage implements SaveStorage {
     private final Gson gson = new Gson();
@@ -49,9 +49,8 @@ public final class JsonSaveStorage implements SaveStorage {
         }
         try {
             return Optional.ofNullable(gson.fromJson(Files.readString(filePath), SaveData.class));
-        } catch (IOException e) {
-            throw new UncheckedIOException("Could not load the game", e);
-        } catch (RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
+            // A save that cannot be used is the same as no save: the player can still start a new game.
             return Optional.empty();
         }
     }

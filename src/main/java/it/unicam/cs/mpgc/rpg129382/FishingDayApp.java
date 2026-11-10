@@ -21,19 +21,34 @@ import javafx.stage.Stage;
 
 import java.nio.file.Path;
 
+/**
+ * The JavaFX application: builds the objects of the game, connects the screens
+ * and saves the game when the window closes.
+ */
 public class FishingDayApp extends Application {
     private static final Path SAVE_FILE = Path.of(System.getProperty("user.home"), ".fishingday", "save.json");
 
     private GameSession session;
+
+    /**
+     * Creates the application; JavaFX calls it before {@link #start(Stage)}.
+     */
+    public FishingDayApp() {
+    }
 
     @Override
     public void start(Stage stage) {
         StageNavigator navigator = new StageNavigator(stage);
         Player player = new Player(RodCatalog.starter());
         Shop shop = new Shop();
-        StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"), player);
+        StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"),
+                () -> RodCatalog.levelOf(player.getRod()) + 1);
         session = new GameSession(player, story, new JsonSaveStorage(SAVE_FILE));
-        navigator.register(GameScreen.MAIN_MENU, new MainMenuScreenFactory(navigator, session));
+        MainMenuScreenFactory menu = new MainMenuScreenFactory(navigator, session);
+        navigator.register(GameScreen.MAIN_MENU, () -> {
+            session.save();
+            return menu.createScreen();
+        });
         navigator.register(GameScreen.FISHING, new FishingScreenFactory(player, story, navigator));
         navigator.register(GameScreen.SHOP, new ShopScreenFactory(shop, player, navigator));
 

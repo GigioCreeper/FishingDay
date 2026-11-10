@@ -10,6 +10,10 @@ import javafx.scene.layout.StackPane;
 
 import java.util.Objects;
 
+/**
+ * Controller of the main menu: starts a new game or continues the saved one,
+ * asking for confirmation before a new game overwrites a save.
+ */
 public class MainMenuController {
     @FXML
     private Button continueButton;
@@ -20,6 +24,12 @@ public class MainMenuController {
     private final ScreenNavigator screenNavigator;
     private final GameSession session;
 
+    /**
+     * Creates the controller of the main menu.
+     *
+     * @param screenNavigator the navigator used to go fishing.
+     * @param session         the game session the menu starts or continues.
+     */
     public MainMenuController(ScreenNavigator screenNavigator, GameSession session) {
         this.screenNavigator = Objects.requireNonNull(screenNavigator);
         this.session = Objects.requireNonNull(session);

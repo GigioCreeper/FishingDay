@@ -4,13 +4,14 @@ import it.unicam.cs.mpgc.rpg129382.logic.shop.Shop;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
-import javafx.fxml.FXMLLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.FxmlLoader;
 import javafx.scene.Parent;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Objects;
 
+/**
+ * Creates the shop screen from its FXML file.
+ */
 public final class ShopScreenFactory implements ScreenFactory {
     private final Shop shop;
     private final Player player;
@@ -33,16 +34,9 @@ public final class ShopScreenFactory implements ScreenFactory {
      * Creates and returns the content of the shop screen.
      *
      * @return the Parent node representing the shop screen.
-     * @throws UncheckedIOException if there is an error loading the FXML file.
      */
     @Override
     public Parent createScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Shop.fxml"));
-            loader.setControllerFactory(_ -> new ShopController(shop, player, navigator));
-            return loader.load();
-        } catch (IOException e) {
-            throw new UncheckedIOException("Could not load Shop.fxml", e);
-        }
+        return FxmlLoader.loadFxml("/fxml/Shop.fxml", () -> new ShopController(shop, player, navigator));
     }
 }

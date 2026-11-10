@@ -38,7 +38,9 @@ public final class FishingGameFactory {
         Objects.requireNonNull(story);
         Objects.requireNonNull(random);
         Lake lake = createLake();
-        Hook hook = new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y);
+        HookControl hookControl = new HookControl(
+                new Hook(GameConfig.HOOK_START_X, GameConfig.HOOK_START_Y),
+                GameConfig.HOOK_SPEED, lake.water());
         DurationRange spawnDelays = new DurationRange(GameConfig.SPAWN_MIN_SECONDS, GameConfig.SPAWN_MAX_SECONDS);
         Area spawnArea = new Area(0, GameConfig.WINDOW_WIDTH, GameConfig.FISH_SPAWN_TOP, GameConfig.WINDOW_HEIGHT);
         LakeEdges fishEdges = new LakeEdges(spawnArea, GameConfig.FISH_SPAWN_MARGIN);
@@ -49,7 +51,7 @@ public final class FishingGameFactory {
                 new DurationRange(GameConfig.FINAL_FISH_MIN_SECONDS, GameConfig.FINAL_FISH_MAX_SECONDS),
                 random);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);
-        return new FishingGame(hook, GameConfig.HOOK_SPEED, population, bottles, finalFish, catchDetector,
+        return new FishingGame(hookControl, population, bottles, finalFish, catchDetector,
                 lake, player, createFightFactory(random, player.getRod().power()),
                 GameConfig.LINE_BROKEN_PENALTY);
     }

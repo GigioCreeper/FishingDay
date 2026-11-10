@@ -17,8 +17,6 @@ public interface SaveStorage {
 
     /**
      * {@return the saved game, or empty if there is none or it cannot be read as a valid save}
-     *
-     * @throws java.io.UncheckedIOException if the save exists but cannot be read.
      */
     Optional<SaveData> load();
 }
