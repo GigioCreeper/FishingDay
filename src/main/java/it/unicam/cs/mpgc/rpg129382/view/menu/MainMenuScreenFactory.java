@@ -3,11 +3,9 @@ package it.unicam.cs.mpgc.rpg129382.view.menu;
 import it.unicam.cs.mpgc.rpg129382.logic.session.GameSession;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
-import javafx.fxml.FXMLLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.FxmlLoader;
 import javafx.scene.Parent;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Objects;
 
 /**
@@ -32,16 +30,9 @@ public final class MainMenuScreenFactory implements ScreenFactory {
      * Creates and returns the content of the main menu screen.
      *
      * @return the Parent node representing the main menu screen.
-     * @throws UncheckedIOException if there is an error loading the FXML file.
      */
     @Override
     public Parent createScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-            loader.setControllerFactory(_ -> new MainMenuController(navigator, session));
-            return loader.load();
-        } catch (IOException e) {
-            throw new UncheckedIOException("Could not load MainMenu.fxml", e);
-        }
+        return FxmlLoader.loadFxml("/fxml/MainMenu.fxml", () -> new MainMenuController(navigator, session));
     }
 }
