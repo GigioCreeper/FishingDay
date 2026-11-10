@@ -15,6 +15,12 @@ import java.util.Optional;
 public final class Shop {
 
     /**
+     * Creates a shop that sells the rods of the {@link RodCatalog}.
+     */
+    public Shop() {
+    }
+
+    /**
      * Sells every fish in the player's inventory.
      *
      * @param player the player who sells.
@@ -30,16 +36,17 @@ public final class Shop {
     }
 
     /**
-     * @return every rod sold by the shop, from the starting one to the best one.
+     * {@return every rod sold by the shop, from the starting one to the best one}
      */
     public List<Rod> rods() {
         return RodCatalog.all();
     }
 
     /**
+     * {@return how the rod relates to what the player owns}
+     *
      * @param rod    a rod of the catalog.
      * @param player the player who looks at it.
-     * @return how the rod relates to what the player owns.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public RodStatus statusOf(Rod rod, Player player) {
@@ -59,9 +66,8 @@ public final class Shop {
         return RodStatus.LOCKED;
     }
 
-
     /**
-     * Buys the next rod level and equips it, if the player can afford it.
+     * Buys the next rod and equips it, if there is one and the player can afford it.
      *
      * @param player the player who buys.
      * @return the result of the purchase.
@@ -81,8 +87,9 @@ public final class Shop {
     }
 
     /**
+     * {@return the rod the player can buy next, or empty if the current one is the best}
+     *
      * @param player the player who wants to upgrade.
-     * @return the rod the player can buy next, or empty if the current one is the best.
      */
     private Optional<Rod> nextRod(Player player) {
         Objects.requireNonNull(player);

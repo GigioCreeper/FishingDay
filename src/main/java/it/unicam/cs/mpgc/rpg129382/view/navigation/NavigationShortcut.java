@@ -27,6 +27,11 @@ public final class NavigationShortcut implements EventHandler<KeyEvent> {
         this.target = Objects.requireNonNull(target);
     }
 
+    /**
+     * Handles the key event. If the pressed key matches the specified key, it navigates to the target screen.
+     *
+     * @param event the key event to handle.
+     */
     @Override
     public void handle(KeyEvent event) {
         if (event.getCode() == key) {

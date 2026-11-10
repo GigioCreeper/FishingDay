@@ -11,17 +11,18 @@ import it.unicam.cs.mpgc.rpg129382.model.Fish;
 public interface FightPhase {
 
     /**
-     * @return true if the fish is pulling the hook and the player has no control over it.
+     * {@return true if the fish is pulling the hook and the player has no control over it}
      */
     boolean isFishPulling();
 
     /**
-     * @return true if the hook must be kept inside the water during this phase.
+     * {@return true if the hook must be kept inside the water during this phase;
+     * if false, the hook can leave it and the line breaks}
      */
     boolean keepsHookInWater();
 
     /**
-     * @return a new duration for this phase, in seconds.
+     * {@return a new duration for this phase, in seconds}
      */
     double nextDuration();
 

@@ -5,7 +5,8 @@ import java.util.ResourceBundle;
 
 /**
  * Adapts a {@link ResourceBundle} to a {@link StoryBook}.
- * The bundle holds one entry per chapter, with the keys chapter.0, chapter.1, ...
+ * The bundle holds one entry per chapter, with the keys chapter.0, chapter.1, ...,
+ * and the two endings, with the keys ending.victory and ending.defeat.
  */
 public final class ResourceStoryBook implements StoryBook {
     private static final String KEY_PREFIX = "chapter.";
@@ -16,6 +17,8 @@ public final class ResourceStoryBook implements StoryBook {
     private final int chapterCount;
 
     /**
+     * Creates a story book from a bundle, checking that it holds the whole story.
+     *
      * @param bundle the bundle that holds the chapters and the endings.
      * @throws IllegalArgumentException if the bundle has no chapter or misses an ending.
      */
@@ -35,6 +38,8 @@ public final class ResourceStoryBook implements StoryBook {
      *
      * @param baseName the name of the file without ".properties", e.g. "story".
      * @return the loaded story.
+     * @throws java.util.MissingResourceException if the file is not found.
+     * @throws IllegalArgumentException           if the file has no chapter or misses an ending.
      */
     public static ResourceStoryBook load(String baseName) {
         return new ResourceStoryBook(ResourceBundle.getBundle(Objects.requireNonNull(baseName)));

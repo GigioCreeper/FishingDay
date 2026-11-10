@@ -11,7 +11,7 @@ import java.util.Random;
 
 /**
  * Lets the final fish of the story swim in the lake once every chapter is read.
- * There is at most one at a time; if it swims away or breaks the line, it comes back later.
+ * There is at most one at a time; if it swims away without being hooked, it comes back later.
  */
 public final class FinalFish {
     private final StoryProgress story;
@@ -23,6 +23,8 @@ public final class FinalFish {
     private double cooldown;
 
     /**
+     * Creates the final fish, which waits a random time before its first appearance.
+     *
      * @param story      the story the final fish concludes.
      * @param type       the type of the final fish.
      * @param spawner    where the final fish enters the water.
@@ -42,13 +44,20 @@ public final class FinalFish {
     }
 
     /**
+     * {@return true if it is the final fish}
+     *
      * @param fish a fish of the lake.
-     * @return true if it is the final fish.
      */
     public boolean is(ReadOnlyFish fish) {
         return fish.getType().equals(type);
     }
 
+    /**
+     * Waits a random time and then lets the final fish enter the lake, if the story is waiting for it
+     * and it is not already swimming.
+     *
+     * @param delta the seconds elapsed since the last tick.
+     */
     public void update(double delta) {
         if (story.awaitsFinal() && !isSwimming()) {
             cooldown -= delta;
@@ -60,14 +69,20 @@ public final class FinalFish {
     }
 
     /**
+     * Concludes the story, because the player caught the final fish.
+     *
      * @return the happy ending of the story.
+     * @throws IllegalStateException if the story is not waiting for the final fish.
      */
     public StoryMessage caught() {
         return story.winFinal();
     }
 
     /**
+     * Concludes the story, because the final fish broke the line.
+     *
      * @return the bad ending of the story.
+     * @throws IllegalStateException if the story is not waiting for the final fish.
      */
     public StoryMessage escaped() {
         return story.loseFinal();

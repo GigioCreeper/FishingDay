@@ -5,6 +5,10 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
+/**
+ * An image split into a grid of frames of the same size, drawn one at a time to animate a sprite.
+ * Frames are numbered row by row, starting from the top left corner.
+ */
 public final class SpriteSheet {
     private final Image image;
     private final int columns;
@@ -12,6 +16,14 @@ public final class SpriteSheet {
     private final double frameWidth;
     private final double frameHeight;
 
+    /**
+     * Creates a sprite sheet from an image split into a grid of frames.
+     *
+     * @param image   the image that holds every frame.
+     * @param columns how many frames there are in each row.
+     * @param rows    how many rows of frames there are.
+     * @throws IllegalArgumentException if columns or rows are not positive.
+     */
     public SpriteSheet(Image image, int columns, int rows) {
         this.image = Objects.requireNonNull(image);
         if (columns <= 0 || rows <= 0) {
@@ -23,6 +35,16 @@ public final class SpriteSheet {
         this.frameHeight = image.getHeight() / rows;
     }
 
+    /**
+     * Draws one frame, keeping its proportions.
+     *
+     * @param gc      where to draw.
+     * @param frame   the number of the frame; it wraps around, so any number, even negative, is valid.
+     * @param centerX the horizontal position of the center of the frame.
+     * @param centerY the vertical position of the center of the frame.
+     * @param width   how wide to draw the frame; the height follows from it.
+     * @param flipped true to mirror the frame horizontally.
+     */
     public void drawFrame(GraphicsContext gc, int frame, double centerX, double centerY,
                           double width, boolean flipped) {
         int index = Math.floorMod(frame, columns * rows);

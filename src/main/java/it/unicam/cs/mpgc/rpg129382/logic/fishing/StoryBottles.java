@@ -25,12 +25,15 @@ public final class StoryBottles {
     private double cooldown;
 
     /**
+     * Creates the bottles: the first one appears after a random wait.
+     *
      * @param story    the story to be read from the bottles.
      * @param edges    the lake edges, used to spawn and remove bottles.
-     * @param surfaceY the vertical position of the water surface.
-     * @param speed    the speed at which the bottle drifts across the lake.
+     * @param surfaceY the height at which the bottles float.
+     * @param speed    how fast the bottles drift, in pixels per second.
      * @param delays   the range of time between two consecutive bottles.
-     * @param random   a source of randomness.
+     * @param random   the source of randomness.
+     * @throws IllegalArgumentException if the speed is not positive.
      */
     public StoryBottles(StoryProgress story, LakeEdges edges, double surfaceY, double speed,
                         DurationRange delays, Random random) {
@@ -47,12 +50,18 @@ public final class StoryBottles {
     }
 
     /**
-     * @return the bottle drifting on the lake, if any.
+     * {@return the bottle drifting on the lake, if any}
      */
     public Optional<MessageBottle> getBottle() {
         return Optional.ofNullable(bottle);
     }
 
+    /**
+     * Lets the bottle drift and removes it when it has left the lake; with no bottle on the lake,
+     * waits a random time and then lets a new one in, if there is an unread chapter.
+     *
+     * @param delta the seconds elapsed since the last tick.
+     */
     public void update(double delta) {
         if (bottle != null) {
             bottle.drift(delta);

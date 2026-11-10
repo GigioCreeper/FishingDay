@@ -17,6 +17,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * A fishing session: the player moves the hook, hooks fishes and fights them, and picks up the
+ * bottles that carry the story. It coordinates the objects of the lake and decides the outcome of
+ * each catch; while a story message is open, the session is paused.
+ */
 public class FishingGame implements FishingState, FishingCommands, Updatable {
     private final Movable hook;
     private final double hookSpeed;
@@ -33,9 +38,24 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private double directionX;
     private double directionY;
 
+    /**
+     * Creates a game with no fish on the hook and no story message open.
+     *
+     * @param hook              the hook the player moves.
+     * @param hookSpeed         how fast the free hook moves, in pixels per second.
+     * @param population        the common fishes of the lake.
+     * @param bottles           the bottles that carry the story.
+     * @param finalFish         the final fish of the story.
+     * @param catchDetector     decides when the hook touches a fish or a bottle.
+     * @param lake              the water and the catch zone.
+     * @param player            the player, who gets the caught fishes and pays the penalties.
+     * @param fightFactory      creates the fight when a fish gets hooked.
+     * @param lineBrokenPenalty the coins the player loses when the line breaks.
+     * @throws IllegalArgumentException if the hook speed is not positive or the penalty is negative.
+     */
     public FishingGame(Movable hook, double hookSpeed, FishPopulation population, StoryBottles bottles,
-                       FinalFish finalFish, CatchDetector catchDetector, Lake lake, Player player, FightFactory fightFactory,
-                       int lineBrokenPenalty) {
+                       FinalFish finalFish, CatchDetector catchDetector, Lake lake, Player player,
+                       FightFactory fightFactory, int lineBrokenPenalty) {
         if (hookSpeed <= 0) {
             throw new IllegalArgumentException("hookSpeed must be positive");
         }

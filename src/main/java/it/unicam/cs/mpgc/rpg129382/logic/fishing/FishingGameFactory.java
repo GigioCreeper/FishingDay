@@ -26,6 +26,13 @@ public final class FishingGameFactory {
     private FishingGameFactory() {
     }
 
+    /**
+     * {@return a new fishing session, with the hook in its starting position and an empty lake}
+     *
+     * @param player the player who fishes: their rod decides how hard the fishes pull.
+     * @param story  the story carried by the bottles and concluded by the final fish.
+     * @param random the source of randomness for the whole session.
+     */
     public static FishingGame create(Player player, StoryProgress story, Random random) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(story);

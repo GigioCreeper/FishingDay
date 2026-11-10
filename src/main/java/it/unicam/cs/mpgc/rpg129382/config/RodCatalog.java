@@ -9,8 +9,11 @@ import java.util.Optional;
  * The rods the player can own, ordered from the starting one to the best one.
  */
 public final class RodCatalog {
+    /** The free rod the player starts with. */
     public static final Rod BAMBOO = new Rod("Bamboo", 0, 75);
+    /** The first upgrade. */
     public static final Rod FIBERGLASS = new Rod("Fiberglass", 120, 110);
+    /** The best rod: it unlocks the last chapter of the story, and with it the final fish. */
     public static final Rod CARBON = new Rod("Carbon", 350, 200);
 
     private static final List<Rod> LEVELS = List.of(BAMBOO, FIBERGLASS, CARBON);
@@ -19,22 +22,23 @@ public final class RodCatalog {
     }
 
     /**
-     * @return every rod, from the starting one to the best one.
+     * {@return every rod, from the starting one to the best one}
      */
     public static List<Rod> all() {
         return LEVELS;
     }
 
     /**
-     * @return the rod the player starts with.
+     * {@return the rod the player starts with}
      */
     public static Rod starter() {
         return LEVELS.getFirst();
     }
 
     /**
+     * {@return the level of the rod, starting from 0 for the starting one}
+     *
      * @param rod a rod of the catalog.
-     * @return its level, starting from 0 for the starting rod.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public static int levelOf(Rod rod) {
@@ -46,8 +50,9 @@ public final class RodCatalog {
     }
 
     /**
+     * {@return the next rod level, or empty if the current one is the best}
+     *
      * @param current the rod the player owns.
-     * @return the next rod level, or empty if the current one is the best.
      * @throws IllegalArgumentException if the rod is not in the catalog.
      */
     public static Optional<Rod> nextAfter(Rod current) {
@@ -59,8 +64,9 @@ public final class RodCatalog {
     }
 
     /**
+     * {@return the rod with that name, or empty if the catalog has none}
+     *
      * @param name the name of a rod.
-     * @return the rod with that name, or empty if the catalog has none.
      */
     public static Optional<Rod> findByName(String name) {
         return LEVELS.stream()
