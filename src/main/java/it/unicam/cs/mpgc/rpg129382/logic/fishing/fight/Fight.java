@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing.fight;
 
+import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.model.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
@@ -12,7 +13,7 @@ import java.util.Objects;
  * A fight with a hooked fish: cycles through its phases, each lasting a random time,
  * and decides when the fight ends.
  */
-public class Fight {
+public class Fight implements Updatable {
     private final Fish fish;
     private final List<FightPhase> phases;
     private int currentIndex;
@@ -74,6 +75,7 @@ public class Fight {
      *
      * @param delta the seconds elapsed since the last tick.
      */
+    @Override
     public void update(double delta) {
         timeLeft -= delta;
         if (timeLeft <= 0) {

@@ -1,4 +1,4 @@
-/* Shop screen: fonts and .main-button come from MainMenu.css. */
+/* Shop screen: fonts and .main-button come from Common.css. */
 .shop {
     -fx-background-image: url("/images/shop/background.png");
     -fx-background-size: cover;

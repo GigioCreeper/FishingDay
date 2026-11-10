@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
@@ -14,7 +15,7 @@ import java.util.Random;
  * Lets a bottle drift across the lake whenever the story has an unread chapter.
  * There is at most one bottle at a time; if it drifts away, another one comes later.
  */
-public final class StoryBottles {
+public final class StoryBottles implements Updatable {
     private final StoryProgress story;
     private final LakeEdges edges;
     private final double surfaceY;
@@ -62,6 +63,7 @@ public final class StoryBottles {
      *
      * @param delta the seconds elapsed since the last tick.
      */
+    @Override
     public void update(double delta) {
         if (bottle != null) {
             bottle.drift(delta);

@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Objects;
  * The fishes swimming in the lake. Common fishes come from the spawner: they swim, leave the lake
  * and are replaced by new ones, up to a maximum. Other fishes, like the final one, can be added on top.
  */
-public class FishPopulation {
+public class FishPopulation implements Updatable {
     private final FishSpawner spawner;
     private final int maxFish;
     private final List<Fish> fishes = new ArrayList<>();
@@ -64,6 +65,7 @@ public class FishPopulation {
      *
      * @param delta the seconds elapsed since the last tick.
      */
+    @Override
     public void update(double delta) {
         fishes.forEach(fish -> fish.swim(delta));
         fishes.removeIf(spawner::hasLeft);

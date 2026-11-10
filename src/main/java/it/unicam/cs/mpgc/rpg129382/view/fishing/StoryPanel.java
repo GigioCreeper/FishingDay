@@ -27,7 +27,7 @@ final class StoryPanel extends VBox {
      */
     StoryPanel(Runnable onContinue) {
         Objects.requireNonNull(onContinue);
-        getStylesheets().addAll(stylesheet("/css/MainMenu.css"), stylesheet("/css/Story.css"));
+        getStylesheets().addAll(stylesheet("/css/Common.css"), stylesheet("/css/Story.css"));
         getStyleClass().add("story-panel");
         setPrefWidth(WIDTH);
         setLayoutX((GameConfig.WINDOW_WIDTH - WIDTH) / 2);

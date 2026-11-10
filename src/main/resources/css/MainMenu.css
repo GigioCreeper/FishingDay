@@ -1,9 +1,3 @@
-/* Bundled pixel font (SIL OFL, see fonts/PixelifySans-OFL.txt), so it works on every system. */
-@font-face {
-    font-family: "Pixelify Sans";
-    src: url("/fonts/PixelifySans.ttf");
-}
-
 /* Main menu: the background image already contains the game title at the top. */
 .main-menu {
     /* A leading "/" resolves from the root of the classpath (src/main/resources). */
@@ -15,65 +9,6 @@
     -fx-spacing: 18;
 }
 
-/* Wooden buttons, matching the title's lettering. */
-.main-button {
-    -fx-pref-width: 260px;
-    -fx-pref-height: 56px;
-    -fx-font-family: "Pixelify Sans";
-    /* Pixel fonts stay crisp at multiples of their grid; no fake bold, it blurs the pixels. */
-    -fx-font-size: 24px;
-    -fx-text-fill: #f8ecd4;
-    -fx-cursor: hand;
-    /* Layers painted in order: dark outline, then the wood inset by 3px. */
-    -fx-background-color: #3b2412, linear-gradient(to bottom, #a8703f, #7a4a24);
-    -fx-background-insets: 0, 3;
-    -fx-background-radius: 12, 9;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 10, 0.3, 0, 4);
-}
-
-.main-button:hover {
-    -fx-background-color: #3b2412, linear-gradient(to bottom, #c08550, #8d5a2e);
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-.main-button:pressed {
-    -fx-background-color: #3b2412, linear-gradient(to bottom, #6b4020, #8d5a2e);
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
-}
-
-/* Custom backgrounds drop the default focus ring: keep keyboard focus visible. */
-.main-button:focused {
-    -fx-background-color: #f2c14e, #3b2412, linear-gradient(to bottom, #a8703f, #7a4a24);
-    -fx-background-insets: -3, 0, 3;
-    -fx-background-radius: 14, 12, 9;
-}
-
-.main-button:focused:hover {
-    -fx-background-color: #f2c14e, #3b2412, linear-gradient(to bottom, #c08550, #8d5a2e);
-}
-
-/* Exit button: same wooden shape, reddish tint to tell it apart from the others. */
-.main-button.exit-button {
-    -fx-background-color: #3a1210, linear-gradient(to bottom, #b5483a, #7e2a22);
-}
-
-.main-button.exit-button:hover {
-    -fx-background-color: #3a1210, linear-gradient(to bottom, #cc5a4a, #92342a);
-}
-
-.main-button.exit-button:pressed {
-    -fx-background-color: #3a1210, linear-gradient(to bottom, #6e221b, #92342a);
-}
-
-.main-button.exit-button:focused {
-    -fx-background-color: #f2c14e, #3a1210, linear-gradient(to bottom, #b5483a, #7e2a22);
-}
-
-.main-button.exit-button:focused:hover {
-    -fx-background-color: #f2c14e, #3a1210, linear-gradient(to bottom, #cc5a4a, #92342a);
-}
 /* Overlay for confirming a new game: semi-transparent black, covering the whole menu. */
 .dialog-overlay {
     -fx-background-color: rgba(0, 0, 0, 0.55);

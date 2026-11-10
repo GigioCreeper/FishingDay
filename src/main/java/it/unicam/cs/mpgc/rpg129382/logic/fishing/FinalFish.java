@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
+import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
@@ -13,7 +14,7 @@ import java.util.Random;
  * Lets the final fish of the story swim in the lake once every chapter is read.
  * There is at most one at a time; if it swims away without being hooked, it comes back later.
  */
-public final class FinalFish {
+public final class FinalFish implements Updatable {
     private final StoryProgress story;
     private final FishType type;
     private final FishSpawner spawner;
@@ -58,6 +59,7 @@ public final class FinalFish {
      *
      * @param delta the seconds elapsed since the last tick.
      */
+    @Override
     public void update(double delta) {
         if (story.awaitsFinal() && !isSwimming()) {
             cooldown -= delta;

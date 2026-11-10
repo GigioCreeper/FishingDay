@@ -100,7 +100,7 @@ public class Player {
     public void restore(Rod rod, int money, Map<FishType, Integer> fishes) {
         Objects.requireNonNull(fishes);
         if (money < 0) {
-            throw new IllegalArgumentException("Amount must be non-negative");
+            throw new IllegalArgumentException("Money must be non-negative");
         }
         equip(rod);
         this.money = money;

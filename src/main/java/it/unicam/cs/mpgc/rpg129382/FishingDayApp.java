@@ -62,6 +62,8 @@ public class FishingDayApp extends Application {
 
     @Override
     public void stop() {
-        session.save();
+        if (session != null) {
+            session.save();
+        }
     }
 }
