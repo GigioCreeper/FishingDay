@@ -159,7 +159,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     }
 
     private void pickUpBottle() {
-        if (fight != null) {
+        if (fight != null || storyMessage != null) {
             return;
         }
         bottles.getBottle()
