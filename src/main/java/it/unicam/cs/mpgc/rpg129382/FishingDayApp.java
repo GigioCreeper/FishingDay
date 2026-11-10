@@ -33,7 +33,11 @@ public class FishingDayApp extends Application {
         Shop shop = new Shop();
         StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"), player);
         session = new GameSession(player, story, new JsonSaveStorage(SAVE_FILE));
-        navigator.register(GameScreen.MAIN_MENU, new MainMenuScreenFactory(navigator, session));
+        MainMenuScreenFactory menu = new MainMenuScreenFactory(navigator, session);
+        navigator.register(GameScreen.MAIN_MENU, () -> {
+            session.save();
+            return menu.createScreen();
+        });
         navigator.register(GameScreen.FISHING, new FishingScreenFactory(player, story, navigator));
         navigator.register(GameScreen.SHOP, new ShopScreenFactory(shop, player, navigator));
 

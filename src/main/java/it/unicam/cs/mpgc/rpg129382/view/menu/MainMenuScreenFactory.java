@@ -18,7 +18,7 @@ public final class MainMenuScreenFactory implements ScreenFactory {
      * Creates a new MainMenuScreenFactory.
      *
      * @param navigator the ScreenNavigator to use for navigation.
-     * @param session   the game session the menu starts and saves.
+     * @param session   the game session the menu starts or continues.
      */
     public MainMenuScreenFactory(ScreenNavigator navigator, GameSession session) {
         this.navigator = Objects.requireNonNull(navigator);
@@ -35,8 +35,6 @@ public final class MainMenuScreenFactory implements ScreenFactory {
     @Override
     public Parent createScreen() {
         try {
-            // Every way back to the menu passes here, and Continue must see the latest save.
-            session.save();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
             loader.setControllerFactory(_ -> new MainMenuController(navigator, session));
             return loader.load();
