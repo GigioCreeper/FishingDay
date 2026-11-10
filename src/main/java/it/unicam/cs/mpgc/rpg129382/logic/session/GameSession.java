@@ -8,6 +8,7 @@ import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.persistence.SaveData;
 import it.unicam.cs.mpgc.rpg129382.persistence.SaveStorage;
 
+import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,10 +40,15 @@ public final class GameSession {
     /**
      * Saves the current state of the game. Before a game is started or continued it does nothing,
      * so that the save on disk is not overwritten with an empty one.
+     * If the save fails, the error is printed and the game goes on.
      */
     public void save() {
         if (started) {
-            storage.save(snapshot());
+            try {
+                storage.save(snapshot());
+            } catch (UncheckedIOException e) {
+                System.err.println("Failed to save the game: " + e.getCause().getMessage());
+            }
         }
     }
 
