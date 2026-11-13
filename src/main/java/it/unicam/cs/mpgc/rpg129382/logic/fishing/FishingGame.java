@@ -24,7 +24,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private final HookControl hookControl;
     private final FishPopulation population;
     private final StoryBottles bottles;
-    private final FinalFish finalFish;
+    private final FinalFishEncounter finalFish;
     private final CatchDetector catchDetector;
     private final Lake lake;
     private final Player player;
@@ -50,7 +50,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
      * @throws IllegalArgumentException if the penalty is negative.
      */
     public FishingGame(HookControl hookControl, FishPopulation population, StoryBottles bottles,
-                       FinalFish finalFish, CatchDetector catchDetector, Lake lake, Player player,
+                       FinalFishEncounter finalFish, CatchDetector catchDetector, Lake lake, Player player,
                        FightFactory fightFactory, int lineBrokenPenalty) {
         if (lineBrokenPenalty < 0) {
             throw new IllegalArgumentException("lineBrokenPenalty must not be negative");
