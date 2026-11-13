@@ -1,10 +1,10 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing.fight;
 
 import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
-import it.unicam.cs.mpgc.rpg129382.model.Displacement;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
-import it.unicam.cs.mpgc.rpg129382.model.Positioned;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Positioned;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.model;
+package it.unicam.cs.mpgc.rpg129382.model.geometry;
 
 /**
  * Something whose position can be changed.

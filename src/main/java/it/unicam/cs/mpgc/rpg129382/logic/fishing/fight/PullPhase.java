@@ -1,9 +1,9 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing.fight;
 
 import it.unicam.cs.mpgc.rpg129382.logic.DurationRange;
-import it.unicam.cs.mpgc.rpg129382.model.Displacement;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Displacement;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
-import it.unicam.cs.mpgc.rpg129382.model.Heading;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Heading;
 
 import java.util.Objects;
 import java.util.Random;

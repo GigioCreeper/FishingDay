@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
-import it.unicam.cs.mpgc.rpg129382.view.utils.StylesheetLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.StylesheetLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;

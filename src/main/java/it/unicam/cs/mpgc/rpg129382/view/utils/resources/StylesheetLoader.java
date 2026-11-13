@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.view.utils;
+package it.unicam.cs.mpgc.rpg129382.view.utils.resources;
 
 import java.net.URL;
 import java.util.Objects;

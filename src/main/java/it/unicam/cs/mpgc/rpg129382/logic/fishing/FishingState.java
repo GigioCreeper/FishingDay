@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
-import it.unicam.cs.mpgc.rpg129382.model.Area;
-import it.unicam.cs.mpgc.rpg129382.model.Positioned;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Area;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Positioned;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
 import java.util.List;

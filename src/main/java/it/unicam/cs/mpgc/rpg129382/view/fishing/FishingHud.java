@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
-import it.unicam.cs.mpgc.rpg129382.view.utils.FontLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.FontLoader;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

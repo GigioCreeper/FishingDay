@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.shop;
 
 import it.unicam.cs.mpgc.rpg129382.logic.shop.RodStatus;
 import it.unicam.cs.mpgc.rpg129382.model.Rod;
-import it.unicam.cs.mpgc.rpg129382.view.utils.ImageLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.ImageLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

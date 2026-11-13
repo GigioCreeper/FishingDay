@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.view.utils;
+package it.unicam.cs.mpgc.rpg129382.view.utils.graphics;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

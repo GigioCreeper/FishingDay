@@ -5,7 +5,7 @@ import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingCommands;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
-import it.unicam.cs.mpgc.rpg129382.view.utils.SharpCanvas;
+import it.unicam.cs.mpgc.rpg129382.view.utils.graphics.SharpCanvas;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 

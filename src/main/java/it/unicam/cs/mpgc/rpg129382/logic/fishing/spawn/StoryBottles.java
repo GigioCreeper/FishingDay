@@ -1,10 +1,10 @@
-package it.unicam.cs.mpgc.rpg129382.logic.fishing;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn;
 
 import it.unicam.cs.mpgc.rpg129382.logic.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
-import it.unicam.cs.mpgc.rpg129382.model.Heading;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Heading;
 import it.unicam.cs.mpgc.rpg129382.model.MessageBottle;
 
 import java.util.Objects;

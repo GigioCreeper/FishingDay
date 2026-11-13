@@ -2,8 +2,8 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
-import it.unicam.cs.mpgc.rpg129382.view.utils.ImageLoader;
-import it.unicam.cs.mpgc.rpg129382.view.utils.SpriteSheet;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.ImageLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.graphics.SpriteSheet;
 
 import java.util.HashMap;
 import java.util.Map;

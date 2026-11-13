@@ -7,7 +7,7 @@ import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.model.Rod;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.GameScreen;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
-import it.unicam.cs.mpgc.rpg129382.view.utils.ImageLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.ImageLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

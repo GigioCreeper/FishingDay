@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Area;
+
 import java.util.Objects;
 
 /**

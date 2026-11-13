@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.logic.fishing;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn;
 
 import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
