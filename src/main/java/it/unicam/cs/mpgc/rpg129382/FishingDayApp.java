@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg129382.config.RodCatalog;
 import it.unicam.cs.mpgc.rpg129382.logic.session.GameSession;
 import it.unicam.cs.mpgc.rpg129382.logic.shop.Shop;
 import it.unicam.cs.mpgc.rpg129382.logic.story.ResourceStoryBook;
+import it.unicam.cs.mpgc.rpg129382.logic.story.RodChapterUnlock;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.persistence.JsonSaveStorage;
@@ -41,8 +42,7 @@ public class FishingDayApp extends Application {
         StageNavigator navigator = new StageNavigator(stage);
         Player player = new Player(RodCatalog.starter());
         Shop shop = new Shop();
-        StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"),
-                () -> RodCatalog.levelOf(player.getRod()) + 1);
+        StoryProgress story = new StoryProgress(ResourceStoryBook.load("story"), new RodChapterUnlock(player));
         session = new GameSession(player, story, new JsonSaveStorage(SAVE_FILE));
         MainMenuScreenFactory menu = new MainMenuScreenFactory(navigator, session);
         navigator.register(GameScreen.MAIN_MENU, () -> {
@@ -62,6 +62,8 @@ public class FishingDayApp extends Application {
 
     @Override
     public void stop() {
-        session.save();
+        if (session != null) {
+            session.save();
+        }
     }
 }

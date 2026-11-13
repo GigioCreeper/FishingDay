@@ -1,8 +1,8 @@
-package it.unicam.cs.mpgc.rpg129382.logic.fishing;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn;
 
-import it.unicam.cs.mpgc.rpg129382.model.Area;
-import it.unicam.cs.mpgc.rpg129382.model.Heading;
-import it.unicam.cs.mpgc.rpg129382.model.Positioned;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Area;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Heading;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Positioned;
 
 import java.util.Objects;
 

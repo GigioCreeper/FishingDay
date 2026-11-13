@@ -2,13 +2,18 @@ package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
+import it.unicam.cs.mpgc.rpg129382.logic.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.ControlPhase;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.PullPhase;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.FinalFishEncounter;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.FishPopulation;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.FishSpawner;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.LakeEdges;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.StoryBottles;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
-import it.unicam.cs.mpgc.rpg129382.model.Area;
-import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Hook;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
@@ -47,7 +52,7 @@ public final class FishingGameFactory {
         FishSpawner spawner = new FishSpawner(FishCatalog.all(), fishEdges, spawnDelays, random);
         FishPopulation population = new FishPopulation(spawner, GameConfig.MAX_FISH);
         StoryBottles bottles = createStoryBottles(story, lake.water(), random);
-        FinalFish finalFish = new FinalFish(story, FishCatalog.LEGEND, spawner, population,
+        FinalFishEncounter finalFish = new FinalFishEncounter(story, FishCatalog.LEGEND, spawner, population,
                 new DurationRange(GameConfig.FINAL_FISH_MIN_SECONDS, GameConfig.FINAL_FISH_MAX_SECONDS),
                 random);
         CatchDetector catchDetector = new CatchDetector(GameConfig.CATCH_RADIUS);

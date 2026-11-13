@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
  * The fish the player has caught and not sold yet, counted by type.
  */
 public class Inventory {
-    private final Map<FishType, Integer> fishes = new LinkedHashMap<>();
+    private final Map<FishType, Integer> fishes = new HashMap<>();
 
     /**
      * Creates an empty inventory.
@@ -56,7 +56,7 @@ public class Inventory {
     }
 
     /**
-     * {@return how many fish there are of each type, in the order they were first caught; it cannot be modified}
+     * {@return how many fish there are of each type; it cannot be modified}
      */
     public Map<FishType, Integer> getFishes() {
         return Collections.unmodifiableMap(fishes);

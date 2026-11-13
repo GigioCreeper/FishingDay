@@ -24,6 +24,8 @@ public final class GameConfig {
     public static final double CATCH_ZONE_TOP = WATER_TOP - 30;
     /** The bottom border of the catch zone. */
     public static final double CATCH_ZONE_BOTTOM = WATER_TOP + 40;
+    /** True to draw the catch zone over the lake, so the player can see where to bring a hooked fish. */
+    public static final boolean SHOW_CATCH_ZONE = true;
 
     // Hook
 

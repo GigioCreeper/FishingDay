@@ -4,7 +4,7 @@ import it.unicam.cs.mpgc.rpg129382.logic.shop.Shop;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
-import it.unicam.cs.mpgc.rpg129382.view.utils.FxmlLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.FxmlLoader;
 import javafx.scene.Parent;
 
 import java.util.Objects;

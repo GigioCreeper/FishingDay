@@ -5,15 +5,13 @@ import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingCommands;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.FishingState;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
-import it.unicam.cs.mpgc.rpg129382.view.utils.SharpCanvas;
+import it.unicam.cs.mpgc.rpg129382.view.utils.graphics.SharpCanvas;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 
 import java.util.Objects;
 
 final class FishingView extends Pane {
-    private static final boolean SHOW_CATCH_ZONE = true;
-
     private final FishingState state;
     private final SharpCanvas canvas;
     private final FishingRenderer renderer;
@@ -27,7 +25,7 @@ final class FishingView extends Pane {
         Objects.requireNonNull(onStoryEnd);
         Objects.requireNonNull(commands);
         this.canvas = new SharpCanvas(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
-        this.renderer = new FishingRenderer(state, SHOW_CATCH_ZONE);
+        this.renderer = new FishingRenderer(state, GameConfig.SHOW_CATCH_ZONE);
         this.storyPanel = new StoryPanel(() -> {
             boolean isEnding = state.getStoryMessage().map(StoryMessage::isEnding).orElse(false);
             commands.closeStoryMessage();

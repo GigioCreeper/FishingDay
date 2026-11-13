@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg129382.view.fishing;
 
 import it.unicam.cs.mpgc.rpg129382.config.GameConfig;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.StylesheetLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -27,7 +28,9 @@ final class StoryPanel extends VBox {
      */
     StoryPanel(Runnable onContinue) {
         Objects.requireNonNull(onContinue);
-        getStylesheets().addAll(stylesheet("/css/MainMenu.css"), stylesheet("/css/Story.css"));
+        getStylesheets().addAll(
+                StylesheetLoader.loadStylesheet("/css/Common.css"),
+                StylesheetLoader.loadStylesheet("/css/Story.css"));
         getStyleClass().add("story-panel");
         setPrefWidth(WIDTH);
         setLayoutX((GameConfig.WINDOW_WIDTH - WIDTH) / 2);
@@ -71,10 +74,5 @@ final class StoryPanel extends VBox {
             case VICTORY -> "The Lord of the Lake";
             case DEFEAT -> "Dragged into the deep";
         };
-    }
-
-    private static String stylesheet(String path) {
-        return Objects.requireNonNull(StoryPanel.class.getResource(path), "Stylesheet not found: " + path)
-                .toExternalForm();
     }
 }

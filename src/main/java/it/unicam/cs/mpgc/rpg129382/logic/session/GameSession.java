@@ -1,14 +1,12 @@
 package it.unicam.cs.mpgc.rpg129382.logic.session;
 
-import it.unicam.cs.mpgc.rpg129382.config.FishCatalog;
 import it.unicam.cs.mpgc.rpg129382.config.RodCatalog;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
-import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
 import it.unicam.cs.mpgc.rpg129382.persistence.SaveData;
 import it.unicam.cs.mpgc.rpg129382.persistence.SaveStorage;
 
-import java.util.HashMap;
+import java.io.UncheckedIOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,6 +19,7 @@ public final class GameSession {
     private final Player player;
     private final StoryProgress story;
     private final SaveStorage storage;
+    private final SaveDataMapper mapper;
     private boolean started;
 
     /**
@@ -34,15 +33,21 @@ public final class GameSession {
         this.player = Objects.requireNonNull(player);
         this.story = Objects.requireNonNull(story);
         this.storage = Objects.requireNonNull(storage);
+        this.mapper = new SaveDataMapper(player, story);
     }
 
     /**
      * Saves the current state of the game. Before a game is started or continued it does nothing,
      * so that the save on disk is not overwritten with an empty one.
+     * If the save fails, the error is printed and the game goes on.
      */
     public void save() {
         if (started) {
-            storage.save(snapshot());
+            try {
+                storage.save(mapper.snapshot());
+            } catch (UncheckedIOException e) {
+                System.err.println("Failed to save the game: " + e.getCause().getMessage());
+            }
         }
     }
 
@@ -72,29 +77,11 @@ public final class GameSession {
     public void continueGame() {
         SaveData save = continuableSave()
                 .orElseThrow(() -> new IllegalStateException("No game to continue"));
-        Map<FishType, Integer> fishes = new HashMap<>();
-        save.fishes().forEach((name, count) -> fishes.put(FishCatalog.findByName(name).orElseThrow(), count));
-        player.restore(RodCatalog.findByName(save.rodName()).orElseThrow(), save.money(), fishes);
-        story.restore(save.chaptersRead(), save.storyCompleted());
+        mapper.restore(save);
         started = true;
     }
 
     private Optional<SaveData> continuableSave() {
-        return storage.load().filter(save -> !save.storyCompleted() && isValid(save));
-    }
-
-    private boolean isValid(SaveData save) {
-        return RodCatalog.findByName(save.rodName()).isPresent()
-                && save.chaptersRead() <= story.chapterCount()
-                && save.fishes().keySet().stream()
-                .allMatch(name -> FishCatalog.findByName(name).isPresent());
-    }
-
-    private SaveData snapshot() {
-        Map<String, Integer> fishes = new HashMap<>();
-        player.getInventory().getFishes()
-                .forEach((type, count) -> fishes.put(type.name(), count));
-        return new SaveData(player.getMoney(), player.getRod().name(), fishes,
-                story.getChaptersRead(), story.isConcluded());
+        return storage.load().filter(save -> !save.storyCompleted() && mapper.isValid(save));
     }
 }

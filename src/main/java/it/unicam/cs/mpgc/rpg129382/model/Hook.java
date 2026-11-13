@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg129382.model;
 
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Movable;
+
 /**
  * The hook at the end of the fishing line, moved by the player.
  */

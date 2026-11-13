@@ -1,8 +1,9 @@
-package it.unicam.cs.mpgc.rpg129382.logic.fishing;
+package it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn;
 
+import it.unicam.cs.mpgc.rpg129382.logic.DurationRange;
+import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryProgress;
-import it.unicam.cs.mpgc.rpg129382.model.DurationRange;
 import it.unicam.cs.mpgc.rpg129382.model.FishType;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
@@ -13,7 +14,7 @@ import java.util.Random;
  * Lets the final fish of the story swim in the lake once every chapter is read.
  * There is at most one at a time; if it swims away without being hooked, it comes back later.
  */
-public final class FinalFish {
+public final class FinalFishEncounter implements Updatable {
     private final StoryProgress story;
     private final FishType type;
     private final FishSpawner spawner;
@@ -32,8 +33,8 @@ public final class FinalFish {
      * @param delays     how long to wait before the final fish appears.
      * @param random     the source of randomness.
      */
-    public FinalFish(StoryProgress story, FishType type, FishSpawner spawner, FishPopulation population,
-                     DurationRange delays, Random random) {
+    public FinalFishEncounter(StoryProgress story, FishType type, FishSpawner spawner, FishPopulation population,
+                              DurationRange delays, Random random) {
         this.story = Objects.requireNonNull(story);
         this.type = Objects.requireNonNull(type);
         this.spawner = Objects.requireNonNull(spawner);
@@ -58,6 +59,7 @@ public final class FinalFish {
      *
      * @param delta the seconds elapsed since the last tick.
      */
+    @Override
     public void update(double delta) {
         if (story.awaitsFinal() && !isSwimming()) {
             cooldown -= delta;

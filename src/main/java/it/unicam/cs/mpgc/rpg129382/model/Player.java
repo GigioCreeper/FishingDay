@@ -95,12 +95,20 @@ public class Player {
      * @param rod    the rod to use.
      * @param money  the coins to own.
      * @param fishes the fish to own, with their quantities.
+     * @throws NullPointerException     if the rod, the fishes or one of their types is null.
      * @throws IllegalArgumentException if the money is negative or a quantity is not positive.
      */
     public void restore(Rod rod, int money, Map<FishType, Integer> fishes) {
         Objects.requireNonNull(fishes);
+        Objects.requireNonNull(rod);
+        fishes.forEach((type, count) -> {
+            Objects.requireNonNull(type);
+            if (count <= 0) {
+                throw new IllegalArgumentException("Fish counts must be positive");
+            }
+        });
         if (money < 0) {
-            throw new IllegalArgumentException("Amount must be non-negative");
+            throw new IllegalArgumentException("Money must be non-negative");
         }
         equip(rod);
         this.money = money;

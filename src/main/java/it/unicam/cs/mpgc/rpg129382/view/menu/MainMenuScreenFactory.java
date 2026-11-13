@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg129382.view.menu;
 import it.unicam.cs.mpgc.rpg129382.logic.session.GameSession;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenFactory;
 import it.unicam.cs.mpgc.rpg129382.view.navigation.ScreenNavigator;
-import it.unicam.cs.mpgc.rpg129382.view.utils.FxmlLoader;
+import it.unicam.cs.mpgc.rpg129382.view.utils.resources.FxmlLoader;
 import javafx.scene.Parent;
 
 import java.util.Objects;

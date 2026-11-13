@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129382.model;
+package it.unicam.cs.mpgc.rpg129382.model.geometry;
 
 /**
  * A rectangle in the game world, with its borders included.

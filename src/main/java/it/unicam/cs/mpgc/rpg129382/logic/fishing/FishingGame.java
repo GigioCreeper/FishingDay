@@ -3,12 +3,15 @@ package it.unicam.cs.mpgc.rpg129382.logic.fishing;
 import it.unicam.cs.mpgc.rpg129382.logic.Updatable;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.Fight;
 import it.unicam.cs.mpgc.rpg129382.logic.fishing.fight.FightFactory;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.FinalFishEncounter;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.FishPopulation;
+import it.unicam.cs.mpgc.rpg129382.logic.fishing.spawn.StoryBottles;
 import it.unicam.cs.mpgc.rpg129382.logic.story.StoryMessage;
-import it.unicam.cs.mpgc.rpg129382.model.Area;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Area;
 import it.unicam.cs.mpgc.rpg129382.model.Fish;
 import it.unicam.cs.mpgc.rpg129382.model.Lake;
 import it.unicam.cs.mpgc.rpg129382.model.Player;
-import it.unicam.cs.mpgc.rpg129382.model.Positioned;
+import it.unicam.cs.mpgc.rpg129382.model.geometry.Positioned;
 import it.unicam.cs.mpgc.rpg129382.model.ReadOnlyFish;
 
 import java.util.List;
@@ -24,7 +27,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     private final HookControl hookControl;
     private final FishPopulation population;
     private final StoryBottles bottles;
-    private final FinalFish finalFish;
+    private final FinalFishEncounter finalFish;
     private final CatchDetector catchDetector;
     private final Lake lake;
     private final Player player;
@@ -50,7 +53,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
      * @throws IllegalArgumentException if the penalty is negative.
      */
     public FishingGame(HookControl hookControl, FishPopulation population, StoryBottles bottles,
-                       FinalFish finalFish, CatchDetector catchDetector, Lake lake, Player player,
+                       FinalFishEncounter finalFish, CatchDetector catchDetector, Lake lake, Player player,
                        FightFactory fightFactory, int lineBrokenPenalty) {
         if (lineBrokenPenalty < 0) {
             throw new IllegalArgumentException("lineBrokenPenalty must not be negative");
@@ -159,7 +162,7 @@ public class FishingGame implements FishingState, FishingCommands, Updatable {
     }
 
     private void pickUpBottle() {
-        if (fight != null) {
+        if (fight != null || storyMessage != null) {
             return;
         }
         bottles.getBottle()
