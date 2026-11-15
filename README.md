@@ -37,7 +37,14 @@ cd FishingDay
 ./gradlew run
 ```
 
----
+### Commands
+
+| Key | Action |
+|---|---|
+| Arrow keys | Move the hook |
+| `N` | Open the shop |
+| `Esc` | Back to the main menu |
+| `F11` | Toggle full screen |
 
 ## Use of AI tools
 
