@@ -9,6 +9,8 @@ for you at the bottom.
 All the documentation (features, responsibilities, classes, persistence, extensibility) is in
 the [Wiki](https://github.com/GigioCreeper/FishingDay/wiki).
 
+<img width="2560" height="1440" alt="Fishing-Day-gameplay-screenshot" src="https://github.com/user-attachments/assets/d0a4dfb2-5994-4827-a1f7-54deaf4bb2d4" />
+
 ## 🚀 How to run the project
 
 ### Prerequisites
