@@ -52,7 +52,7 @@ AI tools were used as support during development, never as a replacement for des
 
 - **GitHub Copilot**: code review of pull requests, commit message suggestions, autocompletion of repetitive code and
   Javadoc comments.
-- **Claude Code**: help organizing the project structure, explanations and review of JavaFX and of some design patterns
+- **Claude Code**: feedback on the project structure, explanations and review of JavaFX and of some design patterns
   used, and help drafting the documentation (README and Wiki).
 - **Gemini**: generation of the graphic assets (sprites and backgrounds).
 
